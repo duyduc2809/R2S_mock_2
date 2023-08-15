@@ -18,12 +18,19 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: const Text('Mobile Store'),
+      title: const Text(
+        'Mobile Store',
+        style: TextStyle(fontSize: 45, color: Colors.black),
+        
+      ),
       centerTitle: true,
-      
-      actions: <Widget>[
-        IconButton(onPressed: () {}, icon: const Icon(Icons.menu))
-      ],
+      backgroundColor: const Color.fromRGBO(238, 238, 238, 1),
+      leading: IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+        bottomLeft: Radius.circular(25),
+        bottomRight: Radius.circular(25),
+      )),
     );
   }
 }

@@ -1,15 +1,7 @@
 /.flutter-plugins-dependencies
 /.dart_tool
 /.idea
-/android
-/build
-/ios
-/linux
-/macos
-/web
-/windows
 /.flutter-plugins
-/main.dart
 /.dart_tool/flutter_build
 /flutter_01.log
 /flutter_02.log

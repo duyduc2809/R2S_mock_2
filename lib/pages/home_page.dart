@@ -45,13 +45,19 @@ class _HomePageState extends State<HomePage> {
                     enlargeCenterPage: true,
                     onPageChanged: (index, reason) =>
                         setState(() => activeIndex = index))),
-            Container(
-              child: SizedBox(
-                height: 32,
-                child: Image.asset('assets/img/new.png'),
-              ),
-            )
-            
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(
+                  height: 32,
+                  child: Image.asset('assets/img/new.png'),
+                ),
+                const SizedBox()
+              ],
+            ),
           ],
         ),
       ),

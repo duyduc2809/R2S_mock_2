@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_store/pages/auth_screen.dart';
 import 'package:mobile_store/pages/home_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+      MaterialApp(debugShowCheckedModeBanner: false, home: const AuthScreen()));
 }
 
 class MyApp extends StatelessWidget {
@@ -13,9 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primaryColor: Colors.white
-      ),
+      theme: ThemeData(primaryColor: Colors.white),
       home: const HomePage(),
     );
   }

@@ -8,7 +8,7 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage>  {
+class _HomePageState extends State<HomePage> {
   int activeIndex = 0;
   final controller = CarouselController();
   List images = [
@@ -20,11 +20,17 @@ class _HomePageState extends State<HomePage>  {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Mobile Store'),),
-      body: Column(
-        children: [
-          const SizedBox(height: 20,),
-          CarouselSlider.builder(
+      appBar: AppBar(
+        title: const Text('Mobile Store'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.only(left: 10, right: 10),
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 20,
+            ),
+            CarouselSlider.builder(
                 carouselController: controller,
                 itemCount: images.length,
                 itemBuilder: (context, index, realIndex) {
@@ -39,10 +45,22 @@ class _HomePageState extends State<HomePage>  {
                     enlargeCenterPage: true,
                     onPageChanged: (index, reason) =>
                         setState(() => activeIndex = index))),
-        ],
+            Container(
+              child: SizedBox(
+                height: 32,
+                child: Image.asset('assets/img/new.png'),
+              ),
+            )
+            
+          ],
+        ),
       ),
     );
   }
-  Widget buildImage(String urlImage, int index) =>
-    Container(child: Image.asset("assets/img/" + urlImage, fit: BoxFit.cover,));
+
+  Widget buildImage(String urlImage, int index) => Container(
+          child: Image.asset(
+        "assets/img/" + urlImage,
+        fit: BoxFit.cover,
+      ));
 }

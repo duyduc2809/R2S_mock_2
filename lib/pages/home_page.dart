@@ -1,6 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_store/widget/list_product.dart';
+import 'package:mobile_store/widgets/custom_app_bar.dart';
+
+import '../constants/size_config.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -20,14 +23,14 @@ class _HomePageState extends State<HomePage> {
   ];
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Mobile Store'),
-      ),
+      appBar: CustomAppBar(
+        context: context,
+        logged: false,
+        ),
       body: Container(
           margin: const EdgeInsets.symmetric(horizontal: 20),
-          height: double.infinity,
-          width: double.infinity,
           child: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.only(left: 20, right: 20),
@@ -68,8 +71,8 @@ class _HomePageState extends State<HomePage> {
                     height: 10,
                   ),
                   ListProduct(),
-                  ListProduct(),
-                  ListProduct(),
+                  // ListProduct(),
+                  // ListProduct(),
                 ],
               ),
             ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../constants/size_config.dart';
 import '../constants/text_style_const.dart';
 
 enum AppBarMode { Basic, Auth, ShowInfo, TitleWhenLogged }
@@ -8,12 +9,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   String? title;
   bool? logged;
   bool? showUserInfo;
-
+  double statusBarHeight = 0;
+  BuildContext context;
   CustomAppBar(
       {super.key,
-        this.title = '',
-        this.logged = true,
-        this.showUserInfo = false});
+        required this.context,
+      this.title = '',
+      this.logged = true,
+      this.showUserInfo = false});
 
   AppBarMode selectedMode = AppBarMode.Basic;
 
@@ -33,30 +36,33 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   _buildAuthMode() {
-    return Center(
+    return Positioned.fill(
+      top: getHeight(statusBarHeight) / 2 + statusBarHeight * 5,
+        left: 45,
         child: Text(
-          title!,
-          style: const TextStyle(
-            color: Colors.black,
-            fontSize: 48,
-            fontFamily: 'Inter',
-            fontWeight: FontWeight.w400,
-          ),
-        ));
+      title!,
+      style: const TextStyle(
+        color: Colors.black,
+        fontSize: 48,
+        fontFamily: 'Inter',
+        fontWeight: FontWeight.w400,
+      ),
+    ));
   }
 
-  double getHeight() {
+  double getHeight(double statusBarHeight) {
     if (logged == false) {
+      print(SizeConfig.screenHeight);
       selectedMode = AppBarMode.Auth;
-      return height = 150;
+      return height = SizeConfig.screenHeight * 0.17 + statusBarHeight;
     } else if (title != '' && showUserInfo == false) {
       selectedMode = AppBarMode.TitleWhenLogged;
-      return height = 106;
+      return height = SizeConfig.screenHeight * 0.125 + statusBarHeight;
     } else if (showUserInfo == true && title == '') {
       selectedMode = AppBarMode.ShowInfo;
-      return height = 164;
+      return height = SizeConfig.screenHeight * 0.19 + statusBarHeight;
     } else {
-      return height = 50;
+      return height = SizeConfig.screenHeight * 0.06 + statusBarHeight;
     }
   }
 
@@ -95,5 +101,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   // TODO: implement preferredSize
-  Size get preferredSize => Size(double.maxFinite, getHeight());
+  Size get preferredSize {
+    double statusBarHeight = MediaQuery.of(context).padding.top;
+    return Size(double.maxFinite, getHeight(statusBarHeight));
+  }
 }

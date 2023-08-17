@@ -9,11 +9,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   String? title;
   bool? logged;
   bool? showUserInfo;
-  double statusBarHeight = 0;
+  final statusBarHeight = SizeConfig.statusbarHeight;
   BuildContext context;
+
   CustomAppBar(
       {super.key,
-        required this.context,
+      required this.context,
       this.title = '',
       this.logged = true,
       this.showUserInfo = false});
@@ -37,22 +38,22 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   _buildAuthMode() {
     return Positioned.fill(
-      top: getHeight(statusBarHeight) / 2 + statusBarHeight * 5,
-        left: 45,
-        child: Text(
-      title!,
-      style: const TextStyle(
-        color: Colors.black,
-        fontSize: 48,
-        fontFamily: 'Inter',
-        fontWeight: FontWeight.w400,
-      ),
-    ));
+        top: SizeConfig.statusbarHeight,
+        child: Center(
+          child: Text(
+            title!,
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 48,
+              fontFamily: 'Inter',
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+        ));
   }
 
-  double getHeight(double statusBarHeight) {
+  double getHeight() {
     if (logged == false) {
-      print(SizeConfig.screenHeight);
       selectedMode = AppBarMode.Auth;
       return height = SizeConfig.screenHeight * 0.17 + statusBarHeight;
     } else if (title != '' && showUserInfo == false) {
@@ -103,6 +104,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   // TODO: implement preferredSize
   Size get preferredSize {
     double statusBarHeight = MediaQuery.of(context).padding.top;
-    return Size(double.maxFinite, getHeight(statusBarHeight));
+    return Size(double.maxFinite, getHeight());
   }
 }

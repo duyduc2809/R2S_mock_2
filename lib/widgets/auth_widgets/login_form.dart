@@ -1,9 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_store/constants/color_const.dart';
 import 'package:mobile_store/constants/dimension_const.dart';
+import 'package:mobile_store/constants/size_config.dart';
 import 'package:mobile_store/widgets/custom_input_decoration.dart';
 import 'package:mobile_store/widgets/custom_text_form_field.dart';
+
+import '../../cubit/app_cubits.dart';
 
 class LoginWidget extends StatefulWidget {
   const LoginWidget({super.key});
@@ -25,9 +29,9 @@ class _LoginWidgetState extends State<LoginWidget> {
         child: Column(
           children: [
             SizedBox(
-              height: 74,
+              height: SizeConfig.screenHeight * 0.086,
             ),
-            SizedBox(
+            const SizedBox(
               width: 212,
               height: 55,
               child: Text(
@@ -63,27 +67,36 @@ class _LoginWidgetState extends State<LoginWidget> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric( horizontal: 10.0),
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   InkWell(
+                    onTap: () {
+                      setState(() {
+                        _rememberMe = !_rememberMe;
+                      });
+                    },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Radio(
-                            value: !_rememberMe,
-                            groupValue: _rememberMe,
-                            onChanged: (value) {
-                              setState(() {
-                                _rememberMe = !_rememberMe;
-                              });
-                            }),
-                        Text('Remember me')
+                        _rememberMe
+                            ? const Icon(
+                          Icons.radio_button_checked,
+                          size: 30,
+                          color: Colors.black,
+                        )
+                            : Icon(
+                          Icons.circle,
+                          size: 30,
+                          color: Colors.grey.shade300,
+                        ),
+                        Text(' Remember me')
                       ],
                     ),
                   ),
                   InkWell(
+                    onTap: () {},
                     child: Text('Forgot password?'),
                   )
                 ],
@@ -167,6 +180,9 @@ class _LoginWidgetState extends State<LoginWidget> {
               height: 27,
             ),
             InkWell(
+              onTap: () {
+                BlocProvider.of<AppCubits>(context).registerPage();
+              },
               child: Text.rich(TextSpan(
                   text: "Don't have an account? ",
                   children: [

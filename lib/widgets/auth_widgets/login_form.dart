@@ -66,6 +66,12 @@ class _LoginWidgetState extends State<LoginWidget> {
             Padding(
               padding: const EdgeInsets.only(left: 10.0, right: 10),
               child: CustomTextFormField.normal(
+                validator: (value) {
+                  if (value == '' || value == null) {
+                    print('object');
+                    return 'Please enter your password';
+                  }
+                },
                   isSecure: true,
                   hintText: 'Password',
                   controller: passwordController),
@@ -82,12 +88,12 @@ class _LoginWidgetState extends State<LoginWidget> {
                         final user = User(
                             email: emailController.text,
                             password: passwordController.text);
-                        appCubit.login(user);
+                        BlocProvider.of<AppCubits>(context).login(user);
                       }
                     },
-                    child: Text('Login'),
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: ColorPallete.mainColor)),
+                        backgroundColor: ColorPallete.mainColor),
+                    child: const Text('Login')),
               ),
             ),
             Padding(

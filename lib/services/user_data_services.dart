@@ -40,6 +40,8 @@ class UserDataServices {
     );
     if (response.statusCode == 201) {
       print('login successfully');
+      final jsonResponse = json.decode(response.body);
+      print(jsonResponse);
     } else {
       final jsonResponse = json.decode(response.body);
       print(jsonResponse);

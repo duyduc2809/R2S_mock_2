@@ -13,3 +13,9 @@ class LoadingState extends CubitStates {
   // TODO: implement props
   List<Object> get props => [];
 }
+
+class HomePageState extends CubitStates {
+  @override
+  // TODO: implement props
+  List<Object> get props => [];
+}

@@ -25,8 +25,6 @@ class _AppCubitLogicsState extends State<AppCubitLogics> {
             print(state);
             return LoginScreen();
           } else if (state is RegisterState) {
-            print(state);
-
             return RegisterScreen();
           } else if (state is HomePageState) {
             return HomePage();

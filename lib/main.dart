@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_store/cubit/auth_cubit/app_cubit_logic.dart';
 import 'package:mobile_store/pages/login_page.dart';
 import 'package:mobile_store/pages/home_page.dart';
+import 'package:mobile_store/widget/detail_product.dart';
 
 import 'cubit/app_cubits.dart';
 
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: Colors.white),
-      home: const HomePage(),
+      home: const DetailProduct(),
     );
   }
 }

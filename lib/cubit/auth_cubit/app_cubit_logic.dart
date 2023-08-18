@@ -5,6 +5,7 @@ import 'package:mobile_store/cubit/auth_cubit/auth_cubits_state.dart';
 import 'package:mobile_store/pages/home_page.dart';
 import 'package:mobile_store/pages/register_page.dart';
 import 'package:mobile_store/pages/login_page.dart';
+import 'package:mobile_store/widget/detail_product.dart';
 
 import '../app_cubits.dart';
 
@@ -29,7 +30,7 @@ class _AppCubitLogicsState extends State<AppCubitLogics> {
 
             return RegisterScreen();
           } else if (state is HomePageState) {
-            return HomePage();
+            return DetailProduct();
           } else if (state is LoadingState) {
             return const Center(
               child: CircularProgressIndicator(),

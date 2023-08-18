@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_store/cubit/app_cubit_states.dart';
 import 'package:mobile_store/cubit/app_cubits.dart';
-import 'package:mobile_store/models/product.dart';
 
 class ListProduct extends StatefulWidget {
   @override
@@ -12,11 +11,7 @@ class ListProduct extends StatefulWidget {
 class _ListProductState extends State<ListProduct> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: BlocBuilder<AppCubits, CubitsStates>(builder: (context, state) {
-        if (state is LoadedState) {
-          var info = state.products;
-          return Container(
+    return  Container(
             child: SingleChildScrollView(
               child: Row(
                 children: <Widget>[
@@ -42,7 +37,7 @@ class _ListProductState extends State<ListProduct> {
                                             image: AssetImage(
                                                 "assets/img/samsung.jpg"))),
                                   ),
-                                  Text(
+                                  const Text(
                                     "Samsung",
                                     style: TextStyle(
                                       fontSize: 12,
@@ -68,8 +63,5 @@ class _ListProductState extends State<ListProduct> {
               ),
             ),
           );
-        }
-      }),
-    );
   }
 }

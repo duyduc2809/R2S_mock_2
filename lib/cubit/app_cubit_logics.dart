@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_store/pages/home_page.dart';
-
 import 'app_cubit_states.dart';
 import 'app_cubits.dart';
 
@@ -18,7 +17,6 @@ class _AppCubitLogicsState extends State<AppCubitLogics> {
     return Scaffold(
       body: BlocBuilder<AppCubits, CubitsStates>(
         builder: (context, state) {
-        
           if (state is LoadedState) {
             return const HomePage();
           }

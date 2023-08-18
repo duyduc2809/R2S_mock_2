@@ -9,6 +9,7 @@ class InitialState extends CubitsStates {
 
 }
 
+
 class LoadingState extends CubitsStates {
   @override
   List<Object> get props => [];

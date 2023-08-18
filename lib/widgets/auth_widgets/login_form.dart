@@ -1,9 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_store/constants/color_const.dart';
 import 'package:mobile_store/constants/dimension_const.dart';
+import 'package:mobile_store/constants/size_config.dart';
+import 'package:mobile_store/models/user.dart';
+import 'package:mobile_store/services/user_data_services.dart';
 import 'package:mobile_store/widgets/custom_input_decoration.dart';
 import 'package:mobile_store/widgets/custom_text_form_field.dart';
+
+import '../../cubit/app_cubits.dart';
 
 class LoginWidget extends StatefulWidget {
   const LoginWidget({super.key});
@@ -15,6 +21,9 @@ class LoginWidget extends StatefulWidget {
 class _LoginWidgetState extends State<LoginWidget> {
   final _formKey = GlobalKey<FormState>();
   bool _rememberMe = false;
+  final appCubit = AppCubits();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +34,9 @@ class _LoginWidgetState extends State<LoginWidget> {
         child: Column(
           children: [
             SizedBox(
-              height: 74,
+              height: SizeConfig.screenHeight * 0.086,
             ),
-            SizedBox(
+            const SizedBox(
               width: 212,
               height: 55,
               child: Text(
@@ -43,11 +52,29 @@ class _LoginWidgetState extends State<LoginWidget> {
             ),
             Padding(
               padding: const EdgeInsets.only(left: 10.0, right: 10),
-              child: CustomTextFormField.normal(hintText: 'User Name'),
+              child: CustomTextFormField.normal(
+                  validator: (value) {
+                    if (value == '' || value == null) {
+                      print('object');
+                      return 'Please enter your email';
+                    }
+                  },
+                  hintText: 'Email',
+                  controller: emailController),
             ),
+            // TextFormField(controller: emailController,),
             Padding(
               padding: const EdgeInsets.only(left: 10.0, right: 10),
-              child: CustomTextFormField.normal(hintText: 'Password'),
+              child: CustomTextFormField.normal(
+                validator: (value) {
+                  if (value == '' || value == null) {
+                    print('object');
+                    return 'Please enter your password';
+                  }
+                },
+                  isSecure: true,
+                  hintText: 'Password',
+                  controller: passwordController),
             ),
             Padding(
               padding: const EdgeInsets.only(
@@ -56,34 +83,50 @@ class _LoginWidgetState extends State<LoginWidget> {
                 height: 47,
                 width: double.maxFinite,
                 child: ElevatedButton(
-                    onPressed: () {},
-                    child: Text('Login'),
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        final user = User(
+                            email: emailController.text,
+                            password: passwordController.text);
+                        BlocProvider.of<AppCubits>(context).login(user);
+                      }
+                    },
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: ColorPallete.mainColor)),
+                        backgroundColor: ColorPallete.mainColor),
+                    child: const Text('Login')),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric( horizontal: 10.0),
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   InkWell(
+                    onTap: () {
+                      setState(() {
+                        _rememberMe = !_rememberMe;
+                      });
+                    },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Radio(
-                            value: !_rememberMe,
-                            groupValue: _rememberMe,
-                            onChanged: (value) {
-                              setState(() {
-                                _rememberMe = !_rememberMe;
-                              });
-                            }),
-                        Text('Remember me')
+                        _rememberMe
+                            ? const Icon(
+                                Icons.radio_button_checked,
+                                size: 30,
+                                color: Colors.black,
+                              )
+                            : Icon(
+                                Icons.circle,
+                                size: 30,
+                                color: Colors.grey.shade300,
+                              ),
+                        Text(' Remember me')
                       ],
                     ),
                   ),
                   InkWell(
+                    onTap: () {},
                     child: Text('Forgot password?'),
                   )
                 ],
@@ -167,6 +210,9 @@ class _LoginWidgetState extends State<LoginWidget> {
               height: 27,
             ),
             InkWell(
+              onTap: () {
+                BlocProvider.of<AppCubits>(context).registerPage();
+              },
               child: Text.rich(TextSpan(
                   text: "Don't have an account? ",
                   children: [

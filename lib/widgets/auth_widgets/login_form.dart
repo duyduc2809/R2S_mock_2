@@ -10,6 +10,7 @@ import 'package:mobile_store/widgets/custom_input_decoration.dart';
 import 'package:mobile_store/widgets/custom_text_form_field.dart';
 
 import '../../cubit/app_cubits.dart';
+import 'forgot_password_widgets.dart';
 
 class CheckBoxState {}
 
@@ -115,24 +116,32 @@ class _LoginWidgetState extends State<LoginWidget> {
                 child: SizedBox(
                   height: 47,
                   width: double.maxFinite,
-                  child: ElevatedButton(
-                      onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          final user = User(
-                              email: emailController.text,
-                              password: passwordController.text);
-                          final result =
-                              await BlocProvider.of<AppCubits>(context)
-                                  .login(user);
-                          if (result == false) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Failed')));
-                          }
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: ColorPallete.mainColor),
-                      child: const Text('Login')),
+                  child: BlocBuilder<CheckBoxCubit, CheckBoxState>(
+                    builder: (context, state) {
+                      return ElevatedButton(
+                          onPressed: () async {
+                            if (_formKey.currentState!.validate()) {
+                              final user = User(
+                                  email: emailController.text,
+                                  password: passwordController.text);
+                              // print('object $_rememberMe');
+                              final result = await BlocProvider.of<AppCubits>(
+                                      context)
+                                  .login(
+                                      user,
+                                      BlocProvider.of<CheckBoxCubit>(context)
+                                          .isChecked);
+                              if (result == false) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(content: Text('Failed')));
+                              }
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: ColorPallete.mainColor),
+                          child: const Text('Login'));
+                    },
+                  ),
                 ),
               ),
               Padding(
@@ -167,7 +176,10 @@ class _LoginWidgetState extends State<LoginWidget> {
                             ),
                           ),
                           InkWell(
-                            onTap: () {},
+                            onTap: () => ForgotPasswordWidget.displayDialog(
+                                context: context,
+                                content:
+                                    ForgotPasswordWidget.enterEmail(context)),
                             child: const Text('Forgot password?'),
                           )
                         ],

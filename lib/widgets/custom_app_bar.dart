@@ -34,6 +34,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       default:
         break;
     }
+    return null;
   }
 
   _buildAuthMode() {

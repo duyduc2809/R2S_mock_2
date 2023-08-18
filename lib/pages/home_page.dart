@@ -1,5 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mobile_store/cubit/app_cubits.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -39,6 +41,9 @@ class _HomePageState extends State<HomePage>  {
                     enlargeCenterPage: true,
                     onPageChanged: (index, reason) =>
                         setState(() => activeIndex = index))),
+          ElevatedButton(onPressed: () {
+            BlocProvider.of<AppCubits>(context).loginPage();
+          }, child: Text('Logout'))
         ],
       ),
     );

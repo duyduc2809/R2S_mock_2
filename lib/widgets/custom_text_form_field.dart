@@ -21,39 +21,19 @@ class CustomTextFormField {
     return Padding(
       padding: const EdgeInsets.only(bottom: 18),
       child: StatefulBuilder(builder: (context, StateSetter setState) {
-        return SizedBox(
-          height: defaultHeight,
-          child: TextFormField(
-            validator: (value) {
-              if (validator == null) {
-                return null;
-              }
-              if (validator(value) != null) {
-                setState(() {
-                  defaultHeight = kDefaultWidgetHeight + 25;
-                });
-
-                return validator(value);
-              }
-              else {
-                setState(() {
-                  defaultHeight = kDefaultWidgetHeight;
-                });
-              }
-              print(defaultHeight);
-            },
-            controller: controller,
-            obscureText: isSecure!,
-            cursorColor: cursorColor,
-            decoration: CustomInputDecoration(
-                labelText: label,
-                hintText: hintText,
-                suffixIcon: (isSecure == true && isPassword == true)
-                    ? const Icon(Icons.visibility)
-                    : (isSecure == false && isPassword == true)
-                        ? const Icon(Icons.visibility_off)
-                        : null),
-          ),
+        return TextFormField(
+          validator: validator,
+          controller: controller,
+          obscureText: isSecure!,
+          cursorColor: cursorColor,
+          decoration: CustomInputDecoration(
+              labelText: label,
+              hintText: hintText,
+              suffixIcon: (isSecure == true && isPassword == true)
+                  ? const Icon(Icons.visibility)
+                  : (isSecure == false && isPassword == true)
+                      ? const Icon(Icons.visibility_off)
+                      : null),
         );
       }),
     ); // Đổi thành phiên bản của NormalTFF

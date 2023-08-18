@@ -1,33 +1,21 @@
 import 'package:equatable/equatable.dart';
-import 'package:mobile_store/models/product.dart';
 
-abstract class CubitsStates extends Equatable {}
+abstract class CubitStates extends Equatable {}
 
-class InitialState extends CubitsStates {
+class InitialState extends CubitStates {
   @override
+  // TODO: implement props
   List<Object> get props => [];
-
 }
 
-
-class LoadingState extends CubitsStates {
+class LoadingState extends CubitStates {
   @override
+  // TODO: implement props
   List<Object> get props => [];
-
 }
 
-class LoadedState extends CubitsStates {
-  LoadedState(this.products);
-  final List<Product> products;
+class HomePageState extends CubitStates {
   @override
-  List<Object> get props => [products];
-
-}
-
-class DetailState extends CubitsStates {
-  DetailState(this.product);
-  final Product product;
-  @override
-  List<Object> get props => [product];
-
+  // TODO: implement props
+  List<Object> get props => [];
 }

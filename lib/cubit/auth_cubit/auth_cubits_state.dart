@@ -1,4 +1,3 @@
-import 'package:equatable/equatable.dart';
 
 import '../app_cubit_states.dart';
 

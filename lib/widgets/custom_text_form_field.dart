@@ -8,32 +8,54 @@ import 'package:mobile_store/widgets/custom_input_decoration.dart';
 import '../constants/dimension_const.dart';
 
 class CustomTextFormField {
-  static const defaultHeight = kDefaultWidgetHeight;
+  static double defaultHeight = kDefaultWidgetHeight;
   static const cursorColor = Colors.black;
 
   static Widget normal(
       {String? label,
+      String? Function(String?)? validator,
       String? hintText,
       TextEditingController? controller,
       bool? isSecure = false,
       bool? isPassword = false}) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 18),
-      child: SizedBox(
-        height: defaultHeight,
-        child: TextFormField(
-          obscureText: isSecure!,
-          cursorColor: cursorColor,
-          decoration: CustomInputDecoration(
-              labelText: label,
-              hintText: hintText,
-              suffixIcon: (isSecure == true && isPassword == true)
-                  ? Icon(Icons.visibility)
-                  : (isSecure == false && isPassword == true)
-                      ? Icon(Icons.visibility_off)
-                      : null),
-        ),
-      ),
+      child: StatefulBuilder(builder: (context, StateSetter setState) {
+        return SizedBox(
+          height: defaultHeight,
+          child: TextFormField(
+            validator: (value) {
+              if (validator == null) {
+                return null;
+              }
+              if (validator(value) != null) {
+                setState(() {
+                  defaultHeight = kDefaultWidgetHeight + 25;
+                });
+
+                return validator(value);
+              }
+              else {
+                setState(() {
+                  defaultHeight = kDefaultWidgetHeight;
+                });
+              }
+              print(defaultHeight);
+            },
+            controller: controller,
+            obscureText: isSecure!,
+            cursorColor: cursorColor,
+            decoration: CustomInputDecoration(
+                labelText: label,
+                hintText: hintText,
+                suffixIcon: (isSecure == true && isPassword == true)
+                    ? const Icon(Icons.visibility)
+                    : (isSecure == false && isPassword == true)
+                        ? const Icon(Icons.visibility_off)
+                        : null),
+          ),
+        );
+      }),
     ); // Đổi thành phiên bản của NormalTFF
   }
 

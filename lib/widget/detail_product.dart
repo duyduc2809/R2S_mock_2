@@ -309,16 +309,17 @@ class _DetailProductState extends State<DetailProduct> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Container(
                 width: 383,
-                height: 170,
+                height: 330,
                 decoration: BoxDecoration(
                     border:
                         Border.all(color: const Color(0xFF878593), width: 1.0)),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(
                       height: 10,
@@ -333,46 +334,225 @@ class _DetailProductState extends State<DetailProduct> {
                       height: 5,
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 15),
-                      child: Row(
-                        children: [
-                          const Text(
-                            "Arain",
-                            style: TextStyle(fontSize: 16),
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Wrap(
-                            children: List.generate(5, (index) {
-                              return const Icon(
-                                Icons.star,
-                                color: Colors.yellow,
-                                size: 26,
-                              );
-                            }),
-                          ),
-                        ],
-                      )
+                        padding: const EdgeInsets.only(left: 15),
+                        child: Row(
+                          children: [
+                            const Text(
+                              "Arain",
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Wrap(
+                              children: List.generate(5, (index) {
+                                return const Icon(
+                                  Icons.star,
+                                  color: Colors.yellow,
+                                  size: 26,
+                                );
+                              }),
+                            ),
+                          ],
+                        )),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 15),
+                      child: Text(
+                        "This is amazing, it have nice camera!",
+                      ),
                     ),
-                    const Text("This is amazing, it have nice camera!"),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Container(
+                        height: 1,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey, width: 1.5)),
+                      ),
+                    ),
                     const SizedBox(
                       height: 10,
                     ),
-                    Container(
-                      width: 350,
-                      height: 33,
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.green)),
-                      child: Center(
-                        child: AppText(
-                          text: "See more ",
-                          color: Colors.green,
+                    Padding(
+                        padding: const EdgeInsets.only(left: 15),
+                        child: Row(
+                          children: [
+                            const Text(
+                              "Bray",
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Wrap(
+                              children: List.generate(5, (index) {
+                                return const Icon(
+                                  Icons.star,
+                                  color: Colors.yellow,
+                                  size: 26,
+                                );
+                              }),
+                            ),
+                          ],
+                        )),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 15),
+                      child: Text("I don't like its design very much"),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Container(
+                        height: 1,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey, width: 1.5)),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.only(left: 15),
+                        child: Row(
+                          children: [
+                            const Text(
+                              "Ronaldo",
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Wrap(
+                              children: List.generate(5, (index) {
+                                return const Icon(
+                                  Icons.star,
+                                  color: Colors.yellow,
+                                  size: 26,
+                                );
+                              }),
+                            ),
+                          ],
+                        )),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 15),
+                      child: Text(
+                        "It is suitable for people who are in business",
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Container(
+                        height: 1,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey, width: 1.5)),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.only(left: 15),
+                        child: Row(
+                          children: [
+                            const Text(
+                              "Ronaldo",
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Wrap(
+                              children: List.generate(5, (index) {
+                                return const Icon(
+                                  Icons.star,
+                                  color: Colors.yellow,
+                                  size: 26,
+                                );
+                              }),
+                            ),
+                          ],
+                        )),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 15),
+                      child: Text(
+                        "It is suitable for people who are in business",
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Container(
+                        height: 1,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey, width: 1.5)),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Container(
+                        width: 350,
+                        height: 33,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.green)),
+                        child: Center(
+                          child: AppText(
+                            text: "See more ",
+                            color: Colors.green,
+                          ),
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Container(
+                width: 383,
+                height: 250,
+                decoration: BoxDecoration(
+                    border:
+                        Border.all(color: const Color(0xFF878593), width: 1.0)),
+                child: Column(children: [
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const Center(
+                      child: Text(
+                    "ANOTHER",
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
+                  )),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    children: [
+                      SizedBox(
+                        height: 200,
+                        width: 360 / 2,
+                        child: Image.asset('assets/img/samsung.jpg'),
+                      ),
+                      SizedBox(
+                        height: 200,
+                        width: 360 / 2,
+                        child: Image.asset('assets/img/samsung.jpg'),
+                      ),
+                    ],
+                  )
+                ]),
               )
             ],
           ),

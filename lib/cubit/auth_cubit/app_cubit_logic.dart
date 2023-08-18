@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_store/cubit/app_cubit_states.dart';
 import 'package:mobile_store/cubit/auth_cubit/auth_cubits_state.dart';
 import 'package:mobile_store/pages/home_page.dart';
+import 'package:mobile_store/pages/navpages/main_page.dart';
 import 'package:mobile_store/pages/register_page.dart';
 import 'package:mobile_store/pages/login_page.dart';
 import 'package:mobile_store/widget/detail_product.dart';
@@ -30,8 +31,9 @@ class _AppCubitLogicsState extends State<AppCubitLogics> {
 
             return RegisterScreen();
           } else if (state is HomePageState) {
-            return DetailProduct();
-          } else if (state is LoadingState) {
+            return MainPage();
+          }
+           else if (state is LoadingState) {
             return const Center(
               child: CircularProgressIndicator(),
             );

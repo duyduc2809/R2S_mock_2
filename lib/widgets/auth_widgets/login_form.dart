@@ -46,7 +46,6 @@ class LoginWidget extends StatefulWidget {
 class _LoginWidgetState extends State<LoginWidget> {
   final _formKey = GlobalKey<FormState>();
   bool _rememberMe = false;
-  final appCubit = AppCubits();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 

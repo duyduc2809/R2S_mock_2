@@ -10,14 +10,28 @@ import 'package:mobile_store/services/user_data_services.dart';
 import '../models/user.dart';
 
 class AppCubits extends Cubit<CubitStates> {
-  AppCubits() : super(InitialState()) {
+  late final User userData;
+  UserDataServices dataServices;
+
+  AppCubits({required this.dataServices}) : super(InitialState()) {
     emit(LoadingState());
     init();
+  }
+
+  void getUserData() async {
+    try {
+      emit(LoadingState());
+      userData = await dataServices.getUser();
+      emit(UserLoadedState(userData));
+    } catch (e) {
+      throw Exception();
+    }
   }
 
   Future<void> init() async {
     final rememberMe = await HiveHelper.loadRememberMe();
     if (rememberMe == true) {
+      getUserData();
       return homePage();
     } else {
       return loginPage();
@@ -32,18 +46,21 @@ class AppCubits extends Cubit<CubitStates> {
     emit(HomePageState());
   }
 
+  //hàm xử lý đăng nhập
   Future<bool> login(User user, bool rememberMe) async {
     final result = await UserDataServices.loginUser(user, rememberMe);
     emit(LoadingState());
     if (result == false) {
       emit(SignInState());
     } else {
-      emit(HomePageState());
+      emit(LoadingState());
+      getUserData();
     }
     print(result);
     return result;
   }
 
+  //hàm xử lý đăng ký
   register(User user) async {
     final result = await UserDataServices.createUser(user);
     emit(LoadingState());

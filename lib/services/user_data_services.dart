@@ -9,7 +9,7 @@ import 'package:mobile_store/services/hive_helpers.dart';
 import '../models/user.dart';
 
 class UserDataServices {
-  AppCubits appCubits = AppCubits();
+  static const urlGetUserByID = 'http://45.117.170.206:60/apis/user/';
   static const urlCreate = 'http://45.117.170.206:60/apis/user/';
   static const urlLogin = 'http://45.117.170.206:60/apis/login';
 
@@ -57,10 +57,10 @@ class UserDataServices {
       final jsonResponse = json.decode(response.body);
       // print(jsonResponse);
       print('asdassd $rememberMe');
-      if (rememberMe == true) {
+
       final apiUser = APIUser.fromJson(jsonResponse);
       HiveHelper.saveData(apiUser, rememberMe);
-      }
+
       return true;
     } else {
       final jsonResponse = json.decode(response.body);
@@ -68,6 +68,28 @@ class UserDataServices {
       return false;
     }
   }
+  //(hàm được gọi từ hàm login của AppCubits, dùng để lấy về thông tin của user đã đăng nhập)
+  Future<User> getUser() async {
+    final APIUser user = await HiveHelper.loadUserData();
+    final url = '$urlGetUserByID${user.idUser}';
+    final uri = Uri.parse(url);
 
-
+    try {
+      final response = await http.get(
+        uri,
+        headers: {'Authorization': 'Bearer ${user.token}'},
+      );
+      print(response.statusCode);
+      if (response.statusCode == 200) {
+        print('getuser successfully');
+        return User.fromJson(json.decode(response.body));
+      } else {
+        print('get failed');
+        throw Exception();
+      }
+    } catch (e) {
+      print(e);
+      throw Exception();
+    }
+  }
 }

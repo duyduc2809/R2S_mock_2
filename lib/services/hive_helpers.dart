@@ -17,7 +17,7 @@ class HiveHelper {
       await box.put('rememberMe', rememberMe);
     }
   }
-
+  //trả về 1 đối tượng APIUser (là json được response về khi đăng nhập, lưu userID và token)
   static Future<APIUser> loadUserData() async {
     await openBox();
     return await box.get('user') as APIUser;

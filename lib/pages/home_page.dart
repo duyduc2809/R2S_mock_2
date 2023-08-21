@@ -76,7 +76,27 @@ class _HomePageState extends State<HomePage> {
                   const SizedBox(
                     height: 10,
                   ),
-                  ListProduct(),
+                  Row(
+                    children: [
+                      ListProduct(),
+                      SizedBox(width: 15,),
+                      ListProduct(),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      ListProduct(),
+                      SizedBox(width: 15,),
+                      ListProduct(),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      ListProduct(),
+                      SizedBox(width: 15,),
+                      ListProduct(),
+                    ],
+                  ),
                 ],
               ),
             ),

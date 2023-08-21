@@ -11,6 +11,7 @@ class CustomInputDecoration extends InputDecoration {
     Widget? suffixIcon,
     bool enabled = true,
   }) : super(
+    constraints: BoxConstraints(maxHeight: 70, minHeight: 47),
           labelText: labelText,
           hintText: hintText,
           prefixIcon: prefixIcon,

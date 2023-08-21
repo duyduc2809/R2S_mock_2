@@ -29,6 +29,7 @@ class _HomePageState extends State<HomePage> {
       builder: (context, state) {
         if (state is UserLoadedState) {
           return Scaffold(
+            backgroundColor: Colors.white,
             appBar: CustomAppBar(
               logged: true,
               title: '',

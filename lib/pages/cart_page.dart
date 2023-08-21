@@ -125,7 +125,7 @@ class _CartPageState extends State<CartPage> {
                               ),
                               Row(
                                 children: [
-                        
+                                  
                                 ],
                               ),
                          

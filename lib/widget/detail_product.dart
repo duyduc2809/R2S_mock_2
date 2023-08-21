@@ -16,17 +16,18 @@ class DetailProduct extends StatefulWidget {
 class _DetailProductState extends State<DetailProduct> {
   int gottenStars = 4;
   int selectedIndex = 1;
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
-      if (state is UserLoadedState) {
+      if (state is DetailProductState) {
         return Scaffold(
           appBar: CustomAppBar(
             logged: true,
             title: '',
             showUserInfo: true,
             context: context,
-            user: state.user,
+            user: AppCubits.userData,
           ),
           body: SingleChildScrollView(
             child: Container(
@@ -557,19 +558,15 @@ class _DetailProductState extends State<DetailProduct> {
                       const SizedBox(
                         height: 5,
                       ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            height: 200,
-                            width: 360 / 2,
-                            child: Image.asset('assets/img/samsung.jpg'),
-                          ),
-                          SizedBox(
-                            height: 200,
-                            width: 360 / 2,
-                            child: Image.asset('assets/img/samsung.jpg'),
-                          ),
-                        ],
+                      Container(
+                        height: 200,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: [
+                            Image.asset('assets/img/samsung.jpg'),
+                            Image.asset('assets/img/samsung.jpg'),
+                          ],
+                        ),
                       )
                     ]),
                   )

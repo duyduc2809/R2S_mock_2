@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return BlocBuilder<AppCubits, CubitStates>(
       builder: (context, state) {
-        if (state is UserLoadedState) {
+        if (state is HomePageState) {
           return Scaffold(
             backgroundColor: Colors.white,
             appBar: CustomAppBar(
@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
               title: '',
               showUserInfo: true,
               context: context,
-              user: state.user,
+              user: AppCubits.userData,
             ),
             body: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 20),

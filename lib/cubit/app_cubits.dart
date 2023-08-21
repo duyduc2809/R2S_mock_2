@@ -9,7 +9,7 @@ import 'package:mobile_store/services/user_data_services.dart';
 import '../models/user.dart';
 
 class AppCubits extends Cubit<CubitStates> {
-  late final User userData;
+  static late User userData;
   UserDataServices dataServices;
 
   AppCubits({required this.dataServices}) : super(InitialState()) {
@@ -21,8 +21,9 @@ class AppCubits extends Cubit<CubitStates> {
     try {
       emit(LoadingState());
       userData = await dataServices.getUser();
-      emit(UserLoadedState(userData));
+      emit(HomePageState());
     } catch (e) {
+      print(e);
       throw Exception();
     }
   }

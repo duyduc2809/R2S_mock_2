@@ -1,10 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_store/constants/color_const.dart';
 import 'package:mobile_store/models/user.dart';
 import 'package:mobile_store/widgets/custom_input_decoration.dart';
-import 'package:mobile_store/widgets/custom_text_form_field.dart';
 import 'package:mobile_store/validator.dart';
 
 import '../../constants/dimension_const.dart';
@@ -62,7 +60,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                 }
               },
             ),
-            SizedBox(
+            const SizedBox(
               height: spaceBetweenField,
             ),
             TextFormField(
@@ -72,7 +70,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                 return Validator.emailValidator(value);
               },
             ),
-            SizedBox(
+            const SizedBox(
               height: spaceBetweenField,
             ),
             TextFormField(
@@ -86,7 +84,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                 }
               },
             ),
-            SizedBox(
+            const SizedBox(
               height: spaceBetweenField,
             ),
             TextFormField(
@@ -97,7 +95,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                 return Validator.passwordValidator(value);
               },
             ),
-            SizedBox(
+            const SizedBox(
               height: spaceBetweenField,
             ),
             TextFormField(
@@ -109,7 +107,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                     value, passwordController);
               },
             ),
-            SizedBox(
+            const SizedBox(
               height: spaceBetweenField,
             ),
             SizedBox(

@@ -52,18 +52,20 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
-              padding: EdgeInsets.all(5),
+              padding: const EdgeInsets.all(5),
               child: SizedBox(
                 width: SizeConfig.screenWidth,
                 child: Row(
                   children: [
-                    IconButton(onPressed: () {}, icon: Icon(Icons.menu)),
+
+                    IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
+
                     Container(
                       height: 37,
                       width: 290,
                       child: TextFormField(
                         decoration: CustomInputDecoration(
-                            suffixIcon: Icon(Icons.search)),
+                            suffixIcon: const Icon(Icons.search)),
                       ),
                     )
                   ],
@@ -77,7 +79,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 children: [
                   Container(
                     decoration: BoxDecoration(
-                        color: Color(0xFFDAD8D8),
+                        color: const Color(0xFFDAD8D8),
                         borderRadius: BorderRadius.circular(5)),
                     child: Padding(
                       padding: const EdgeInsets.all(5.0),

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_store/cubit/app_cubit_states.dart';
 import 'package:mobile_store/cubit/app_cubits.dart';
-import 'package:mobile_store/services/hive_helpers.dart';
 import 'package:mobile_store/widget/list_product.dart';
 import 'package:mobile_store/widgets/custom_app_bar.dart';
 
@@ -53,7 +52,7 @@ class _HomePageState extends State<HomePage> {
                         height: 150,
                         autoPlay: true,
                         enableInfiniteScroll: true,
-                        autoPlayAnimationDuration: Duration(seconds: 2),
+                        autoPlayAnimationDuration: const Duration(seconds: 2),
                         enlargeCenterPage: true,
                         onPageChanged: (index, reason) =>
                             setState(() => activeIndex = index))),
@@ -77,7 +76,7 @@ class _HomePageState extends State<HomePage> {
             ),
           );
         } else {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         }
       },
     );

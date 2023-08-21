@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_store/cubit/app_cubit_states.dart';
 import 'package:mobile_store/cubit/auth_cubit/auth_cubits_state.dart';
-import 'package:mobile_store/pages/home_page.dart';
 import 'package:mobile_store/pages/navpages/main_page.dart';
 import 'package:mobile_store/pages/register_page.dart';
 import 'package:mobile_store/pages/login_page.dart';

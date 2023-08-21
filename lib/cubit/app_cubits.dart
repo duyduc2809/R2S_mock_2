@@ -1,9 +1,8 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:mobile_store/cubit/app_cubit_states.dart';
 import 'package:mobile_store/cubit/auth_cubit/auth_cubits_state.dart';
-import 'package:mobile_store/pages/home_page.dart';
-import 'package:mobile_store/pages/login_page.dart';
+
 import 'package:mobile_store/services/hive_helpers.dart';
 import 'package:mobile_store/services/user_data_services.dart';
 

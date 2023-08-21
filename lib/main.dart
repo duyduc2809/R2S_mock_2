@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:mobile_store/constants/color_const.dart';
 import 'package:mobile_store/cubit/auth_cubit/app_cubit_logic.dart';
-import 'package:mobile_store/pages/login_page.dart';
 import 'package:mobile_store/pages/home_page.dart';
 import 'package:mobile_store/services/user_data_services.dart';
 

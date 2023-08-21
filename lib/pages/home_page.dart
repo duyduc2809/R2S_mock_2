@@ -27,6 +27,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
+      backgroundColor: Colors.white,
         appBar: CustomAppBar(
           context: context,
           logged: false,

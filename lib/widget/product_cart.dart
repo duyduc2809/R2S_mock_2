@@ -62,7 +62,7 @@ class ProductCart extends StatelessWidget {
         Container(
           height: 1,
           decoration:
-              BoxDecoration(border: Border.all(color: Colors.grey, width: 1.5)),
+              BoxDecoration(border: Border.all(color: Colors.grey.withOpacity(0.5), width: 0.5)),
         ),
       ],
     ));

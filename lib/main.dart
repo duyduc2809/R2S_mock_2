@@ -4,6 +4,8 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:mobile_store/constants/color_const.dart';
 import 'package:mobile_store/cubit/auth_cubit/app_cubit_logic.dart';
 import 'package:mobile_store/pages/home_page.dart';
+import 'package:mobile_store/pages/information_page.dart';
+
 import 'package:mobile_store/services/user_data_services.dart';
 
 import 'cubit/app_cubits.dart';
@@ -33,7 +35,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: Colors.white),
-      home: const HomePage(),
+      home: const InformationPage(),
     );
   }
 }

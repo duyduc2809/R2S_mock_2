@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_store/pages/cart_page.dart';
+import 'package:mobile_store/pages/information_page.dart';
 
 import '../home_page.dart';
 
@@ -11,10 +12,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  List pages = [
-    HomePage(),
-    CartPage(),
-  ];
+  List pages = [HomePage(), CartPage(), InformationPage()];
   int currentIndex = 0;
   void onTap(int index) {
     setState(() {
@@ -45,6 +43,8 @@ class _MainPageState extends State<MainPage> {
             BottomNavigationBarItem(
                 label: "Cart",
                 icon: Image.asset("assets/img/shopping-cart.png")),
+            BottomNavigationBarItem(
+                label: "Information", icon: Image.asset("assets/img/user.png")),
           ]),
     );
   }

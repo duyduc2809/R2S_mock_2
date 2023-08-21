@@ -12,11 +12,7 @@ class _ListProductState extends State<ListProduct> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
-      return GestureDetector(
-        onTap: () {
-          BlocProvider.of<AppCubits>(context).detailPage();
-        },
-        child: Container(
+      return  Container(
           child: SingleChildScrollView(
             child: Row(
               children: <Widget>[
@@ -25,38 +21,43 @@ class _ListProductState extends State<ListProduct> {
                   children: <Widget>[
                     Row(
                       children: <Widget>[
-                        Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                          ),
-                          child: Container(
-                            height: 177,
-                            width: 147,
-                            child: Column(
-                              children: <Widget>[
-                                Container(
-                                  height: 119,
-                                  width: 126,
-                                  decoration: const BoxDecoration(
-                                      image: DecorationImage(
-                                          image: AssetImage(
-                                              "assets/img/samsung.jpg"))),
-                                ),
-                                const Text(
-                                  "Samsung",
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w600,
+                        GestureDetector(
+                          onTap: () {
+                            BlocProvider.of<AppCubits>(context).detailPage();
+                          },
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            child: Container(
+                              height: 177,
+                              width: 147,
+                              child: Column(
+                                children: <Widget>[
+                                  Container(
+                                    height: 119,
+                                    width: 126,
+                                    decoration: const BoxDecoration(
+                                        image: DecorationImage(
+                                            image: AssetImage(
+                                                "assets/img/samsung.jpg"))),
                                   ),
-                                ),
-                                const Text(
-                                  "599 USD",
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w700,
-                                      color: Color.fromRGBO(91, 184, 93, 1)),
-                                ),
-                              ],
+                                  const Text(
+                                    "Galaxy S8",
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  const Text(
+                                    "599 USD",
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w700,
+                                        color: Color.fromRGBO(91, 184, 93, 1)),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -67,8 +68,7 @@ class _ListProductState extends State<ListProduct> {
               ],
             ),
           ),
-        ),
-      );
+        );
     });
   }
 }

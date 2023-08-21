@@ -14,15 +14,20 @@ class ProductCart extends StatelessWidget {
         Container(
           margin: const EdgeInsets.only(right: 10),
           child: Row(
-            children: [
-              Container(
-                margin: const EdgeInsets.only(right: 25),
-                decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey, width: 1.0),),
-                height: 100,
-                child: Image.asset('assets/img/samsung.jpg'),
+            children: <Widget>[
+              Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+                child: Container(
+                  margin: const EdgeInsets.all(10),
+                  width: 92,
+                  height: 54,
+                  child: Image.asset('assets/img/productCardimg.png'),
+                ),
               ),
               Container(
+                margin: const EdgeInsets.only(left: 15),
                 child: const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -31,7 +36,7 @@ class ProductCart extends StatelessWidget {
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: 10, bottom: 40),
+                      padding: EdgeInsets.only(top: 10, bottom: 20),
                       child: Text.rich(TextSpan(
                           text: "Quannity: ",
                           style: TextStyle(fontStyle: FontStyle.italic),
@@ -61,8 +66,9 @@ class ProductCart extends StatelessWidget {
         ),
         Container(
           height: 1,
-          decoration:
-              BoxDecoration(border: Border.all(color: Colors.grey.withOpacity(0.5), width: 0.5)),
+          decoration: BoxDecoration(
+              border:
+                  Border.all(color: Colors.grey.withOpacity(0.5), width: 0.5)),
         ),
       ],
     ));

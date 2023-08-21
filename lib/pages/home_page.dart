@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_store/cubit/app_cubit_states.dart';
 import 'package:mobile_store/cubit/app_cubits.dart';
 import 'package:mobile_store/services/hive_helpers.dart';
+import 'package:mobile_store/widget/list_product.dart';
 import 'package:mobile_store/widgets/custom_app_bar.dart';
 
 class HomePage extends StatefulWidget {
@@ -56,7 +57,22 @@ class _HomePageState extends State<HomePage> {
                         enlargeCenterPage: true,
                         onPageChanged: (index, reason) =>
                             setState(() => activeIndex = index))),
-
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      height: 32,
+                      child: Image.asset('assets/img/new.png'),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                ListProduct(),
               ],
             ),
           );

@@ -30,8 +30,8 @@ class _DetailProductState extends State<DetailProduct> {
               context: context,
               user: state.user,
             ),
-      body: ListView(
-        children: <Widget>[Container(
+      body: SingleChildScrollView(
+        child: Container(
           margin: const EdgeInsets.only(left: 10, right: 10, bottom: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -569,7 +569,7 @@ class _DetailProductState extends State<DetailProduct> {
               )
             ],
           ),
-        )],
+        ),
       ),
     );
       } else {

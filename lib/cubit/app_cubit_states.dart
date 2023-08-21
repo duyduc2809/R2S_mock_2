@@ -31,3 +31,8 @@ class UserLoadedState extends CubitStates {
   // TODO: implement props
   List<Object> get props => [user];
 }
+
+class DetailProductState extends CubitStates {
+  List<Object> get props => [];
+
+}

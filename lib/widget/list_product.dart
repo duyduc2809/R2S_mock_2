@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_store/cubit/app_cubit_states.dart';
 import 'package:mobile_store/cubit/app_cubits.dart';
-import 'package:mobile_store/widget/detail_product.dart';
 
 class ListProduct extends StatefulWidget {
   @override
@@ -12,74 +11,64 @@ class ListProduct extends StatefulWidget {
 class _ListProductState extends State<ListProduct> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AppCubits, CubitStates>(
-      builder: (context, state) {
-        if(state is UserLoadedState) {
-          return GestureDetector(
-      onTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => const DetailProduct(),
-          ),
-        );
-      },
-      child: Container(
-        child: SingleChildScrollView(
-          child: Row(
-            children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
-                        child: Container(
-                          height: 177,
-                          width: 147,
-                          child: Column(
-                            children: <Widget>[
-                              Container(
-                                height: 119,
-                                width: 126,
-                                decoration: const BoxDecoration(
-                                    image: DecorationImage(
-                                        image: AssetImage(
-                                            "assets/img/samsung.jpg"))),
-                              ),
-                              const Text(
-                                "Samsung",
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w600,
+    return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
+      return GestureDetector(
+        onTap: () {
+          BlocProvider.of<AppCubits>(context).detailPage();
+        },
+        child: Container(
+          child: SingleChildScrollView(
+            child: Row(
+              children: <Widget>[
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                          child: Container(
+                            height: 177,
+                            width: 147,
+                            child: Column(
+                              children: <Widget>[
+                                Container(
+                                  height: 119,
+                                  width: 126,
+                                  decoration: const BoxDecoration(
+                                      image: DecorationImage(
+                                          image: AssetImage(
+                                              "assets/img/samsung.jpg"))),
                                 ),
-                              ),
-                              const Text(
-                                "599 USD",
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w700,
-                                    color: Color.fromRGBO(91, 184, 93, 1)),
-                              ),
-                            ],
+                                const Text(
+                                  "Samsung",
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                const Text(
+                                  "599 USD",
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w700,
+                                      color: Color.fromRGBO(91, 184, 93, 1)),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ],
+                      ],
+                    )
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-    );
-
-      } else {
-        return const Center(child: CircularProgressIndicator());
-      }
-      });
+      );
+    });
   }
 }

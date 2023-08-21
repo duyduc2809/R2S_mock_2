@@ -23,11 +23,6 @@ class HiveHelper {
     return await box.get('user') as APIUser;
   }
 
-  static Future<String> loadUserToken() async {
-    await openBox();
-    return box.get('token') as String;
-  }
-
   static Future<bool> loadRememberMe() async {
     await openBox();
     final result = await box.get('rememberMe');

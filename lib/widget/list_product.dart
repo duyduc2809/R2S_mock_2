@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mobile_store/cubit/app_cubit_states.dart';
+import 'package:mobile_store/cubit/app_cubits.dart';
 import 'package:mobile_store/widget/detail_product.dart';
 
 class ListProduct extends StatefulWidget {
@@ -9,7 +12,10 @@ class ListProduct extends StatefulWidget {
 class _ListProductState extends State<ListProduct> {
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return BlocBuilder<AppCubits, CubitStates>(
+      builder: (context, state) {
+        if(state is UserLoadedState) {
+          return GestureDetector(
       onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute(
@@ -70,5 +76,10 @@ class _ListProductState extends State<ListProduct> {
         ),
       ),
     );
+
+      } else {
+        return const Center(child: CircularProgressIndicator());
+      }
+      });
   }
 }

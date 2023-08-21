@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mobile_store/cubit/app_cubit_states.dart';
+import 'package:mobile_store/cubit/app_cubits.dart';
 import 'package:mobile_store/widget/product_cart.dart';
 import 'package:mobile_store/widgets/custom_app_bar.dart';
 
@@ -7,12 +10,18 @@ class CartPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BlocBuilder<AppCubits, CubitStates>(
+      builder: (context, state) {
+        if(state is UserLoadedState){
+          return Scaffold(
       backgroundColor: Colors.white,
         appBar: CustomAppBar(
-          context: context,
-          logged: false,
-        ),
+              logged: true,
+              title: '',
+              showUserInfo: true,
+              context: context,
+              user: state.user,
+            ),
         body: SingleChildScrollView(
           child: Container(
             margin: const EdgeInsets.only(left: 20, right: 26, bottom: 20),
@@ -115,6 +124,11 @@ class CartPage extends StatelessWidget {
               ],
             ),
           ),
-        ));
+        )
+        );
+        
+      } else {
+        return const Center(child: CircularProgressIndicator());
+      }});
   }
 }

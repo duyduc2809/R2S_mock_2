@@ -36,43 +36,48 @@ class _HomePageState extends State<HomePage> {
               context: context,
               user: state.user,
             ),
-            body: Column(
-              children: [
-                const SizedBox(
-                  height: 20,
-                ),
-                CarouselSlider.builder(
-                    carouselController: controller,
-                    itemCount: images.length,
-                    itemBuilder: (context, index, realIndex) {
-                      final urlImage = images[index];
-                      return buildImage(urlImage, index);
-                    },
-                    options: CarouselOptions(
-                        height: 150,
-                        autoPlay: true,
-                        enableInfiniteScroll: true,
-                        autoPlayAnimationDuration: const Duration(seconds: 2),
-                        enlargeCenterPage: true,
-                        onPageChanged: (index, reason) =>
-                            setState(() => activeIndex = index))),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      height: 32,
-                      child: Image.asset('assets/img/new.png'),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                ListProduct(),
-              ],
+            body: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CarouselSlider.builder(
+                      carouselController: controller,
+                      itemCount: images.length,
+                      itemBuilder: (context, index, realIndex) {
+                        final urlImage = images[index];
+                        return buildImage(urlImage, index);
+                      },
+                      options: CarouselOptions(
+                        viewportFraction: 1,
+                        initialPage: 1,
+                          height: 150,
+                          autoPlay: true,
+                          enableInfiniteScroll: true,
+                          autoPlayAnimationDuration: const Duration(seconds: 2),
+                          enlargeCenterPage: true,
+                          onPageChanged: (index, reason) =>
+                              setState(() => activeIndex = index))),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        height: 32,
+                        child: Image.asset('assets/img/new.png'),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  ListProduct(),
+                ],
+              ),
             ),
           );
         } else {

@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mobile_store/cubit/app_cubit_states.dart';
+import 'package:mobile_store/cubit/app_cubits.dart';
+import 'package:mobile_store/cubit/auth_cubit/app_cubit_logic.dart';
 import 'package:mobile_store/widget/app_text.dart';
 import 'package:mobile_store/widget/custom_button_detail.dart';
 import 'package:mobile_store/widgets/custom_app_bar.dart';
@@ -15,8 +19,17 @@ class _DetailProductState extends State<DetailProduct> {
   int selectedIndex = 1;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(context: context, logged: false),
+    return BlocBuilder<AppCubits, CubitStates>(
+      builder: (context, state) {
+        if(state is UserLoadedState) {
+          return Scaffold(
+      appBar: CustomAppBar(
+              logged: true,
+              title: '',
+              showUserInfo: true,
+              context: context,
+              user: state.user,
+            ),
       body: SingleChildScrollView(
         child: Container(
           margin: const EdgeInsets.only(left: 10, right: 10, bottom: 20),
@@ -559,5 +572,9 @@ class _DetailProductState extends State<DetailProduct> {
         ),
       ),
     );
+      } else {
+        return const Center(child: CircularProgressIndicator());
+      }}
+      );
   }
 }

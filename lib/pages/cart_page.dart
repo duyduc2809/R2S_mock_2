@@ -19,7 +19,7 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
-      if (state is UserLoadedState) {
+      if (state is CartState) {
         return Scaffold(
             backgroundColor: Colors.white,
             appBar: CustomAppBar(
@@ -27,7 +27,7 @@ class _CartPageState extends State<CartPage> {
               title: '',
               showUserInfo: true,
               context: context,
-              user: state.user,
+              user: AppCubits.userData,
             ),
             body: SingleChildScrollView(
               child: Container(

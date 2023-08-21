@@ -75,4 +75,8 @@ class AppCubits extends Cubit<CubitStates> {
   detailPage() {
     emit(DetailProductState());
   }
+
+  cartPage() {
+    emit(CartState());
+  }
 }

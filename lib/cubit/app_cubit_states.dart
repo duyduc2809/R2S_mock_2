@@ -36,3 +36,8 @@ class DetailProductState extends CubitStates {
   List<Object> get props => [];
 
 }
+
+class CartState extends CubitStates {
+  List<Object> get props => [];
+
+}

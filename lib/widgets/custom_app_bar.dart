@@ -57,12 +57,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 width: SizeConfig.screenWidth,
                 child: Row(
                   children: [
-                    IconButton(
-                        onPressed: () {
-                          HiveHelper.deleteSavedData();
-                          BlocProvider.of<AppCubits>(context).loginPage();
-                        },
-                        icon: Icon(Icons.menu)),
+                    IconButton(onPressed: () {}, icon: Icon(Icons.menu)),
                     Container(
                       height: 37,
                       width: 290,
@@ -90,8 +85,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     ),
                   ),
                   TextButton(
-                      onPressed: () {},
-                      child: Text(
+                      onPressed: () {
+                        HiveHelper.deleteSavedData();
+                        BlocProvider.of<AppCubits>(context).loginPage();
+                      },
+                      child: const Text(
                         'Logout',
                         style: TextStyle(
                             color: Colors.black,

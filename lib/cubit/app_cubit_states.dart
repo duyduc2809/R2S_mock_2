@@ -1,8 +1,11 @@
 import 'package:equatable/equatable.dart';
+import 'package:mobile_store/models/product.dart';
 
 import '../models/user.dart';
 
 abstract class CubitStates extends Equatable {}
+
+
 
 class InitialState extends CubitStates {
   @override

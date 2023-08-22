@@ -38,6 +38,7 @@ class AppCubits extends Cubit<CubitStates> {
     }
   }
 
+
   loginPage() {
     emit(SignInState());
   }

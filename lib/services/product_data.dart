@@ -7,7 +7,7 @@ class ProductData {
   String baseUrl = "http://45.117.170.206:60/apis/product";
   final int statusCode200 = 200;
   List<Product> parseProducts(String response) {
-    final jsonMap = jsonDecode(response);
+    final jsonMap = jsonDecode(response.toString());
     final contents = jsonMap['contents'] as List<dynamic>;
     return contents.map<Product>((json) => Product.fromJson(json)).toList();
   }

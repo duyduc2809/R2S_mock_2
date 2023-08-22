@@ -58,7 +58,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 child: Row(
                   children: [
 
-                    IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
+                    IconButton(onPressed: () {
+                      
+                    }, icon: const Icon(Icons.menu)),
 
                     Container(
                       height: 37,

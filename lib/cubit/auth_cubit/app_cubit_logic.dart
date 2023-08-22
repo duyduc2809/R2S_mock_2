@@ -31,6 +31,8 @@ class _AppCubitLogicsState extends State<AppCubitLogics> {
             return RegisterScreen();
           } else if (state is HomePageState) {
             return MainPage();
+          } else if (state is HomePageState) {
+            return DetailProduct();
           } else if (state is DetailProductState) {
             return DetailProduct();
           } else if (state is CartState) {

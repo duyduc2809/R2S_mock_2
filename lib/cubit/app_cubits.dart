@@ -80,4 +80,5 @@ class AppCubits extends Cubit<CubitStates> {
   cartPage() {
     emit(CartState());
   }
+  
 }

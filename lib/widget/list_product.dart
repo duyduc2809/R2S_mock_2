@@ -7,6 +7,8 @@ import 'package:mobile_store/services/product_data.dart';
 import '../models/product.dart';
 
 class ListProduct extends StatefulWidget {
+  const ListProduct({super.key});
+
   @override
   State<ListProduct> createState() => _ListProductState();
 }
@@ -40,7 +42,8 @@ class _ListProductState extends State<ListProduct> {
                           future: futureListProducts,
                           builder: (context, snapshot) {
                             if (snapshot.hasError) {
-                              return Text("Retrieve Failed\n ${snapshot.error}");
+                              return Text(
+                                  "Retrieve Failed\n ${snapshot.error}");
                             } else if (snapshot.hasData) {
                               final List<Product> products = snapshot.data!;
                               return ListView.builder(

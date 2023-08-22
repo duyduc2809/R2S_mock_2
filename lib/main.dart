@@ -4,7 +4,6 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:mobile_store/constants/color_const.dart';
 import 'package:mobile_store/cubit/auth_cubit/app_cubit_logic.dart';
 import 'package:mobile_store/services/user_data_services.dart';
-
 import 'cubit/app_cubits.dart';
 import 'models/api_user.dart';
 

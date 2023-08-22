@@ -1,26 +1,24 @@
 import 'dart:convert';
-
 import 'package:mobile_store/models/product.dart';
 import 'package:http/http.dart' as http;
 
 
 class ProductData {
   String baseUrl = "http://45.117.170.206:60/apis/product";
-  Future<List<Product>> getProduct(int no, int limit) async {
-    var apiUrl = '/show-product/1?$no=0&limit=$limit';
-    http.Response res = await http.get(Uri.parse(baseUrl + apiUrl));
-    try {
-      if(res.statusCode == 200) {
-        List<dynamic> list  = json.decode(res.body);
-        print(list);
-        return list.map((e) => Product.fromJson(e)).toList();
-      } else {
-      return <Product>[];
+  final int statusCode200 = 200;
+  List<Product> parseProducts(String response) {
+    final jsonMap = jsonDecode(response);
+    final contents = jsonMap['contents'] as List<dynamic>;
+    return contents.map<Product>((json) => Product.fromJson(json)).toList();
+  }
 
-      }
-    }catch(e) {
-      print(e);
-      return <Product>[];
+  Future<List<Product>> getAllProduct(int no, int limit) async {
+    final uri = Uri.parse("$baseUrl/show-product/1?no=$no&limit=$limit");
+    final response = await http.get(uri);
+
+    if(response.statusCode == statusCode200) {
+      return parseProducts(response.body);
     }
+    throw Exception("Failed to get Product, Status Code: ${response.statusCode}");
   }
 }

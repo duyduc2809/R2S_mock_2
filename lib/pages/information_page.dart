@@ -21,7 +21,7 @@ class _InformationPage extends State<InformationPage>
     'promotion_img.png'
   ];
 
-  List itemsTextInformation = ['Information', 'Order', 'Promotion'];
+  List itemsTextInformation = ['Your Information', 'Order', 'Promotion'];
 
   List tabPages = [
     InformationTab(),

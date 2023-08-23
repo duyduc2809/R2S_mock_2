@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mobile_store/cubit/app_cubit_states.dart';
+import 'package:mobile_store/cubit/app_cubits.dart';
 import 'package:mobile_store/pages/cart_page.dart';
 import 'package:mobile_store/pages/information_page.dart';
+import 'package:mobile_store/widget/detail_product.dart';
 
 import '../home_page.dart';
 
@@ -14,17 +18,43 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   List pages = [HomePage(), CartPage(), InformationPage()];
   int currentIndex = 0;
-  void onTap(int index) {
-    setState(() {
-      currentIndex = index;
+
+  Widget _buildBody(BuildContext context) {
+    return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
+      if (state is DetailProductState) {
+        return DetailProduct();
+      } else if (state is CartPageState) {
+        return CartPage();
+      } else if (state is InformationPageState) {
+        return InformationPage();
+      } else {
+        return HomePage();
+      }
     });
+  }
+
+  onTap(index) {
+    currentIndex = index;
+    switch (currentIndex) {
+      case 0:
+        BlocProvider.of<AppCubits>(context).homePage();
+        break;
+      case 1:
+        BlocProvider.of<AppCubits>(context).cartPage();
+        break;
+      case 2:
+        BlocProvider.of<AppCubits>(context).informationPage();
+        break;
+      default:
+        break;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: pages[currentIndex],
+      body: _buildBody(context),
       bottomNavigationBar: BottomNavigationBar(
           unselectedFontSize: 0,
           selectedFontSize: 0,

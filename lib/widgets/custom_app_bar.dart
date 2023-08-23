@@ -40,6 +40,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       case AppBarMode.TitleWhenLogged:
         break;
       default:
+        return _buildBasicMode();
         break;
     }
     return null;
@@ -53,23 +54,20 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           children: [
             Padding(
               padding: const EdgeInsets.all(5),
-              child: SizedBox(
-                width: SizeConfig.screenWidth,
-                child: Row(
-                  children: [
-
-                    IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
-
-                    Container(
+              child: Row(
+                children: [
+                  IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
+                  Expanded(
+                    child: Container(
+                      margin: const EdgeInsets.only(right: 5),
                       height: 37,
-                      width: 290,
                       child: TextFormField(
                         decoration: CustomInputDecoration(
                             suffixIcon: const Icon(Icons.search)),
                       ),
-                    )
-                  ],
-                ),
+                    ),
+                  )
+                ],
               ),
             ),
             Padding(
@@ -100,6 +98,34 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ],
               ),
             ),
+          ],
+        ));
+  }
+  _buildBasicMode() {
+    return Positioned.fill(
+        top: SizeConfig.statusbarHeight,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(5),
+              child: Row(
+                children: [
+                  IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
+                  Expanded(
+                    child: Container(
+                      margin: const EdgeInsets.only(right: 5),
+                      height: 37,
+                      child: TextFormField(
+                        decoration: CustomInputDecoration(
+                            suffixIcon: const Icon(Icons.search)),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+
           ],
         ));
   }

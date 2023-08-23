@@ -34,6 +34,7 @@ class _PromotionTabState extends State<PromotionTab> {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
+
           child: Center(
         child: FutureBuilder(
           future: futureListPromotion,

@@ -40,6 +40,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       case AppBarMode.TitleWhenLogged:
         break;
       default:
+        return _buildBasicMode();
         break;
     }
     return null;
@@ -52,27 +53,21 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
-              padding: EdgeInsets.all(5),
-              child: SizedBox(
-                width: SizeConfig.screenWidth,
-                child: Row(
-                  children: [
-                    IconButton(
-                        onPressed: () {
-                          HiveHelper.deleteSavedData();
-                          BlocProvider.of<AppCubits>(context).loginPage();
-                        },
-                        icon: Icon(Icons.menu)),
-                    Container(
+              padding: const EdgeInsets.all(5),
+              child: Row(
+                children: [
+                  IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
+                  Expanded(
+                    child: Container(
+                      margin: const EdgeInsets.only(right: 5),
                       height: 37,
-                      width: 290,
                       child: TextFormField(
                         decoration: CustomInputDecoration(
-                            suffixIcon: Icon(Icons.search)),
+                            suffixIcon: const Icon(Icons.search)),
                       ),
-                    )
-                  ],
-                ),
+                    ),
+                  )
+                ],
               ),
             ),
             Padding(
@@ -82,7 +77,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 children: [
                   Container(
                     decoration: BoxDecoration(
-                        color: Color(0xFFDAD8D8),
+                        color: const Color(0xFFDAD8D8),
                         borderRadius: BorderRadius.circular(5)),
                     child: Padding(
                       padding: const EdgeInsets.all(5.0),
@@ -90,8 +85,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     ),
                   ),
                   TextButton(
-                      onPressed: () {},
-                      child: Text(
+                      onPressed: () {
+                        HiveHelper.deleteSavedData();
+                        BlocProvider.of<AppCubits>(context).loginPage();
+                      },
+                      child: const Text(
                         'Logout',
                         style: TextStyle(
                             color: Colors.black,
@@ -100,6 +98,34 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ],
               ),
             ),
+          ],
+        ));
+  }
+  _buildBasicMode() {
+    return Positioned.fill(
+        top: SizeConfig.statusbarHeight,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(5),
+              child: Row(
+                children: [
+                  IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
+                  Expanded(
+                    child: Container(
+                      margin: const EdgeInsets.only(right: 5),
+                      height: 37,
+                      child: TextFormField(
+                        decoration: CustomInputDecoration(
+                            suffixIcon: const Icon(Icons.search)),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+
           ],
         ));
   }

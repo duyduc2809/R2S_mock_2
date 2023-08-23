@@ -38,7 +38,6 @@ class AppCubits extends Cubit<CubitStates> {
     }
   }
 
-
   loginPage() {
     emit(SignInState());
   }
@@ -77,8 +76,11 @@ class AppCubits extends Cubit<CubitStates> {
     emit(DetailProductState());
   }
 
-  cartPage() {
-    emit(CartState());
+  informationPage() {
+    emit(InformationPageState());
   }
-  
+
+  cartPage() {
+    emit(CartPageState());
+  }
 }

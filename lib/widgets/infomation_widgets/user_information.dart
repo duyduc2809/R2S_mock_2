@@ -31,23 +31,60 @@ class UserInformation extends StatelessWidget {
               )
             ],
           ),
-          inforRow(context, icon: Icons.edit, text: "0941893338"),
           Row(
             children: [
-              inforRow(context, icon: Icons.person, text: "Tran Ky Anh"),
-              const SizedBox(
-                width: 100,
+              Image.asset(
+                'assets/img/phone.png',
+                width: 20,
+                height: 20,
               ),
-              inforRow(context, icon: Icons.male, text: "male")
+              const Text('0941893338')
             ],
           ),
           Row(
             children: [
-              inforRow(context, icon: Icons.calendar_month, text: "28/09/2001"),
+              Row(children: [
+                Image.asset(
+                  'assets/img/image 42.png',
+                  width: 20,
+                  height: 20,
+                ),
+                const Text('Tran Ky Anh')
+              ]),
               const SizedBox(
                 width: 100,
               ),
-              inforRow(context, icon: Icons.email, text: "kyanh@gmail.com")
+              Row(children: [
+                Image.asset(
+                  'assets/img/gender.png',
+                  width: 20,
+                  height: 20,
+                ),
+                const Text('Male')
+              ])
+            ],
+          ),
+          Row(
+            children: [
+              Row(children: [
+                Image.asset(
+                  'assets/img/calender.png',
+                  width: 20,
+                  height: 20,
+                ),
+                const Text('01/01/2001')
+              ]),
+              const SizedBox(
+                width: 100,
+              ),
+              Row(children: [
+                Image.asset(
+                  'assets/img/mail.png',
+                  width: 20,
+                  height: 20,
+                ),
+                const Text('kyanh@gmail.com')
+              ])
             ],
           ),
           ButtonTheme(
@@ -64,20 +101,20 @@ class UserInformation extends StatelessWidget {
       ),
     );
   }
-
-  Row inforRow(BuildContext context,
-      {required IconData icon, required String text}) {
-    return Row(
-      children: [
-        Icon(
-          icon,
-          color: Colors.green,
-        ),
-        Text(
-          text,
-          style: Theme.of(context).textTheme.bodyMedium,
-        )
-      ],
-    );
-  }
 }
+//   Row inforRow(BuildContext context,
+//       {required IconData icon, required String text}) {
+//     return Row(
+//       children: [
+//         Icon(
+//           icon,
+//           color: Colors.green,
+//         ),
+//         Text(
+//           text,
+//           style: Theme.of(context).textTheme.bodyMedium,
+//         )
+//       ],
+//     );
+//   }
+// }

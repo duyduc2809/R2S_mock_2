@@ -1,31 +1,35 @@
 class ProductTech {
-  final int id;
-  final String name;
+  final int? id;
+  final Technical? technical;
   final String? info;
   final bool? primary;
-  final TechnicalDTO technicalDTO;
-  ProductTech(
-      {required this.id, 
-      required this.name, 
-      required this.info, 
-      required this.primary, 
-      required this.technicalDTO});
+
+  ProductTech({
+    this.id,
+    this.technical,
+    this.info,
+    this.primary});
 
   factory ProductTech.fromJson(Map<String, dynamic> json) {
-    final technicalDTO = TechnicalDTO.fromJson(json['technicalDTO']);
     return ProductTech(
-        id: json["id"], name: json["name"],
-        info: json['info'],
-        primary: json['primary'], 
-        technicalDTO: technicalDTO);
+      id: json["id"],
+      technical: Technical.fromJson(json["technicalDTO"]),
+      info: json["info"],
+      primary: json["primary"],
+    );
   }
 }
 
-class TechnicalDTO {
-  final int id;
-  final String name;
-  TechnicalDTO({required this.id, required this.name});
-  factory TechnicalDTO.fromJson(Map<String, dynamic> json) {
-    return TechnicalDTO(id: json['id'], name: json['name']);
+class Technical {
+  final int? id;
+  final String? name;
+
+  Technical({this.id,this.name,});
+
+  factory Technical.fromJson(Map<String, dynamic> json) {
+    return Technical(
+        id: json["id"],
+        name: json["name"]
+    );
   }
 }

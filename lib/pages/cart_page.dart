@@ -101,7 +101,7 @@ class _CartPageState extends State<CartPage> {
                                 children: [
                                   Text.rich(
                                     TextSpan(
-                                        text: "Temporary price: ",
+                                        text: "Grand total: ",
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 16),
@@ -116,18 +116,25 @@ class _CartPageState extends State<CartPage> {
                               ),
                             ],
                           ),
-                          const Column(
+                           Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
                               Text(
                                 "ADDRESS",
                                 style: TextStyle(fontWeight: FontWeight.w400),
                               ),
-                              Row(
-                                children: [
-                                  
-                                ],
-                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  child: Row(
+                                    children: [
+                                      SizedBox(
+                                        child: Image.asset("assets/img/radio.png"),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              )
                          
                             ],
                           )

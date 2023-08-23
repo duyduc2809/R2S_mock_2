@@ -6,6 +6,10 @@ import 'package:mobile_store/widget/app_text.dart';
 import 'package:mobile_store/widget/custom_button_detail.dart';
 import 'package:mobile_store/widgets/custom_app_bar.dart';
 
+import '../pages/cart_page.dart';
+import '../pages/home_page.dart';
+import '../pages/information_page.dart';
+
 class DetailProduct extends StatefulWidget {
   const DetailProduct({super.key});
 
@@ -16,18 +20,36 @@ class DetailProduct extends StatefulWidget {
 class _DetailProductState extends State<DetailProduct> {
   int gottenStars = 4;
   int selectedIndex = 1;
+  List pages = [HomePage(), CartPage(), InformationPage()];
+  int currentIndex = 0;
+
+  void onTap(int index) {
+    switch (index) {
+      case 0:
+        BlocProvider.of<AppCubits>(context).homePage();
+        break;
+      case 1:
+        BlocProvider.of<AppCubits>(context).cartPage();
+        break;
+      case 2:
+        BlocProvider.of<AppCubits>(context).informationPage();
+        break;
+      default:
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
       if (state is DetailProductState) {
         return Scaffold(
+
+
           appBar: CustomAppBar(
             logged: true,
             title: '',
-            showUserInfo: true,
             context: context,
-            user: AppCubits.userData,
           ),
           body: SingleChildScrollView(
             child: Container(

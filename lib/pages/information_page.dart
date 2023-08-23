@@ -4,6 +4,7 @@ import 'package:mobile_store/widgets/information_tab.dart';
 import 'package:mobile_store/widgets/order_tab.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/promotion_tab.dart';
+import 'package:mobile_store/cubit/app_cubits.dart';
 
 class InformationPage extends StatefulWidget {
   const InformationPage({super.key});
@@ -38,9 +39,11 @@ class _InformationPage extends State<InformationPage>
         backgroundColor: Color(0xFFE0EAEB),
         // appBar: AppBar(title: const Text('Mobile Store'),),
         appBar: CustomAppBar(
+          logged: true,
+          title: '',
+          showUserInfo: true,
           context: context,
-          title: 'Mobile Store',
-          logged: false,
+          user: AppCubits.userData,
         ),
         body: Container(
           margin: const EdgeInsets.all(9),

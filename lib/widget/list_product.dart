@@ -19,7 +19,7 @@ class _ListProductState extends State<ListProduct> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    futureListProducts = ProductData().getAllProduct(0, 5);
+    futureListProducts = ProductData().getNewProducts();
   }
 
   @override

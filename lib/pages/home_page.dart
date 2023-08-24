@@ -29,6 +29,7 @@ class _HomePageState extends State<HomePage> {
       builder: (context, state) {
         if (state is HomePageState) {
           return Scaffold(
+            resizeToAvoidBottomInset: false,
             backgroundColor: Colors.white,
             appBar: CustomAppBar(
               logged: true,
@@ -76,11 +77,19 @@ class _HomePageState extends State<HomePage> {
                   const SizedBox(
                     height: 10,
                   ),
-                  Column(
-                    children: [
-                      ListProduct(),
-                    ],
+                  Expanded(
+                    child: GridView(gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 11,
+                    mainAxisSpacing: 11,
                   ),
+                  scrollDirection: Axis.vertical,
+                  children: [
+                    ListProduct()
+                  ],
+                  ),
+                  ),
+                    
                 ],
               ),
             ),

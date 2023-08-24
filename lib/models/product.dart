@@ -1,12 +1,12 @@
-import 'package:mobile_store/models/product_category.dart';
-import 'package:mobile_store/models/product_image.dart';
-import 'package:mobile_store/models/product_manufacturer.dart';
-import 'package:mobile_store/models/product_memory.dart';
-import 'package:mobile_store/models/product_review.dart';
-import 'package:mobile_store/models/product_seri.dart';
-import 'package:mobile_store/models/product_tech.dart';
+import 'package:mobile_store/models/product/product_category.dart';
+import 'package:mobile_store/models/product/product_image.dart';
+import 'package:mobile_store/models/product/product_manufacturer.dart';
+import 'package:mobile_store/models/product/product_memory.dart';
+import 'package:mobile_store/models/product/product_review.dart';
+import 'package:mobile_store/models/product/product_seri.dart';
+import 'package:mobile_store/models/product/product_tech.dart';
 
-import 'product_color.dart';
+import 'product/product_color.dart';
 
 class Product {
   final int? id;

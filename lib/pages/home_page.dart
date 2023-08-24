@@ -53,8 +53,8 @@ class _HomePageState extends State<HomePage> {
                         return buildImage(urlImage, index);
                       },
                       options: CarouselOptions(
-                        viewportFraction: 1,
-                        initialPage: 1,
+                          viewportFraction: 1,
+                          initialPage: 1,
                           height: 150,
                           autoPlay: true,
                           enableInfiniteScroll: true,
@@ -78,18 +78,24 @@ class _HomePageState extends State<HomePage> {
                     height: 10,
                   ),
                   Expanded(
-                    child: GridView(gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 11,
-                    mainAxisSpacing: 11,
+                    child: GridView(
+                      shrinkWrap: true,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 11,
+                        mainAxisSpacing: 11,
+                      ),
+                      scrollDirection: Axis.vertical,
+                      children: [
+                        Container(
+                          width: 177,
+                          height: 147,
+                          child: ListProduct(),
+                        )
+                      ],
+                    ),
                   ),
-                  scrollDirection: Axis.vertical,
-                  children: [
-                    ListProduct()
-                  ],
-                  ),
-                  ),
-                    
                 ],
               ),
             ),

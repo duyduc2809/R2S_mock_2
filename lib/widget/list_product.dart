@@ -26,6 +26,8 @@ class _ListProductState extends State<ListProduct> {
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
       return  Expanded(
         child: Container(
+          width: 177,
+          height: 147,
             child: SingleChildScrollView(
               child: InkWell(
                 onTap: () {
@@ -39,6 +41,7 @@ class _ListProductState extends State<ListProduct> {
                       } else if (snapshot.hasData) {
                         final List<Product> products = snapshot.data!;
                         return ListView.builder(
+                          shrinkWrap: true,
                           itemBuilder: (context, index) => Card(
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15.0),

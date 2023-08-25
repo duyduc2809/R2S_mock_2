@@ -24,8 +24,7 @@ class _ListProductState extends State<ListProduct> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
-      return  Expanded(
-        child: Container(
+      return   Container(
           width: 177,
           height: 147,
             child: SingleChildScrollView(
@@ -85,9 +84,6 @@ class _ListProductState extends State<ListProduct> {
                   ),
                 ),
               ),
-            
-          
-        ),
       );
     });
   }

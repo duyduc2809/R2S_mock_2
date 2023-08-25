@@ -6,7 +6,9 @@ import 'package:mobile_store/services/product_data.dart';
 
 import '../models/product.dart';
 
+
 class ListProduct extends StatefulWidget {
+  
   const ListProduct({super.key});
 
   @override
@@ -14,6 +16,7 @@ class ListProduct extends StatefulWidget {
 }
 
 class _ListProductState extends State<ListProduct> {
+  String baseUrl = "http://45.117.170.206:60/apis/file/display/";
   late Future<List<Product>> futureListProducts;
   @override
   void initState() {
@@ -62,7 +65,7 @@ class _ListProductState extends State<ListProduct> {
                             decoration:  BoxDecoration(
                                 image: DecorationImage(
                                     image:
-                                        // NetworkImage("http://45.117.170.206:60/apis/file/display/${products[index].images}"))
+                                        // NetworkImage(baseUrl + (products)))
                                         AssetImage("assets/img/samsung.jpg"))
                                         ),
                           ),

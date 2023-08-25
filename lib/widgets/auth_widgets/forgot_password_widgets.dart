@@ -1,11 +1,12 @@
-import 'dart:async';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_store/constants/color_const.dart';
 import 'package:mobile_store/services/user_data_services.dart';
 
+import '../../constants/dimension_const.dart';
+
 class ForgotPasswordWidget {
+  static const buttonHeight = smallButtonHeight;
+
   static displayDialog(
       {required BuildContext context, Widget? content, double? height}) async {
     return showDialog(
@@ -13,7 +14,7 @@ class ForgotPasswordWidget {
         builder: (context) {
           return Dialog(
             child: Container(
-              height: height ?? 192,
+              height: height ?? 195,
               decoration: ShapeDecoration(
                 shape: RoundedRectangleBorder(
                   side: BorderSide(
@@ -55,7 +56,7 @@ class ForgotPasswordWidget {
         });
   }
 
-  static enterEmail(BuildContext context) {
+  static enterEmail(BuildContext context, mounted) {
     final emailController = TextEditingController();
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -88,7 +89,7 @@ class ForgotPasswordWidget {
               style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)),
-                  fixedSize: const Size(85, 20),
+                  fixedSize: const Size(buttonHeight, 20),
                   backgroundColor: ColorPallete.redColor),
               child: const Text('Cancel'),
             ),
@@ -96,13 +97,13 @@ class ForgotPasswordWidget {
               onPressed: () async {
                 var result = await UserDataServices.sendForgotEmail(
                     emailController.text);
-                if (result == null) {
+                if (result == null && mounted) {
                   Navigator.pop(context);
                   displayDialog(
                       context: context,
-                      content: enterOTP(context),
+                      content: enterOTP(context, mounted),
                       height: 192 + 125);
-                } else {
+                } else if (result != null && mounted) {
                   ScaffoldMessenger.of(context)
                       .showSnackBar(SnackBar(content: Text(result)));
                 }
@@ -110,7 +111,7 @@ class ForgotPasswordWidget {
               style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)),
-                  fixedSize: const Size(85, 20),
+                  fixedSize: const Size(buttonHeight, 20),
                   backgroundColor: ColorPallete.mainColor),
               child: const Text('Confirm'),
             ),
@@ -120,28 +121,18 @@ class ForgotPasswordWidget {
     );
   }
 
-  static enterOTP(BuildContext context) {
+  static enterOTP(BuildContext context, mounted) {
     final _formKey = GlobalKey<FormState>();
     final passwordController = TextEditingController();
     final confirmPasswordController = TextEditingController();
     final otpController = TextEditingController();
 
     int secondsLeft = 60;
-    late Timer timer;
     bool isCounting = false;
 
     void startTimer(setState) {
       if (!isCounting) {
         isCounting = true; // Đánh dấu đã bắt đầu đếm ngược
-        timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-          if (secondsLeft > 0) {
-            setState(() {
-              secondsLeft--;
-            });
-          } else {
-            timer.cancel();
-          }
-        });
       }
     }
 
@@ -268,12 +259,13 @@ class ForgotPasswordWidget {
               children: [
                 ElevatedButton(
                   onPressed: () {
+                    secondsLeft = 0;
                     Navigator.pop(context);
                   },
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)),
-                      fixedSize: const Size(85, 20),
+                      fixedSize: const Size(buttonHeight, 20),
                       backgroundColor: ColorPallete.redColor),
                   child: const Text('Cancel'),
                 ),
@@ -284,21 +276,22 @@ class ForgotPasswordWidget {
                           await UserDataServices.sendNewPasswordByOTP(
                               otpController.text, passwordController.text);
                       print(result);
-                      if (result == null) {
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(const SnackBar(content: Text('Password changed successfully!')));
+                      if (result == null && mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content:
+                                    Text('Password changed successfully!')));
                         Navigator.of(context).pop();
-                      } else {
+                      } else if (result != null && mounted) {
                         ScaffoldMessenger.of(context)
                             .showSnackBar(SnackBar(content: Text(result)));
                       }
-
                     }
                   },
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)),
-                      fixedSize: const Size(85, 20),
+                      fixedSize: const Size(buttonHeight, 20),
                       backgroundColor: ColorPallete.mainColor),
                   child: const Text('Confirm'),
                 ),

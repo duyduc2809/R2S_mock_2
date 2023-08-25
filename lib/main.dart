@@ -7,13 +7,6 @@ import 'package:mobile_store/services/user_data_services.dart';
 import 'cubit/app_cubits.dart';
 import 'models/api_user.dart';
 
-// void main() {
-//   // runApp(InformationPage());
-//   runApp(
-//   MaterialApp(debugShowCheckedModeBanner: false, home: const CheckOutPage()));
-// }
-
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Hive.registerAdapter(APIUserAdapter());

@@ -16,7 +16,6 @@ class ListProduct extends StatefulWidget {
 }
 
 class _ListProductState extends State<ListProduct> {
-  String baseUrl = "http://45.117.170.206:60/apis/file/display/";
   late Future<List<Product>> futureListProducts;
   @override
   void initState() {

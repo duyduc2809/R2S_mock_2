@@ -18,69 +18,75 @@ class _ListProductState extends State<ListProduct> {
   @override
   void initState() {
     super.initState();
-    futureListProducts = ProductData().getNewProducts();
+    futureListProducts = ProductData().getAllProducts();
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
       return Center(
-        child: SingleChildScrollView(
-          child: InkWell(
-            onTap: () {
-              BlocProvider.of<AppCubits>(context).detailPage();
-            },
-            child: FutureBuilder(
-              future: futureListProducts,
-              builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  return Text("Retrieve Failed\n ${snapshot.error}");
-                } else if (snapshot.hasData) {
-                  final List<Product> products = snapshot.data!;
-                  return ListView.builder(
-                    itemCount: products.length,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) => Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                      ),
-                      child: Container(
-                        height: 177,
-                        width: 147,
-                        child: Column(
-                          children: [
-                            Container(
-                              height: 119,
-                              width: 126,
-                              decoration: const BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage(
-                                          "assets/img/samsung.jpg"))),
-                            ),
-                            ListTile(
-                              title: Text("${products[index].name}",
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w600,
-                                  )),
-                              subtitle: Text(
-                                "${products[index].price}",
-                                style: const TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w700,
-                                    color: Color.fromRGBO(91, 184, 93, 1)),
-                              ),
-                            )
-                          ],
-                        ),
+        child:
+            InkWell(
+          onTap: () {
+            BlocProvider.of<AppCubits>(context).detailPage();
+          },
+          child: FutureBuilder(
+            future: futureListProducts,
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return Text("Retrieve Failed\n ${snapshot.error}");
+              } else if (snapshot.hasData) {
+                final List<Product> products = snapshot.data!;
+                return GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 3,
+                    crossAxisSpacing: 2
+                  ),
+                  scrollDirection: Axis.vertical,
+
+                  itemCount: products.length,
+
+                  itemBuilder: (context, index) => Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    child: Container(
+                      height: 177,
+                      width: 147,
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 109,
+                            width: 106,
+                            decoration:  BoxDecoration(
+                                image: DecorationImage(
+                                    image:
+                                        // NetworkImage("http://45.117.170.206:60/apis/file/display/${products[index].images}"))
+                                        AssetImage("assets/img/samsung.jpg"))
+                                        ),
+                          ),
+                          Text("${products[index].name}",
+                              style: const TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                              )),
+                          Text(
+                            "${products[index].price}",
+                            style: const TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w700,
+                                color: Color.fromRGBO(91, 184, 93, 1)),
+                          ),
+                        ],
                       ),
                     ),
-                  );
-                } else {
-                  return const CircularProgressIndicator();
-                }
-              },
-            ),
+                  ),
+                );
+              } else {
+                return const CircularProgressIndicator();
+              }
+            },
           ),
         ),
       );

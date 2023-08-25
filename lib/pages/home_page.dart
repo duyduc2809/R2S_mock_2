@@ -76,22 +76,13 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-                  GridView(
-                    shrinkWrap: true,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 11,
-                      mainAxisSpacing: 11,
-                    ),
-                    scrollDirection: Axis.vertical,
-                    children: [
-                      Container(
-                        width: 177,
-                        height: 147,
-                        child: ListProduct(),
-                      )
-                    ],
+
+                  Container(
+                    width: 300,
+                    height: 350,
+                    child: ListProduct()
+                // )  
+                    
                   ),
                 ],
               )),

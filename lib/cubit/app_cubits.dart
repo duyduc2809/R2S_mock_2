@@ -61,7 +61,7 @@ class AppCubits extends Cubit<CubitStates> {
   }
 
   //hàm xử lý đăng ký
-  register(User user) async {
+  Future<String?> register(User user) async {
     final result = await UserDataServices.createUser(user);
     emit(LoadingState());
     emit(RegisterState());

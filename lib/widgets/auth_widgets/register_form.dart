@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_store/constants/color_const.dart';
 import 'package:mobile_store/models/user.dart';
+import 'package:mobile_store/services/user_data_services.dart';
 import 'package:mobile_store/widgets/custom_input_decoration.dart';
 import 'package:mobile_store/validator.dart';
 
@@ -23,6 +26,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
   final fullNameController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+  final otpController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -124,17 +128,19 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                       final result = await BlocProvider.of<AppCubits>(context)
                           .register(user);
 
-                      if (result == true) {
-                        emailController.text = '';
-                        userNameController.text = '';
-                        fullNameController.text = '';
-                        passwordController.text = '';
-                        confirmPasswordController.text = '';
+                      if (result == null) {
+                        if (mounted) {
+                          _dialogBuilder(context);
+                          emailController.text = '';
+                          userNameController.text = '';
+                          fullNameController.text = '';
+                          passwordController.text = '';
+                          confirmPasswordController.text = '';
+                        }
+                      } else {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(SnackBar(content: Text(result)));
                       }
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text(result == false
-                              ? 'Create Failed!'
-                              : 'Account created successfully')));
                     }
                   },
                   style: ElevatedButton.styleFrom(
@@ -160,5 +166,134 @@ class _RegisterWidgetState extends State<RegisterWidget> {
         ),
       ),
     );
+  }
+
+  Future<void> _dialogBuilder(BuildContext context) {
+    int secondsLeft = 60;
+    late Timer timer;
+    bool isCounting = false;
+
+    void startTimer(setState) {
+      if (!isCounting) {
+        isCounting = true; // Đánh dấu đã bắt đầu đếm ngược
+        timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+          if (secondsLeft > 0) {
+            setState(() {
+              secondsLeft--;
+            });
+          } else {
+            timer.cancel();
+          }
+        });
+      }
+    }
+
+    return showDialog(
+        // barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return StatefulBuilder(builder: (context, StateSetter setState) {
+            startTimer(setState);
+            return Dialog(
+              child: Container(
+                height: 190,
+                decoration: ShapeDecoration(
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(
+                      width: 0.50,
+                      color: Colors.black.withOpacity(0.20000000298023224),
+                    ),
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    Container(
+                      width: double.maxFinite,
+                      height: 37,
+                      decoration: ShapeDecoration(
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(
+                            width: 0.50,
+                            color: Colors.black.withOpacity(0.5),
+                          ),
+                        ),
+                      ),
+                      child: const Center(
+                          child: Text(
+                        'VERIFIED EMAIL',
+                        style: TextStyle(
+                            color: ColorPallete.mainColor,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 16),
+                      )),
+                    ),
+                    Container(
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 14, horizontal: 30),
+                        width: double.maxFinite,
+                        child: Center(
+                            child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            TextFormField(
+                              controller: otpController,
+                              decoration: InputDecoration(
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      vertical: 6, horizontal: 10),
+                                  constraints: const BoxConstraints(
+                                      maxHeight: 30, minHeight: 20),
+                                  border: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(10.0))),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            SizedBox(
+                              width: double.maxFinite,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    '${otpController.text.length}/4',
+                                    style: const TextStyle(color: Colors.grey),
+                                  ),
+                                  Text(
+                                      ("Sent OTP via email: ${secondsLeft.toString()}s"))
+                                ],
+                              ),
+                            ),
+                            ElevatedButton(
+                              onPressed: () async {
+                                final result =
+                                    await UserDataServices.sendActiveOTP(
+                                        otpController.text);
+                                if (result == null && mounted) {
+                                  secondsLeft = 0;
+                                  Navigator.pop(context);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          content: Text(
+                                              "Account created successfully!")));
+                                } else if (result != null && mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text(result)));
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10)),
+                                  fixedSize: const Size(167, 20),
+                                  backgroundColor: ColorPallete.mainColor),
+                              child: const Text('Verified Email'),
+                            )
+                          ],
+                        ))),
+                  ],
+                ),
+              ),
+            );
+          });
+        });
   }
 }

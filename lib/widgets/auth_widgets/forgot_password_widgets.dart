@@ -1,15 +1,20 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_store/constants/color_const.dart';
+import 'package:mobile_store/services/user_data_services.dart';
+
+import '../../constants/dimension_const.dart';
 
 class ForgotPasswordWidget {
-  static displayDialog({required BuildContext context, Widget? content, double? height }) async {
+  static const buttonHeight = smallButtonHeight;
+
+  static displayDialog(
+      {required BuildContext context, Widget? content, double? height}) async {
     return showDialog(
         context: context,
         builder: (context) {
           return Dialog(
             child: Container(
-              height: height ?? 192,
+              height: height ?? 195,
               decoration: ShapeDecoration(
                 shape: RoundedRectangleBorder(
                   side: BorderSide(
@@ -51,7 +56,7 @@ class ForgotPasswordWidget {
         });
   }
 
-  static enterEmail(BuildContext context) {
+  static enterEmail(BuildContext context, mounted) {
     final emailController = TextEditingController();
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -65,7 +70,7 @@ class ForgotPasswordWidget {
           decoration: InputDecoration(
               hintStyle: const TextStyle(color: ColorPallete.mainColor),
               contentPadding:
-                  const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+                  const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
               constraints: const BoxConstraints(maxHeight: 30, minHeight: 20),
               hintText: 'email',
               border: OutlineInputBorder(
@@ -84,19 +89,29 @@ class ForgotPasswordWidget {
               style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)),
-                  fixedSize: const Size(85, 20),
+                  fixedSize: const Size(buttonHeight, 20),
                   backgroundColor: ColorPallete.redColor),
               child: const Text('Cancel'),
             ),
             ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-                displayDialog(context: context, content: enterOTP(context));
+              onPressed: () async {
+                var result = await UserDataServices.sendForgotEmail(
+                    emailController.text);
+                if (result == null && mounted) {
+                  Navigator.pop(context);
+                  displayDialog(
+                      context: context,
+                      content: enterOTP(context, mounted),
+                      height: 192 + 125);
+                } else if (result != null && mounted) {
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(SnackBar(content: Text(result)));
+                }
               },
               style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)),
-                  fixedSize: const Size(85, 20),
+                  fixedSize: const Size(buttonHeight, 20),
                   backgroundColor: ColorPallete.mainColor),
               child: const Text('Confirm'),
             ),
@@ -106,160 +121,185 @@ class ForgotPasswordWidget {
     );
   }
 
-  static enterPassword(BuildContext context) {
+  static enterOTP(BuildContext context, mounted) {
+    final _formKey = GlobalKey<FormState>();
     final passwordController = TextEditingController();
     final confirmPasswordController = TextEditingController();
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        const Text('Please enter your new password'),
-        const SizedBox(
-          height: 15,
-        ),
-        TextFormField(
-          controller: passwordController,
-          decoration: InputDecoration(
-              hintStyle: const TextStyle(color: ColorPallete.mainColor),
-              contentPadding:
-                  const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-              constraints: const BoxConstraints(maxHeight: 30, minHeight: 20),
-              hintText: 'Password',
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0))),
-        ),
-        const SizedBox(
-          height: 15,
-        ),
-        TextFormField(
-          controller: confirmPasswordController,
-          decoration: InputDecoration(
-              hintStyle: const TextStyle(color: ColorPallete.mainColor),
-              contentPadding:
-                  const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-              constraints: const BoxConstraints(maxHeight: 30, minHeight: 20),
-              hintText: 'Repeat Password',
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0))),
-        ),
-        const SizedBox(
-          height: 15,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                  fixedSize: const Size(85, 20),
-                  backgroundColor: ColorPallete.redColor),
-              child: const Text('Cancel'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                  fixedSize: const Size(85, 20),
-                  backgroundColor: ColorPallete.mainColor),
-              child: const Text('Confirm'),
-            ),
-          ],
-        )
-      ],
-    );
-  }
+    final otpController = TextEditingController();
 
-  static enterOTP(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        const Text(
-          'Verify code has been sent to your phone number.\nPlease confirm it \n',
-          textAlign: TextAlign.center,
-        ),
-        TextFormField(
-          decoration: InputDecoration(
-              contentPadding:
-                  const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-              constraints: const BoxConstraints(maxHeight: 30, minHeight: 20),
-              hintText: 'OTP',
-              hintStyle: const TextStyle(color: ColorPallete.mainColor),
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0))),
-        ),
-        const SizedBox(
-          height: 5,
-        ),
-        const Text.rich(
-          TextSpan(
-            children: [
-              TextSpan(
-                text: 'OTP code expires later ',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 12,
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-              TextSpan(
-                text: '59',
-                style: TextStyle(
-                  color: Color(0xFF5FB950),
-                  fontSize: 12,
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-              TextSpan(
-                text: ' seconds',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 12,
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            ],
-          ),
-          textAlign: TextAlign.center,
-        ),
-        Row(
+    int secondsLeft = 60;
+    bool isCounting = false;
+
+    void startTimer(setState) {
+      if (!isCounting) {
+        isCounting = true; // Đánh dấu đã bắt đầu đếm ngược
+      }
+    }
+
+    return Form(
+      key: _formKey,
+      child: StatefulBuilder(builder: (context, StateSetter setState) {
+        startTimer(setState);
+        return Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                  fixedSize: const Size(85, 20),
-                  backgroundColor: ColorPallete.redColor),
-              child: const Text('Cancel'),
+            const Text(
+              'Verify code has been sent to your email.\nPlease confirm it \n',
+              textAlign: TextAlign.center,
             ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-                displayDialog(
-                    context: context, content: enterPassword(context), height: 220);
+            TextFormField(
+              controller: otpController,
+              validator: (value) {
+                if (value == null || value == '') {
+                  return "Vui lòng nhập OTP";
+                } else {
+                  return null;
+                }
               },
-              style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                  fixedSize: const Size(85, 20),
-                  backgroundColor: ColorPallete.mainColor),
-              child: const Text('Confirm'),
+              decoration: InputDecoration(
+                  contentPadding:
+                      const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
+                  constraints:
+                      const BoxConstraints(maxHeight: 30, minHeight: 20),
+                  hintText: 'OTP',
+                  hintStyle: const TextStyle(color: ColorPallete.mainColor),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0))),
             ),
+            const SizedBox(
+              height: 5,
+            ),
+            TextFormField(
+              obscureText: true,
+              validator: (value) {
+                if (value == null || value == '') {
+                  return "Vui lòng nhập mật khẩu mới";
+                } else {
+                  return null;
+                }
+              },
+              controller: passwordController,
+              decoration: InputDecoration(
+                  hintStyle: const TextStyle(color: ColorPallete.mainColor),
+                  contentPadding:
+                      const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
+                  constraints:
+                      const BoxConstraints(maxHeight: 30, minHeight: 20),
+                  hintText: 'Password',
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0))),
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            TextFormField(
+              obscureText: true,
+              validator: (value) {
+                if (value == null || value == '') {
+                  return "Vui lòng nhập lại mật khẩu";
+                } else if (value != passwordController.text) {
+                  return 'Mật khẩu không trùng khớp';
+                } else {
+                  return null;
+                }
+              },
+              controller: confirmPasswordController,
+              decoration: InputDecoration(
+                  hintStyle: const TextStyle(color: ColorPallete.mainColor),
+                  contentPadding:
+                      const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
+                  constraints:
+                      const BoxConstraints(maxHeight: 30, minHeight: 20),
+                  hintText: 'Repeat Password',
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0))),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Text.rich(
+              TextSpan(
+                children: [
+                  const TextSpan(
+                    text: 'OTP code expires later ',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 12,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  TextSpan(
+                    text: secondsLeft.toString(),
+                    style: const TextStyle(
+                      color: Color(0xFF5FB950),
+                      fontSize: 12,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  const TextSpan(
+                    text: ' seconds',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 12,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ],
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    secondsLeft = 0;
+                    Navigator.pop(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      fixedSize: const Size(buttonHeight, 20),
+                      backgroundColor: ColorPallete.redColor),
+                  child: const Text('Cancel'),
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    if (_formKey.currentState!.validate()) {
+                      String? result =
+                          await UserDataServices.sendNewPasswordByOTP(
+                              otpController.text, passwordController.text);
+                      print(result);
+                      if (result == null && mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content:
+                                    Text('Password changed successfully!')));
+                        Navigator.of(context).pop();
+                      } else if (result != null && mounted) {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(SnackBar(content: Text(result)));
+                      }
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      fixedSize: const Size(buttonHeight, 20),
+                      backgroundColor: ColorPallete.mainColor),
+                  child: const Text('Confirm'),
+                ),
+              ],
+            )
           ],
-        )
-      ],
+        );
+      }),
     );
   }
 }

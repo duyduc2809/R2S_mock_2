@@ -118,7 +118,6 @@ class _LoginWidgetState extends State<LoginWidget> {
                               final user = User(
                                   email: emailController.text,
                                   password: passwordController.text);
-                              // print('object $_rememberMe');
                               final result = await BlocProvider.of<AppCubits>(
                                       context)
                                   .login(
@@ -172,7 +171,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                             onTap: () => ForgotPasswordWidget.displayDialog(
                                 context: context,
                                 content:
-                                    ForgotPasswordWidget.enterEmail(context)),
+                                    ForgotPasswordWidget.enterEmail(context, mounted)),
                             child: const Text('Forgot password?'),
                           )
                         ],

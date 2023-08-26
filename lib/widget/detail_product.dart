@@ -116,7 +116,7 @@ class _DetailProductState extends State<DetailProduct> {
                     ),
                     onPressed: () {},
                     child: const Text(
-                      'BUY NOW',
+                      'ADD TO CART',
                       style:
                           TextStyle(fontSize: 15, fontWeight: FontWeight.w800),
                     ),

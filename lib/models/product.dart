@@ -26,8 +26,8 @@ class Product {
   final List<Review>? reviews;
   final List<Image>? images;
 
-  Product({
-      this.id,
+  Product(
+      {this.id,
       this.category,
       this.manufacturer,
       this.description,
@@ -42,7 +42,7 @@ class Product {
       this.memories,
       this.reviews,
       this.images,
-      this.name });
+      this.name});
 
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
@@ -55,12 +55,19 @@ class Product {
         status: json["status"],
         views: json["views"],
         star: json["star"],
-        productTechs: List<ProductTech>.from(json["productTechDTOs"].map((e) => ProductTech.fromJson(e)).toList()),
-        series: List<Seri>.from(json["seriDTOs"].map((e) => Seri.fromJson(e)).toList()),
-        colors: List<ColorDTO>.from(json["colorDTOs"].map((e) => ColorDTO.fromJson(e)).toList()),
-        memories: List<Memory>.from(json["memoryDTOs"].map((e) => Memory.fromJson(e)).toList()),
-        reviews: List<Review>.from(json["reviewDTOs"].map((e) => Review.fromJson(e)).toList()),
-        images: List<Image>.from(json["imageDTOs"].map((e) => Image.fromJson(e)).toList()),
+        productTechs: List<ProductTech>.from(json["productTechDTOs"]
+            .map((e) => ProductTech.fromJson(e))
+            .toList()),
+        series: List<Seri>.from(
+            json["seriDTOs"].map((e) => Seri.fromJson(e)).toList()),
+        colors: List<ColorDTO>.from(
+            json["colorDTOs"].map((e) => ColorDTO.fromJson(e)).toList()),
+        memories: List<Memory>.from(
+            json["memoryDTOs"].map((e) => Memory.fromJson(e)).toList()),
+        reviews: List<Review>.from(
+            json["reviewDTOs"].map((e) => Review.fromJson(e)).toList()),
+        images: List<Image>.from(
+            json["imageDTOs"].map((e) => Image.fromJson(e)).toList()),
         name: json["name"]);
   }
 }

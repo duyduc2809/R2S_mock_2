@@ -6,9 +6,7 @@ import 'package:mobile_store/services/product_data.dart';
 
 import '../models/product.dart';
 
-
 class ListProduct extends StatefulWidget {
-  
   const ListProduct({super.key});
 
   @override
@@ -16,6 +14,7 @@ class ListProduct extends StatefulWidget {
 }
 
 class _ListProductState extends State<ListProduct> {
+  final String baseUrl = "http://45.117.170.206:60/apis/file/display/";
   late Future<List<Product>> futureListProducts;
   @override
   void initState() {
@@ -27,29 +26,23 @@ class _ListProductState extends State<ListProduct> {
   Widget build(BuildContext context) {
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
       return Center(
-        child:
-            InkWell(
-          onTap: () {
-            BlocProvider.of<AppCubits>(context).detailPage();
-          },
-          child: FutureBuilder(
-            future: futureListProducts,
-            builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                return Text("Retrieve Failed\n ${snapshot.error}");
-              } else if (snapshot.hasData) {
-                final List<Product> products = snapshot.data!;
-                return GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 3,
-                    crossAxisSpacing: 2
-                  ),
-                  scrollDirection: Axis.vertical,
-
-                  itemCount: products.length,
-
-                  itemBuilder: (context, index) => Card(
+        child: FutureBuilder(
+          future: futureListProducts,
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return Text("Retrieve Failed\n ${snapshot.error}");
+            } else if (snapshot.hasData) {
+              final List<Product> products = snapshot.data!;
+              return GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2, mainAxisSpacing: 3, crossAxisSpacing: 2),
+                scrollDirection: Axis.vertical,
+                itemCount: products.length,
+                itemBuilder: (context, index) => GestureDetector(
+                  onTap: () {
+                    BlocProvider.of<AppCubits>(context).detailPage();
+                  },
+                  child: Card(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15.0),
                     ),
@@ -59,15 +52,9 @@ class _ListProductState extends State<ListProduct> {
                       child: Column(
                         children: [
                           Container(
-                            height: 109,
-                            width: 106,
-                            decoration:  BoxDecoration(
-                                image: DecorationImage(
-                                    image:
-                                        // NetworkImage(baseUrl + (products)))
-                                        AssetImage("assets/img/samsung.jpg"))
-                                        ),
-                          ),
+                              height: 109,
+                              width: 106,
+                              child: Image.network(baseUrl)),
                           Text("${products[index].name}",
                               style: const TextStyle(
                                 fontSize: 12,
@@ -84,12 +71,12 @@ class _ListProductState extends State<ListProduct> {
                       ),
                     ),
                   ),
-                );
-              } else {
-                return const CircularProgressIndicator();
-              }
-            },
-          ),
+                ),
+              );
+            } else {
+              return const CircularProgressIndicator();
+            }
+          },
         ),
       );
     });

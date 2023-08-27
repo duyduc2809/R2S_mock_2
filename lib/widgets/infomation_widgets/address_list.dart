@@ -4,6 +4,8 @@ import 'package:mobile_store/cubit/address_cubit.dart';
 import 'package:mobile_store/cubit/state/address_state.dart';
 import 'package:mobile_store/models/address.dart';
 import 'package:mobile_store/services/address_data_service.dart';
+import 'package:mobile_store/services/address_data_repo.dart';
+import 'package:mobile_store/constants/title_text.dart';
 
 class AddressList extends StatefulWidget {
   const AddressList({super.key});
@@ -14,19 +16,266 @@ class AddressList extends StatefulWidget {
 
 class _AddressListState extends State<AddressList> {
   final addressCubit = AddressCubit(AddressRepository());
+  AddressDataRepository addressDataRepository = AddressDataRepository();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  late Address _newAddress;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     addressCubit.getAllAddresses();
+    addressDataRepository.setData();
   }
 
-  void showFormDialog({int? id}) {
+  void _onSubmitForm(Address address) {
+    if (_formKey.currentState!.validate()) {
+    } else {
+      print("Not Done Form Yet");
+    }
+  }
+
+  void showAddressFormDialog({int? id}) {
+    String? provinceSelected = addressDataRepository.provinceList[0];
+    String? districtSelected =
+        addressDataRepository.districts[provinceSelected]![0];
+    String? wardSelected = addressDataRepository.wards[districtSelected]![0];
+
+    bool isChecked = false;
     showDialog(
-      context: context,
-      builder: (context) => AlertDialog(),
-    );
+        context: context,
+        builder: (context) {
+          return Dialog(child: StatefulBuilder(
+            builder: (context, setState) {
+              return Container(
+                height: 515,
+                width: double.maxFinite,
+                child: Column(
+                  children: [
+                    Container(
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.all(5),
+                      width: double.maxFinite,
+                      child: TitleText(
+                        text: "Delivery Address",
+                        size: 25,
+                      ),
+                      decoration: BoxDecoration(
+                          color: Colors.grey[300],
+                          border:
+                              Border.all(width: 3, color: Colors.grey.shade400),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5))),
+                    ),
+                    Flexible(
+                        child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Container(
+                                height: 30,
+                                width: 75,
+                                decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.orange)),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Icon(Icons.home),
+                                    Text(
+                                      "Home",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                height: 30,
+                                width: 75,
+                                decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.orange)),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Icon(Icons.work),
+                                    Text(
+                                      "Work",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    )
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Form(
+                              key: _formKey,
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Container(
+                                      height: 60,
+                                      child: DropdownButtonFormField<String>(
+                                          icon: const Icon(
+                                            Icons.arrow_drop_down,
+                                            color: Colors.green,
+                                          ),
+                                          decoration: const InputDecoration(
+                                            hintStyle: TextStyle(
+                                                fontSize: 15,
+                                                color: Colors.green),
+                                            border: OutlineInputBorder(),
+                                          ),
+                                          value: provinceSelected,
+                                          items: addressDataRepository
+                                              .provinceList
+                                              .map((e) =>
+                                                  DropdownMenuItem<String>(
+                                                      value: e,
+                                                      child: Text(
+                                                        e,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                      )))
+                                              .toList(),
+                                          onChanged: (value) {
+                                            setState(() {
+                                              provinceSelected = value;
+                                              districtSelected =
+                                                  addressDataRepository
+                                                          .districts[
+                                                      provinceSelected]![0];
+                                              wardSelected =
+                                                  addressDataRepository.wards[
+                                                      districtSelected]![0];
+                                            });
+                                          })),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  Container(
+                                      height: 60,
+                                      width: double.maxFinite,
+                                      child: DropdownButtonFormField<String>(
+                                          icon: const Icon(
+                                            Icons.arrow_drop_down,
+                                            color: Colors.green,
+                                          ),
+                                          decoration: const InputDecoration(
+                                            hintStyle: TextStyle(
+                                                fontSize: 15,
+                                                color: Colors.green),
+                                            border: OutlineInputBorder(),
+                                          ),
+                                          value: districtSelected,
+                                          items: addressDataRepository
+                                              .districts[provinceSelected]!
+                                              .map((e) =>
+                                                  DropdownMenuItem<String>(
+                                                    value: e,
+                                                    child: Text(
+                                                      e,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: TextStyle(
+                                                          fontFamily:
+                                                              "RobotoSlap"),
+                                                    ),
+                                                  ))
+                                              .toList(),
+                                          onChanged: (value) {
+                                            setState(() {
+                                              districtSelected = value;
+                                              wardSelected =
+                                                  addressDataRepository.wards[
+                                                      districtSelected]![0];
+                                            });
+                                          })),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  Container(
+                                      height: 60,
+                                      width: double.maxFinite,
+                                      child: DropdownButtonFormField<String>(
+                                          decoration: const InputDecoration(
+                                            hintStyle: TextStyle(
+                                                fontSize: 15,
+                                                color: Colors.green),
+                                            border: OutlineInputBorder(),
+                                          ),
+                                          value: wardSelected,
+                                          items: addressDataRepository
+                                              .wards[districtSelected]!
+                                              .map((e) =>
+                                                  DropdownMenuItem<String>(
+                                                      value: e,
+                                                      child: Text(
+                                                        e,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                      )))
+                                              .toList(),
+                                          onChanged: (value) {
+                                            setState(() {
+                                              wardSelected = value;
+                                            });
+                                          })),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  TextFormField(
+                                    decoration: InputDecoration(
+                                        hintText: "Details",
+                                        border: OutlineInputBorder()),
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return "Need fill";
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  CheckboxListTile(
+                                      title: Text("Set default address"),
+                                      value: isChecked,
+                                      onChanged: (value) {
+                                        setState(
+                                          () => isChecked = value!,
+                                        );
+                                      }),
+                                  ButtonBar(
+                                    alignment: MainAxisAlignment.spaceAround,
+                                    children: [
+                                      ElevatedButton(
+                                          onPressed: () {
+                                            String location =
+                                                "${provinceSelected!}, ${districtSelected!}, ${wardSelected!}";
+                                          },
+                                          child: Text("Save")),
+                                      ElevatedButton(
+                                          onPressed: () {},
+                                          child: Text("Close")),
+                                    ],
+                                  )
+                                ],
+                              )),
+                        ],
+                      ),
+                    ))
+                  ],
+                ),
+              );
+            },
+          ));
+        });
   }
 
   @override
@@ -151,7 +400,9 @@ class _AddressListState extends State<AddressList> {
               }),
             )),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                showAddressFormDialog();
+              },
               style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
               child: const Text("Add"),
             )

@@ -46,10 +46,10 @@ class AppCubits extends Cubit<CubitStates> {
   }
 
   //hàm xử lý đăng nhập
-  Future<bool> login(User user, bool rememberMe) async {
+  Future<String?> login(User user, bool rememberMe) async {
     final result = await UserDataServices.loginUser(user, rememberMe);
     emit(LoadingState());
-    if (result == false) {
+    if (result != null) {
       emit(SignInState());
     } else {
       emit(LoadingState());

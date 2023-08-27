@@ -271,7 +271,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                                   child: const Text('Confirm'),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 9,
                               ),
                               Expanded(

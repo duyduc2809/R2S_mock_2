@@ -49,7 +49,7 @@ class UserDataServices {
   }
 
   //login user
-  static Future<bool> loginUser(User user, bool rememberMe) async {
+  static Future<String?> loginUser(User user, bool rememberMe) async {
     final uri = Uri.parse(urlLogin);
     late final jsonResponse;
     final body = json.encode({'email': user.email, 'password': user.password});
@@ -69,10 +69,10 @@ class UserDataServices {
       HiveHelper.saveData(apiUser, rememberMe);
       print(jsonResponse);
 
-      return true;
+      return null;
     } else {
 
-      return false;
+      return jsonResponse['message'];
     }
   }
 

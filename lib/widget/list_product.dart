@@ -53,9 +53,12 @@ class _ListProductState extends State<ListProduct> {
                           Container(
                               height: 109,
                               width: 106,
-                              child: Image.network(
-                                ProductData.baseUrl + (products[index].images.toString()
-                              ))),
+                              child: 
+                              Image.asset("assets/img/samsung.jpg")
+                              // Image.network(
+                                // ProductData.baseUrl + (products[index].images!["name"].toString()
+                              // ))
+                              ),
                           Text("${products[index].name}",
                               style: const TextStyle(
                                 fontSize: 12,

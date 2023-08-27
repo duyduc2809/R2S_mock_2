@@ -176,7 +176,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
     void startTimer(setState) {
       if (!isCounting) {
         isCounting = true; // Đánh dấu đã bắt đầu đếm ngược
-        timer = Timer.periodic(Duration(seconds: 1), (timer) {
+        timer = Timer.periodic(const Duration(seconds: 1), (timer) {
           if (secondsLeft > 0) {
             setState(() {
               secondsLeft--;
@@ -249,14 +249,14 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                             const SizedBox(
                               height: 5,
                             ),
-                            Container(
+                            SizedBox(
                               width: double.maxFinite,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   Text(
                                     '${otpController.text.length}/4',
-                                    style: TextStyle(color: Colors.grey),
+                                    style: const TextStyle(color: Colors.grey),
                                   ),
                                   Text(
                                       ("Sent OTP via email: ${secondsLeft.toString()}s"))

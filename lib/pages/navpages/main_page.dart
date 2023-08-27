@@ -16,19 +16,19 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  List pages = [HomePage(), CartPage(), InformationPage()];
+  List pages = [const HomePage(), const CartPage(), const InformationPage()];
   int currentIndex = 0;
 
   Widget _buildBody(BuildContext context) {
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
       if (state is DetailProductState) {
-        return DetailProduct();
+        return const DetailProduct();
       } else if (state is CartPageState) {
-        return CartPage();
+        return const CartPage();
       } else if (state is InformationPageState) {
-        return InformationPage();
+        return const InformationPage();
       } else {
-        return HomePage();
+        return const HomePage();
       }
     });
   }

@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:mobile_store/models/product.dart';
+import 'package:mobile_store/models/product/product.dart';
 import 'package:http/http.dart' as http;
 
 class ProductData {

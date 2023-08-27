@@ -4,7 +4,7 @@ import 'package:mobile_store/cubit/app_cubit_states.dart';
 import 'package:mobile_store/cubit/app_cubits.dart';
 import 'package:mobile_store/services/product_data.dart';
 
-import '../models/product.dart';
+import '../../models/product/product.dart';
 
 class ListProduct extends StatefulWidget {
   const ListProduct({super.key});
@@ -53,19 +53,16 @@ class _ListProductState extends State<ListProduct> {
                           Container(
                               height: 109,
                               width: 106,
-                              child: 
-                              Image.asset("assets/img/samsung.jpg")
-                              // Image.network(
-                                // ProductData.baseUrl + (products[index].images!["name"].toString()
-                              // ))
-                              ),
+                              child: Image.network(
+                                ProductData.baseUrl + (products[index].images![1].name
+                              ))),
                           Text("${products[index].name}",
                               style: const TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w600,
                               )),
                           Text(
-                            "${products[index].price} USD",
+                            "${products[index].price} VND",
                             style: const TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w700,

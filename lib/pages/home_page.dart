@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_store/cubit/app_cubit_states.dart';
 import 'package:mobile_store/cubit/app_cubits.dart';
-import 'package:mobile_store/widget/list_product.dart';
+import 'package:mobile_store/widgets/product_widgets/list_product.dart';
 import 'package:mobile_store/widgets/custom_app_bar.dart';
 
 class HomePage extends StatefulWidget {

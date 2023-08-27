@@ -58,6 +58,15 @@ class ProductCart extends StatelessWidget {
                   ],
                 ),
               ),
+              GestureDetector(
+                onTap: () {},
+                child: Container(
+                    margin: const EdgeInsets.only(left: 60),
+                    width: 24,
+                    height: 24,
+                    child: Image.asset('assets/img/delete.png'),
+                  ),
+              ),
             ],
           ),
         ),

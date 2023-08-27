@@ -14,7 +14,6 @@ class ListProduct extends StatefulWidget {
 }
 
 class _ListProductState extends State<ListProduct> {
-  final String baseUrl = "http://45.117.170.206:60/apis/file/display/";
   late Future<List<Product>> futureListProducts;
   @override
   void initState() {
@@ -40,7 +39,7 @@ class _ListProductState extends State<ListProduct> {
                 itemCount: products.length,
                 itemBuilder: (context, index) => GestureDetector(
                   onTap: () {
-                    BlocProvider.of<AppCubits>(context).detailPage();
+                    BlocProvider.of<AppCubits>(context).detailPage(products[index]);
                   },
                   child: Card(
                     shape: RoundedRectangleBorder(
@@ -54,14 +53,16 @@ class _ListProductState extends State<ListProduct> {
                           Container(
                               height: 109,
                               width: 106,
-                              child: Image.network(baseUrl)),
+                              child: Image.network(
+                                ProductData.baseUrl + (products[index].images.toString()
+                              ))),
                           Text("${products[index].name}",
                               style: const TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w600,
                               )),
                           Text(
-                            "${products[index].price}",
+                            "${products[index].price} USD",
                             style: const TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w700,

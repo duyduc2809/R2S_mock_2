@@ -44,8 +44,6 @@ class _DetailProductState extends State<DetailProduct> {
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
       if (state is DetailProductState) {
         return Scaffold(
-
-
           appBar: CustomAppBar(
             logged: true,
             title: '',

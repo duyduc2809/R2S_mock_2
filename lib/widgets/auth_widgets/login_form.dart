@@ -124,9 +124,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                                       user,
                                       BlocProvider.of<CheckBoxCubit>(context)
                                           .isChecked);
-                              if (result == false) {
+                              if (result != null) {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(content: Text('Failed')));
+                                    SnackBar(content: Text(result)));
                               }
                             }
                           },

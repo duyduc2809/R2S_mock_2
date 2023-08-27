@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_store/cubit/app_cubit_states.dart';
 import 'package:mobile_store/widgets/custom_input_decoration.dart';
 
+import '../constants/color_const.dart';
+import '../constants/dimension_const.dart';
 import '../constants/size_config.dart';
 import '../constants/text_style_const.dart';
 import '../cubit/app_cubits.dart';
@@ -18,6 +20,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final statusBarHeight = SizeConfig.statusbarHeight;
   User? user;
   BuildContext context;
+  bool agreeLogout = false;
 
   CustomAppBar(
       {super.key,
@@ -41,7 +44,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         break;
       default:
         return _buildBasicMode();
-        break;
     }
     return null;
   }
@@ -85,9 +87,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     ),
                   ),
                   TextButton(
-                      onPressed: () {
-                        HiveHelper.deleteSavedData();
-                        BlocProvider.of<AppCubits>(context).loginPage();
+                      onPressed: () async {
+                        await _dialogBuilder(context);
+                        if (agreeLogout == true) {
+                          HiveHelper.deleteSavedData();
+                          BlocProvider.of<AppCubits>(context).loginPage();
+                        }
                       },
                       child: const Text(
                         'Logout',
@@ -101,6 +106,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           ],
         ));
   }
+
   _buildBasicMode() {
     return Positioned.fill(
         top: SizeConfig.statusbarHeight,
@@ -125,7 +131,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ],
               ),
             ),
-
           ],
         ));
   }
@@ -199,5 +204,99 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize {
     double statusBarHeight = MediaQuery.of(context).padding.top;
     return Size(double.maxFinite, getHeight());
+  }
+
+  Future<void> _dialogBuilder(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return Dialog(
+            child: Container(
+              height: 190,
+              decoration: ShapeDecoration(
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(
+                    width: 0.50,
+                    color: Colors.black.withOpacity(0.20000000298023224),
+                  ),
+                ),
+              ),
+              child: Column(
+                children: [
+                  SizedBox(
+                      width: double.maxFinite,
+                      height: 37,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          IconButton(
+                              onPressed: () {
+                                agreeLogout = false;
+                                Navigator.pop(context);
+                              },
+                              icon: const Icon(Icons.close))
+                        ],
+                      )),
+                  SizedBox(height: 20,),
+                  Column(
+                    children: [
+                      const Text(
+                        'Are you sure to do this?',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 24,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      SizedBox(
+                        width: double.maxFinite,
+                        child: Padding(
+
+                          padding: const EdgeInsets.symmetric(horizontal: 30),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    agreeLogout = true;
+                                    Navigator.pop(context);
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(5)),
+                                      fixedSize: const Size(smallButtonHeight, 20),
+                                      backgroundColor: const Color(0xFFD1BEBE)),
+                                  child: const Text('Confirm'),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 9,
+                              ),
+                              Expanded(
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(5)),
+                                      fixedSize: const Size(smallButtonHeight, 20),
+                                      backgroundColor: ColorPallete.mainColor),
+                                  child: const Text('Cancel'),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+          );
+        });
   }
 }

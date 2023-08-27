@@ -46,7 +46,8 @@ class _AddressListState extends State<AddressList> {
         builder: (context) {
           return Dialog(child: StatefulBuilder(
             builder: (context, setState) {
-              return Container(
+              return Expanded(
+                  child: Container(
                 height: 515,
                 width: double.maxFinite,
                 child: Column(
@@ -272,7 +273,7 @@ class _AddressListState extends State<AddressList> {
                     ))
                   ],
                 ),
-              );
+              ));
             },
           ));
         });
@@ -281,10 +282,16 @@ class _AddressListState extends State<AddressList> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
-        margin: const EdgeInsets.symmetric(horizontal: 9),
-        color: Colors.white,
-        width: double.maxFinite,
+        padding: const EdgeInsets.all(10),
+        margin: const EdgeInsets.only(left: 2.0, right: 2.0),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(10.0),
+            bottomRight: Radius.circular(10.0),
+          ),
+        ),
+        width: 375,
         height: 167,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -351,12 +358,13 @@ class _AddressListState extends State<AddressList> {
                                       height: 22,
                                       width: 69,
                                       decoration: BoxDecoration(
-                                          border: Border.all(color: Colors.red),
+                                          border:
+                                              Border.all(color: Colors.orange),
                                           color: Colors.grey[200]),
                                       child: const Text(
-                                        "Default",
+                                        "Home",
                                         style: TextStyle(
-                                          color: Colors.red,
+                                          color: Colors.orange,
                                         ),
                                       ),
                                     )
@@ -371,17 +379,18 @@ class _AddressListState extends State<AddressList> {
                             children: [
                               IconButton(
                                   onPressed: () {},
-                                  icon: const Icon(
-                                    Icons.edit,
-                                    color: Colors.blue,
+                                  icon: Image.asset(
+                                    'assets/img/edit (3) 2.png',
+                                    width: 24,
+                                    height: 24,
                                   )),
                               IconButton(
-                                onPressed: () {},
-                                icon: const Icon(
-                                  Icons.delete,
-                                  color: Colors.red,
-                                ),
-                              )
+                                  onPressed: () {},
+                                  icon: Image.asset(
+                                    'assets/img/delete.png',
+                                    width: 24,
+                                    height: 24,
+                                  )),
                             ],
                           ))
                         ],

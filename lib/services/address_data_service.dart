@@ -3,17 +3,17 @@ import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:mobile_store/models/address.dart';
+import 'package:mobile_store/models/api_user.dart';
+import 'package:mobile_store/services/hive_helpers.dart';
 
 class AddressRepository {
   static const addressUrl = "http://45.117.170.206:60/apis/address";
 
   Future<List<Address>> getAllAddresses() async {
+    final APIUser user = await HiveHelper.loadUserData();
     final uri = Uri.parse(addressUrl);
-    final response = await http.get(uri, headers: {
-      HttpHeaders.contentTypeHeader: "application/json",
-      HttpHeaders.authorizationHeader:
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2b3RpZW4xMjM0NUBnbWFpbC5jb20iLCJyb2xlcyI6W3siYXV0aG9yaXR5IjoiUm9sZV9DdXN0b21lciJ9XSwiaWF0IjoxNjkzMDU0NjI1LCJleHAiOjE2OTMwNzI2MjV9.kCFU2sNMYI_NgMjAKLtL1Qc1VO6u_YT3N2n4vQdD6Mo"
-    });
+    final response =
+        await http.get(uri, headers: {'Authorization': 'Bearer ${user.token}'});
     if (response.statusCode == 200) {
       return _parseJsonList(response.body);
     } else {

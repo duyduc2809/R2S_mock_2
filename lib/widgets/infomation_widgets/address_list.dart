@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_store/cubit/address_cubit.dart';
 import 'package:mobile_store/cubit/state/address_state.dart';
 import 'package:mobile_store/models/address.dart';
-import 'package:mobile_store/constants/fetch_address.dart';
+import 'package:mobile_store/services/address_data_service.dart';
 
 class AddressList extends StatefulWidget {
   const AddressList({super.key});

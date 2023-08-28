@@ -1,16 +1,15 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:mobile_store/cubit/app_cubit_states.dart';
 import 'package:mobile_store/cubit/auth_cubit/auth_cubits_state.dart';
-import 'package:mobile_store/pages/home_page.dart';
-import 'package:mobile_store/pages/login_page.dart';
+
 import 'package:mobile_store/services/hive_helpers.dart';
 import 'package:mobile_store/services/user_data_services.dart';
 
 import '../models/user.dart';
 
 class AppCubits extends Cubit<CubitStates> {
-  late final User userData;
+  static late User userData;
   UserDataServices dataServices;
 
   AppCubits({required this.dataServices}) : super(InitialState()) {
@@ -22,8 +21,9 @@ class AppCubits extends Cubit<CubitStates> {
     try {
       emit(LoadingState());
       userData = await dataServices.getUser();
-      emit(UserLoadedState(userData));
+      emit(HomePageState());
     } catch (e) {
+      print(e);
       throw Exception();
     }
   }
@@ -70,5 +70,17 @@ class AppCubits extends Cubit<CubitStates> {
 
   registerPage() {
     emit(RegisterState());
+  }
+
+  detailPage() {
+    emit(DetailProductState());
+  }
+
+  informationPage() {
+    emit(InformationPageState());
+  }
+
+  cartPage() {
+    emit(CartPageState());
   }
 }

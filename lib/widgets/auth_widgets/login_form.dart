@@ -1,13 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_store/constants/color_const.dart';
 import 'package:mobile_store/constants/dimension_const.dart';
 import 'package:mobile_store/constants/size_config.dart';
 import 'package:mobile_store/models/user.dart';
-import 'package:mobile_store/services/user_data_services.dart';
+
 import 'package:mobile_store/widgets/custom_input_decoration.dart';
-import 'package:mobile_store/widgets/custom_text_form_field.dart';
 
 import '../../cubit/app_cubits.dart';
 import 'forgot_password_widgets.dart';
@@ -45,7 +43,6 @@ class LoginWidget extends StatefulWidget {
 
 class _LoginWidgetState extends State<LoginWidget> {
   final _formKey = GlobalKey<FormState>();
-  bool _rememberMe = false;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -81,7 +78,6 @@ class _LoginWidgetState extends State<LoginWidget> {
                 child: TextFormField(
                     validator: (value) {
                       if (value == '' || value == null) {
-                        print('object');
                         return 'Please enter your email';
                       }
                       return null;
@@ -97,7 +93,6 @@ class _LoginWidgetState extends State<LoginWidget> {
                 child: TextFormField(
                     validator: (value) {
                       if (value == '' || value == null) {
-                        print('object');
                         return 'Please enter your password';
                       }
                       return null;
@@ -154,7 +149,6 @@ class _LoginWidgetState extends State<LoginWidget> {
                           InkWell(
                             onTap: () {
                               context.read<CheckBoxCubit>()._onChanged();
-                              _rememberMe = state.isChecked;
                             },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,

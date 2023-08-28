@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_store/constants/size_config.dart';
-
-import '../widgets/auth_widgets/login_form.dart';
 import '../widgets/auth_widgets/register_form.dart';
 import '../widgets/custom_app_bar.dart';
 

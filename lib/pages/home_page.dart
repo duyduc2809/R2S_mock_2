@@ -76,7 +76,6 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-
                   Container(
                     width: 300,
                     height: 350,

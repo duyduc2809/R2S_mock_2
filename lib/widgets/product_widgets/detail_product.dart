@@ -88,17 +88,17 @@ class _DetailProductState extends State<DetailProduct> {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      CustomButtonDetail(text: state.product.memories![0].name),
                       CustomButtonDetail(text: "64 GB"),
-                      CustomButtonDetail(text: "64 GB"),
-                      CustomButtonDetail(text: "64 GB"),
+                      CustomButtonDetail(text: "256 GB"),
                     ],
                   ),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      CustomButtonDetail(text: "Blue"),
-                      CustomButtonDetail(text: "Black"),
-                      CustomButtonDetail(text: "Red"),
+                      CustomButtonDetail(text: state.product.colors![0].name),
+                      CustomButtonDetail(text: state.product.colors![1].name),
+                      // CustomButtonDetail(text: state.product.colors![2].name),
                     ],
                   ),
                    Text(

@@ -7,9 +7,9 @@ class UserInformation extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      padding: const EdgeInsets.symmetric(horizontal: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 6),
       margin: const EdgeInsets.symmetric(horizontal: 9, vertical: 9),
-      width: 375,
+      width: double.maxFinite,
       height: 155,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,13 +33,20 @@ class UserInformation extends StatelessWidget {
           ),
           Row(
             children: [
-              Image.asset(
+              SizedBox(
+                  child: Image.asset(
                 'assets/img/phone.png',
                 width: 20,
                 height: 20,
+              )),
+              const SizedBox(
+                width: 2,
               ),
               const Text('0941893338')
             ],
+          ),
+          const SizedBox(
+            height: 6,
           ),
           Row(
             children: [
@@ -49,10 +56,13 @@ class UserInformation extends StatelessWidget {
                   width: 20,
                   height: 20,
                 ),
+                const SizedBox(
+                  width: 2,
+                ),
                 const Text('Tran Ky Anh')
               ]),
               const SizedBox(
-                width: 100,
+                width: 70,
               ),
               Row(children: [
                 Image.asset(
@@ -60,9 +70,15 @@ class UserInformation extends StatelessWidget {
                   width: 20,
                   height: 20,
                 ),
+                const SizedBox(
+                  width: 2,
+                ),
                 const Text('Male')
               ])
             ],
+          ),
+          const SizedBox(
+            height: 6,
           ),
           Row(
             children: [
@@ -72,10 +88,13 @@ class UserInformation extends StatelessWidget {
                   width: 20,
                   height: 20,
                 ),
+                const SizedBox(
+                  width: 2,
+                ),
                 const Text('01/01/2001')
               ]),
               const SizedBox(
-                width: 100,
+                width: 70,
               ),
               Row(children: [
                 Image.asset(
@@ -83,9 +102,15 @@ class UserInformation extends StatelessWidget {
                   width: 20,
                   height: 20,
                 ),
+                const SizedBox(
+                  width: 2,
+                ),
                 const Text('kyanh@gmail.com')
               ])
             ],
+          ),
+          const SizedBox(
+            height: 5,
           ),
           ButtonTheme(
               height: 20,
@@ -102,19 +127,3 @@ class UserInformation extends StatelessWidget {
     );
   }
 }
-//   Row inforRow(BuildContext context,
-//       {required IconData icon, required String text}) {
-//     return Row(
-//       children: [
-//         Icon(
-//           icon,
-//           color: Colors.green,
-//         ),
-//         Text(
-//           text,
-//           style: Theme.of(context).textTheme.bodyMedium,
-//         )
-//       ],
-//     );
-//   }
-// }

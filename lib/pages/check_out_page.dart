@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_store/constants/size_config.dart';
+import 'package:mobile_store/models/cart_product.dart';
+import 'package:mobile_store/widgets/cart_tab.dart';
+import '../constants/fetch_cart_product.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/payment_radio_button.dart';
 
@@ -18,6 +21,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
   static int discountPercent= 40 ;
   static int deliveryFee= 15 ;
   static int totalFee= 1500 ;
+
 
   @override
   Widget build(BuildContext context) {
@@ -112,12 +116,8 @@ class _CheckOutPageState extends State<CheckOutPage> {
                 decoration: const BoxDecoration(
                   color: Colors.grey,
                 ),
-                child:const Column(
-                  children: [
-                   const Text('Cart'),
-                  ],
+                child: const CartTab(),
                 ),
-              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -180,7 +180,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                           ),
                         ),
                          Text(
-                          '$totalFee USD',
+                          '${CartData().totalCart} USD',
                           style:const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w600,

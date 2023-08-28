@@ -13,9 +13,7 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
-  bool ch1 = false;
-
-  bool ch2 = false;
+  bool click = true;
 
   @override
   Widget build(BuildContext context) {
@@ -24,12 +22,11 @@ class _CartPageState extends State<CartPage> {
         return Scaffold(
             backgroundColor: Colors.white,
             appBar: CustomAppBar(
-              logged: true,
-              title: '',
-              showUserInfo: true,
-              context: context,
-              user: AppCubits.userData
-            ),
+                logged: true,
+                title: '',
+                showUserInfo: true,
+                context: context,
+                user: AppCubits.userData),
             body: SingleChildScrollView(
               child: Container(
                 margin: const EdgeInsets.only(left: 20, right: 26, bottom: 20),
@@ -101,7 +98,7 @@ class _CartPageState extends State<CartPage> {
                                 children: [
                                   Text.rich(
                                     TextSpan(
-                                        text: "Temporary price: ",
+                                        text: "Grand total: ",
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 16),
@@ -116,19 +113,122 @@ class _CartPageState extends State<CartPage> {
                               ),
                             ],
                           ),
-                          const Column(
+                          Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              Text(
+                              const Text(
                                 "ADDRESS",
                                 style: TextStyle(fontWeight: FontWeight.w400),
                               ),
+                              Container(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            click = !click;
+                                          });
+                                        },
+                                        child: SizedBox(
+                                          child: Image.asset((click == true)
+                                              ? "assets/img/radio.png"
+                                              : "assets/img/radio_select.png"),
+                                        ),
+                                      ),
+                                      const Text.rich(TextSpan(
+                                          text: "Tran Ky Anh ",
+                                          children: [
+                                            TextSpan(
+                                                text: " | 0583841958 ",
+                                                style: TextStyle(
+                                                    color: Colors.grey)),
+                                            TextSpan(
+                                                text:
+                                                    "\n 515 a2-07 Le Van Luong ",
+                                                style: TextStyle(
+                                                    color: Colors.grey)),
+                                            TextSpan(
+                                                text:
+                                                    "\n Tan Phong ward, district 7, HoChiMinh city",
+                                                style: TextStyle(
+                                                    color: Colors.grey)),
+                                          ])),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.only(
+                                    left: 60, top: 10, bottom: 5),
+                                child: Text(
+                                  "Add another address",
+                                  style: TextStyle(
+                                    color: Color.fromRGBO(80, 155, 210, 1),
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ),
                               Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
-                                  
+                                  Container(
+                                    width: 170,
+                                    height: 35,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(5),
+                                        color: Color(0xff5bb85d)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: [
+                                          SizedBox(
+                                            child: Image.asset(
+                                                "assets/img/left_circle.png"),
+                                          ),
+                                          const Text(
+                                            "Continue Shopping",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 14),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 115,
+                                    height: 35,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(5),
+                                        color: Color(0xffefac4e)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: [
+                                          SizedBox(
+                                            child: Image.asset(
+                                                "assets/img/cart.png"),
+                                          ),
+                                          const Text(
+                                            "Check out",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 14),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  )
                                 ],
                               ),
-                         
                             ],
                           )
                         ],

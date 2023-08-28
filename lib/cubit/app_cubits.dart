@@ -11,7 +11,6 @@ import '../models/user.dart';
 class AppCubits extends Cubit<CubitStates> {
   static late User userData;
   UserDataServices dataServices;
-
   AppCubits({required this.dataServices}) : super(InitialState()) {
     emit(LoadingState());
     init();
@@ -47,10 +46,10 @@ class AppCubits extends Cubit<CubitStates> {
   }
 
   //hàm xử lý đăng nhập
-  Future<bool> login(User user, bool rememberMe) async {
+  Future<String?> login(User user, bool rememberMe) async {
     final result = await UserDataServices.loginUser(user, rememberMe);
     emit(LoadingState());
-    if (result == false) {
+    if (result != null) {
       emit(SignInState());
     } else {
       emit(LoadingState());
@@ -61,7 +60,7 @@ class AppCubits extends Cubit<CubitStates> {
   }
 
   //hàm xử lý đăng ký
-  register(User user) async {
+  Future<String?> register(User user) async {
     final result = await UserDataServices.createUser(user);
     emit(LoadingState());
     emit(RegisterState());
@@ -72,8 +71,9 @@ class AppCubits extends Cubit<CubitStates> {
     emit(RegisterState());
   }
 
-  detailPage() {
-    emit(DetailProductState());
+  detailPage(product) {
+
+    emit(DetailProductState(product: product));
   }
 
   informationPage() {

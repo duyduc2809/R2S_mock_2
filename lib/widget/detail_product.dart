@@ -44,8 +44,6 @@ class _DetailProductState extends State<DetailProduct> {
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
       if (state is DetailProductState) {
         return Scaffold(
-
-
           appBar: CustomAppBar(
             logged: true,
             title: '',
@@ -116,7 +114,7 @@ class _DetailProductState extends State<DetailProduct> {
                     ),
                     onPressed: () {},
                     child: const Text(
-                      'BUY NOW',
+                      'ADD TO CART',
                       style:
                           TextStyle(fontSize: 15, fontWeight: FontWeight.w800),
                     ),

@@ -12,9 +12,17 @@ class UserDataServices {
   static const urlGetUserByID = 'http://45.117.170.206:60/apis/user/';
   static const urlCreate = 'http://45.117.170.206:60/apis/user/';
   static const urlLogin = 'http://45.117.170.206:60/apis/login';
+  static const urlForgotPassword =
+      'http://45.117.170.206:60/apis/mail/forgot-password/';
+  static const urlChangePasswordByOTP =
+      'http://45.117.170.206:60/apis/user/change-password-by-otp/';
+  static const urlActiveOtp =
+      'http://45.117.170.206:60/apis/user/active-otp?activeOTP=';
+  static const urlActiveUser =
+      'http://45.117.170.206:60/apis/mail/active-user?email=';
 
   //create new user account
-  static Future<bool> createUser(User user) async {
+  static Future<String?> createUser(User user) async {
     final uri = Uri.parse(urlCreate);
     final body = jsonEncode({
       'fullName': user.fullName.toString(),
@@ -28,23 +36,22 @@ class UserDataServices {
       body: body,
       headers: {'Content-Type': 'application/json'},
     );
+    final jsonResponse = json.decode(response.body);
     if (response.statusCode == 201) {
+      UserDataServices.sendActiveUser(user.email);
       print('create successfully');
-      final jsonResponse = json.decode(response.body);
       print(jsonResponse);
-      return true;
-    } else {
-      final jsonResponse = json.decode(response.body);
+      return null;
+     } else {
       print(jsonResponse);
-      return false;
+      return jsonResponse['message'] ?? jsonResponse['error'];
     }
   }
 
   //login user
-  static Future<bool> loginUser(User user, bool rememberMe) async {
+  static Future<String?> loginUser(User user, bool rememberMe) async {
     final uri = Uri.parse(urlLogin);
-    print(user.email);
-    print(user.password);
+    late final jsonResponse;
     final body = json.encode({'email': user.email, 'password': user.password});
 
     final response = await http.post(
@@ -52,22 +59,23 @@ class UserDataServices {
       body: body,
       headers: {'Content-Type': 'application/json'},
     );
+
+    jsonResponse = json.decode(response.body);
     if (response.statusCode == 201) {
       print('login successfully');
-      final jsonResponse = json.decode(response.body);
-      // print(jsonResponse);
-      print('asdassd $rememberMe');
+    print(jsonResponse['messsage']);
 
       final apiUser = APIUser.fromJson(jsonResponse);
       HiveHelper.saveData(apiUser, rememberMe);
-
-      return true;
-    } else {
-      final jsonResponse = json.decode(response.body);
       print(jsonResponse);
-      return false;
+
+      return null;
+    } else {
+
+      return jsonResponse['message'];
     }
   }
+
   //(hàm được gọi từ hàm login của AppCubits, dùng để lấy về thông tin của user đã đăng nhập)
   Future<User> getUser() async {
     final APIUser user = await HiveHelper.loadUserData();
@@ -90,6 +98,77 @@ class UserDataServices {
     } catch (e) {
       print(e);
       throw Exception();
+    }
+  }
+
+  static Future<String?> sendForgotEmail(String? value) async {
+    const url = urlForgotPassword;
+    final uri = Uri.parse('$url$value');
+
+    final response = await http.get(
+      uri,
+      // headers: {'Content-Type': 'application/json'},
+      // headers: {'Authorization': 'Bearer ${user.token}'},
+    );
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      return null;
+    } else {
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      print(responseData);
+      return responseData['message'] ?? responseData['error'];
+    }
+  }
+
+  static Future<String?> sendNewPasswordByOTP(
+      String? otp, String? newPassword) async {
+    const url = urlChangePasswordByOTP;
+    final uri = Uri.parse(url);
+    final body = jsonEncode(
+        {'otp': otp.toString(), 'newPassword': newPassword.toString()});
+    final response = await http.post(
+      uri,
+      body: body,
+      headers: {'Content-Type': 'application/json'},
+    );
+    final Map<String, dynamic> responseData = json.decode(response.body);
+    print(responseData);
+    if (response.statusCode == 200) {
+      return null;
+    } else {
+      return responseData['errors'];
+    }
+  }
+
+  static Future<String?> sendActiveOTP(String? otp) async {
+    const url = urlActiveOtp;
+    final uri = Uri.parse('$url$otp');
+
+    final response = await http.get(
+      uri,
+      // headers: {'Content-Type': 'application/json'},
+    );
+    if (response.statusCode == 200) {
+      return null;
+    } else {
+      return "Wrong OTP";
+    }
+  }
+
+  static Future<String?> sendActiveUser(String? email) async {
+    const url = urlActiveUser;
+    final uri = Uri.parse('$url$email');
+
+    final response = await http.get(
+      uri,
+      // headers: {'Content-Type': 'application/json'},
+    );
+    final Map<String, dynamic> responseData = json.decode(response.body);
+    print(responseData);
+    if (response.statusCode == 200) {
+      return null;
+    } else {
+      return "Wrong OTP";
     }
   }
 }

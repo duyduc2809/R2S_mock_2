@@ -98,15 +98,15 @@ class _InformationPage extends State<InformationPage>
               ),
               Expanded(
                 child: Container(
-                  height: 84,
-                  width: double.maxFinite,
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(20.0),
-                      bottomRight: Radius.circular(20.0),
-                    ),
-                  ),
+                  // height: 84,
+                  // width: double.maxFinite,
+                  // decoration: const BoxDecoration(
+                  //   color: Colors.white,
+                  //   borderRadius: BorderRadius.only(
+                  //     bottomLeft: Radius.circular(20.0),
+                  //     bottomRight: Radius.circular(20.0),
+                  //   ),
+                  // ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [

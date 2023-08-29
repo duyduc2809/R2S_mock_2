@@ -3,10 +3,15 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:mobile_store/models/api_user.dart';
+import 'package:mobile_store/services/hive_helpers.dart';
+import '../models/user.dart';
 
 const String APIURL = "http://45.117.170.206:60/apis";
 
 class UserRepository {
+  static const urlGetUserByID = 'http://45.117.170.206:60/apis/user/';
+
   final _storage = const FlutterSecureStorage();
   Future<int> login(String username, String password) async {
     final body = jsonEncode({
@@ -102,7 +107,6 @@ class UserRepository {
     );
   }
 
-  //added by Nghia
   saveUserPhoneNumber(String number) async {
     await _storage.write(key: "phoneNumber", value: number);
   }
@@ -135,18 +139,27 @@ class UserRepository {
     return val.toString();
   }
 
-  //added by Nghia
   Future<Map<String, dynamic>> getUserById(String id) async {
+    final APIUser user = await HiveHelper.loadUserData();
     final url = "$APIURL/user/$id";
     final uri = Uri.parse(url);
-    final userToken = await getToken();
-    final response = await http.get(uri, headers: {
-      HttpHeaders.authorizationHeader: "Bearer $userToken",
-    });
-    if (response.statusCode == 200) {
-      return jsonDecode(response.body);
-    } else {
-      throw Exception("Failed to find user");
+
+    try {
+      final response = await http.get(
+        uri,
+        headers: {'Authorization': 'Bearer ${user.token}'},
+      );
+      print(response.statusCode);
+      if (response.statusCode == 200) {
+        print('getuser successfully');
+        return json.decode(response.body);
+      } else {
+        print('get failed');
+        throw Exception();
+      }
+    } catch (e) {
+      print(e);
+      throw Exception();
     }
   }
 }

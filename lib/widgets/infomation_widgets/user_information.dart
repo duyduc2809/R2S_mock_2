@@ -7,10 +7,10 @@ class UserInformation extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      padding: const EdgeInsets.symmetric(horizontal: 6),
+      padding: const EdgeInsets.fromLTRB(10, 12, 10, 5),
       margin: const EdgeInsets.symmetric(horizontal: 9, vertical: 9),
       width: double.maxFinite,
-      height: 155,
+      height: 175,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

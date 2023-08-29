@@ -42,7 +42,7 @@ class _AddressListState extends State<AddressList> {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: const Text("close"))
+                child: const Text("Close"))
           ],
         );
       },
@@ -87,6 +87,8 @@ class _AddressListState extends State<AddressList> {
                   child: Dialog(child: StatefulBuilder(
                     builder: (context, setState) {
                       return Container(
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(5))),
                         height: 525,
                         width: double.maxFinite,
                         child: Column(
@@ -103,11 +105,12 @@ class _AddressListState extends State<AddressList> {
                                   color: Colors.grey[300],
                                   border: Border.all(
                                       width: 3, color: Colors.grey.shade400),
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(5))),
+                                  borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(10),
+                                      topRight: Radius.circular(10))),
                             ),
                             const SizedBox(
-                              height: 8,
+                              height: 20,
                             ),
                             Flexible(
                                 child: Padding(
@@ -129,7 +132,7 @@ class _AddressListState extends State<AddressList> {
                                         },
                                         child: Container(
                                           height: 30,
-                                          width: 75,
+                                          width: 80,
                                           decoration: BoxDecoration(
                                               color: isChosenType == 1
                                                   ? selectedColor
@@ -141,7 +144,7 @@ class _AddressListState extends State<AddressList> {
                                               Icon(Icons.home),
                                               Spacer(),
                                               Text(
-                                                "Home",
+                                                "HOME",
                                                 style: TextStyle(
                                                     fontWeight:
                                                         FontWeight.bold),
@@ -158,7 +161,7 @@ class _AddressListState extends State<AddressList> {
                                         },
                                         child: Container(
                                           height: 30,
-                                          width: 75,
+                                          width: 80,
                                           decoration: BoxDecoration(
                                               color: isChosenType == 2
                                                   ? selectedColor
@@ -170,7 +173,7 @@ class _AddressListState extends State<AddressList> {
                                               Icon(Icons.work),
                                               Spacer(),
                                               Text(
-                                                "Work",
+                                                "OFFICE",
                                                 style: TextStyle(
                                                     fontWeight:
                                                         FontWeight.bold),
@@ -182,7 +185,7 @@ class _AddressListState extends State<AddressList> {
                                     ],
                                   ),
                                   const SizedBox(
-                                    height: 10,
+                                    height: 15,
                                   ),
                                   Form(
                                     key: _formKey,
@@ -192,92 +195,51 @@ class _AddressListState extends State<AddressList> {
                                       children: [
                                         Container(
                                             height: 60,
-                                            child:
-                                                DropdownButtonFormField<String>(
-                                                    icon: const Icon(
-                                                      Icons.arrow_drop_down,
-                                                      color: Colors.green,
-                                                    ),
-                                                    decoration:
-                                                        const InputDecoration(
-                                                      hintStyle: TextStyle(
-                                                          fontSize: 15,
-                                                          color: Colors.green),
-                                                      border:
-                                                          OutlineInputBorder(),
-                                                    ),
-                                                    value: provinceSelected,
-                                                    items: addressDataRepository
-                                                        .provinceList
-                                                        .map((e) =>
-                                                            DropdownMenuItem<
-                                                                    String>(
-                                                                value: e,
-                                                                child: Text(
-                                                                  e,
-                                                                  overflow:
-                                                                      TextOverflow
-                                                                          .ellipsis,
-                                                                )))
-                                                        .toList(),
-                                                    onChanged: (value) {
-                                                      setState(() {
-                                                        provinceSelected =
-                                                            value;
-
-                                                        districtSelected =
-                                                            addressDataRepository
-                                                                    .districts[
-                                                                provinceSelected]![0];
-                                                        wardSelected =
-                                                            addressDataRepository
-                                                                    .wards[
-                                                                districtSelected]![0];
-                                                      });
-                                                    })),
-                                        const SizedBox(
-                                          height: 15,
-                                        ),
-                                        Container(
-                                            height: 60,
-                                            width: double.maxFinite,
-                                            child:
-                                                DropdownButtonFormField<String>(
-                                                    icon: const Icon(
-                                                      Icons.arrow_drop_down,
-                                                      color: Colors.green,
-                                                    ),
-                                                    decoration:
-                                                        const InputDecoration(
-                                                      border:
-                                                          OutlineInputBorder(),
-                                                    ),
-                                                    value: districtSelected,
-                                                    items: addressDataRepository
-                                                        .districts[
-                                                            provinceSelected]!
-                                                        .map((e) =>
-                                                            DropdownMenuItem<
+                                            child: DropdownButtonFormField<
+                                                    String>(
+                                                icon: const Icon(
+                                                  Icons.arrow_drop_down,
+                                                  color: Colors.green,
+                                                ),
+                                                decoration:
+                                                    const InputDecoration(
+                                                  hintStyle: TextStyle(
+                                                      fontSize: 15,
+                                                      color: Colors.green),
+                                                  border: OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  10))),
+                                                ),
+                                                value: provinceSelected,
+                                                items: addressDataRepository
+                                                    .provinceList
+                                                    .map((e) =>
+                                                        DropdownMenuItem<
                                                                 String>(
-                                                              value: e,
-                                                              child: Text(
-                                                                e,
-                                                                overflow:
-                                                                    TextOverflow
-                                                                        .ellipsis,
-                                                              ),
-                                                            ))
-                                                        .toList(),
-                                                    onChanged: (value) {
-                                                      setState(() {
-                                                        districtSelected =
-                                                            value;
-                                                        wardSelected =
-                                                            addressDataRepository
-                                                                    .wards[
-                                                                districtSelected]![0];
-                                                      });
-                                                    })),
+                                                            value: e,
+                                                            child: Text(
+                                                              e,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                            )))
+                                                    .toList(),
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    provinceSelected = value;
+
+                                                    districtSelected =
+                                                        addressDataRepository
+                                                                .districts[
+                                                            provinceSelected]![0];
+                                                    wardSelected =
+                                                        addressDataRepository
+                                                                .wards[
+                                                            districtSelected]![0];
+                                                  });
+                                                })),
                                         const SizedBox(
                                           height: 15,
                                         ),
@@ -286,12 +248,65 @@ class _AddressListState extends State<AddressList> {
                                             width: double.maxFinite,
                                             child: DropdownButtonFormField<
                                                     String>(
+                                                icon: const Icon(
+                                                  Icons.arrow_drop_down,
+                                                  color: Colors.green,
+                                                ),
+                                                decoration:
+                                                    const InputDecoration(
+                                                  border: OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  10))),
+                                                ),
+                                                value: districtSelected,
+                                                items: addressDataRepository
+                                                    .districts[
+                                                        provinceSelected]!
+                                                    .map((e) =>
+                                                        DropdownMenuItem<
+                                                            String>(
+                                                          value: e,
+                                                          child: Text(
+                                                            e,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                          ),
+                                                        ))
+                                                    .toList(),
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    districtSelected = value;
+                                                    wardSelected =
+                                                        addressDataRepository
+                                                                .wards[
+                                                            districtSelected]![0];
+                                                  });
+                                                })),
+                                        const SizedBox(
+                                          height: 15,
+                                        ),
+                                        Container(
+                                            height: 60,
+                                            width: double.maxFinite,
+                                            child: DropdownButtonFormField<
+                                                    String>(
+                                                icon: const Icon(
+                                                  Icons.arrow_drop_down,
+                                                  color: Colors.green,
+                                                ),
                                                 decoration:
                                                     const InputDecoration(
                                                   hintStyle: TextStyle(
                                                       fontSize: 15,
                                                       color: Colors.green),
-                                                  border: OutlineInputBorder(),
+                                                  border: OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  10))),
                                                 ),
                                                 value: wardSelected,
                                                 items: addressDataRepository
@@ -321,9 +336,13 @@ class _AddressListState extends State<AddressList> {
                                                 .requestFocus(new FocusNode());
                                           },
                                           controller: detailsAddressController,
-                                          decoration: InputDecoration(
+                                          decoration: const InputDecoration(
                                               hintText: "Details",
-                                              border: OutlineInputBorder()),
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(
+                                                              10)))),
                                           onChanged: (value) {
                                             detailsAddressController
                                                 .addListener(() {
@@ -362,12 +381,12 @@ class _AddressListState extends State<AddressList> {
                                                   switch (isChosenType) {
                                                     case 1:
                                                       {
-                                                        type = "home";
+                                                        type = "HOME";
                                                       }
                                                       break;
                                                     case 2:
                                                       {
-                                                        type = "work";
+                                                        type = "OFFICE";
                                                       }
                                                       break;
                                                   }
@@ -411,6 +430,9 @@ class _AddressListState extends State<AddressList> {
                                                 onPressed: () {
                                                   Navigator.of(context).pop();
                                                 },
+                                                style: ElevatedButton.styleFrom(
+                                                    backgroundColor:
+                                                        Color(0xffcf6767)),
                                                 child: Text("Close")),
                                           ],
                                         )
@@ -444,8 +466,8 @@ class _AddressListState extends State<AddressList> {
           color = Colors.green;
         }
         break;
-      case "home":
-      case "work":
+      case "HOME":
+      case "OFFICE":
         {
           color = Colors.red;
         }
@@ -483,7 +505,7 @@ class _AddressListState extends State<AddressList> {
           ),
         ),
         width: 375,
-        height: 167,
+        height: 256,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -569,14 +591,20 @@ class _AddressListState extends State<AddressList> {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               IconButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    showAddressFormDialog(
+                                        address: addressList[index]);
+                                  },
                                   icon: Image.asset(
                                     'assets/img/edit (3) 2.png',
                                     width: 24,
                                     height: 24,
                                   )),
                               IconButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    addressCubit.deleteAddress(
+                                        "${addressList[index].id}");
+                                  },
                                   icon: Image.asset(
                                     'assets/img/delete.png',
                                     width: 24,

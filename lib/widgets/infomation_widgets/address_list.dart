@@ -118,7 +118,7 @@ class _AddressListState extends State<AddressList> {
                             Flexible(
                                 child: Padding(
                               padding:
-                                  const EdgeInsets.symmetric(horizontal: 20),
+                                  const EdgeInsets.symmetric(horizontal: 10),
                               child: Column(
                                 children: [
                                   Row(

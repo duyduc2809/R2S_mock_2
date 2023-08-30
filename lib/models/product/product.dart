@@ -6,7 +6,7 @@ import 'package:mobile_store/models/product/product_review.dart';
 import 'package:mobile_store/models/product/product_seri.dart';
 import 'package:mobile_store/models/product/product_tech.dart';
 
-import 'product/product_color.dart';
+import 'product_color.dart';
 
 class Product {
   final int? id;

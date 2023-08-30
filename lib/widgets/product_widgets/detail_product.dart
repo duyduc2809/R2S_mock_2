@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_store/cubit/app_cubit_states.dart';
 import 'package:mobile_store/cubit/app_cubits.dart';
-import 'package:mobile_store/widget/app_text.dart';
-import 'package:mobile_store/widget/custom_button_detail.dart';
+import 'package:mobile_store/services/product_data.dart';
+import 'package:mobile_store/widgets/app_text.dart';
+import 'package:mobile_store/widgets/custom_button_detail.dart';
 import 'package:mobile_store/widgets/custom_app_bar.dart';
-
-import '../pages/cart_page.dart';
-import '../pages/home_page.dart';
-import '../pages/information_page.dart';
+import 'package:flutter_html/flutter_html.dart';
+import '../../pages/cart_page.dart';
+import '../../pages/home_page.dart';
+import '../../pages/information_page.dart';
 
 class DetailProduct extends StatefulWidget {
   const DetailProduct({super.key});
@@ -19,8 +20,8 @@ class DetailProduct extends StatefulWidget {
 
 class _DetailProductState extends State<DetailProduct> {
   int gottenStars = 4;
-  int selectedIndex = 1;
-  List pages = [HomePage(), CartPage(), InformationPage()];
+  int selectedIndex = 0;
+  List pages = [const HomePage(), const CartPage(), const InformationPage()];
   int currentIndex = 0;
 
   void onTap(int index) {
@@ -58,28 +59,28 @@ class _DetailProductState extends State<DetailProduct> {
                   SizedBox(
                     height: 177,
                     width: 393,
-                    child: Image.asset('assets/img/imgDetail.png'),
+                    child: Image.network(ProductData.baseUrl + state.product.images![1].name),
                   ),
-                  const Text(
-                    "OPPO A57 128GB",
-                    style: TextStyle(
+                   Text(
+                    state.product.name!,
+                    style: const TextStyle(
                         fontSize: 16,
                         fontStyle: FontStyle.normal,
                         fontWeight: FontWeight.w600),
                   ),
                   Row(
                     children: [
-                      const Text("4.1"),
+                       Text(state.product.star!.toString()),
                       const SizedBox(
                         width: 5,
                       ),
                       Wrap(
                         children: List.generate(5, (index) {
-                          return const Icon(
-                            Icons.star,
-                            color: Colors.yellow,
-                            size: 16,
-                          );
+                          return index < gottenStars ?
+                                  const Icon(Icons.star, color:Color.fromRGBO(254, 140, 35, 1),
+                                    size: 15,) :
+                                  const Icon(Icons.star_border, color:Color.fromRGBO(254, 140, 35, 1),
+                                    size: 15,);
                         }),
                       ),
                     ],
@@ -87,22 +88,22 @@ class _DetailProductState extends State<DetailProduct> {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      CustomButtonDetail(text: state.product.memories![0].name),
                       CustomButtonDetail(text: "64 GB"),
-                      CustomButtonDetail(text: "64 GB"),
-                      CustomButtonDetail(text: "64 GB"),
+                      CustomButtonDetail(text: "256 GB"),
                     ],
                   ),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      CustomButtonDetail(text: "Blue"),
-                      CustomButtonDetail(text: "Black"),
-                      CustomButtonDetail(text: "Red"),
+                      CustomButtonDetail(text: state.product.colors![0].name),
+                      CustomButtonDetail(text: state.product.colors![1].name),
+                      // CustomButtonDetail(text: state.product.colors![2].name),
                     ],
                   ),
-                  const Text(
-                    "475 USD",
-                    style: TextStyle(
+                   Text(
+                    state.product.price.toString() + " VND",
+                    style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
                         color: Color.fromRGBO(239, 33, 33, 1)),
@@ -317,15 +318,12 @@ class _DetailProductState extends State<DetailProduct> {
                         const SizedBox(
                           height: 5,
                         ),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          child: Text(
-                            "OPPO has added to the low-cost OPPO A line up a new device called OPPO A57 128GB. "
-                            "Unlike the previously launched A57 5G model, the new A-series phone has an HD+ screen,"
-                            "a 13 MP main camera and a 5000mAh battery",
-                            textAlign: TextAlign.justify,
-                          ),
-                        ),
+                         Expanded(
+                           child: Padding(
+                            padding:const EdgeInsets.symmetric(horizontal: 10),
+                            child: Html(data: state.product.productTechs![0].info)
+                                                 ),
+                         ),
                         const SizedBox(
                           height: 10,
                         ),
@@ -340,7 +338,8 @@ class _DetailProductState extends State<DetailProduct> {
                               color: Colors.green,
                             ),
                           ),
-                        )
+                        ),
+                        SizedBox(height: 10,)
                       ],
                     ),
                   ),
@@ -372,8 +371,8 @@ class _DetailProductState extends State<DetailProduct> {
                             padding: const EdgeInsets.only(left: 15),
                             child: Row(
                               children: [
-                                const Text(
-                                  "Arain",
+                                 Text(
+                                  state.product.reviews![0].user_name,
                                   style: TextStyle(fontSize: 16),
                                 ),
                                 const SizedBox(
@@ -390,10 +389,10 @@ class _DetailProductState extends State<DetailProduct> {
                                 ),
                               ],
                             )),
-                        const Padding(
+                         Padding(
                           padding: EdgeInsets.only(left: 15),
                           child: Text(
-                            "This is amazing, it have nice camera!",
+                            state.product.reviews![0].comment,
                           ),
                         ),
                         const SizedBox(
@@ -415,8 +414,8 @@ class _DetailProductState extends State<DetailProduct> {
                             padding: const EdgeInsets.only(left: 15),
                             child: Row(
                               children: [
-                                const Text(
-                                  "Bray",
+                                 Text(
+                                  state.product.reviews![0].user_name,
                                   style: TextStyle(fontSize: 16),
                                 ),
                                 const SizedBox(
@@ -433,9 +432,9 @@ class _DetailProductState extends State<DetailProduct> {
                                 ),
                               ],
                             )),
-                        const Padding(
+                         Padding(
                           padding: EdgeInsets.only(left: 15),
-                          child: Text("I don't like its design very much"),
+                          child: Text(state.product.reviews![0].comment),
                         ),
                         const SizedBox(
                           height: 5,
@@ -456,8 +455,8 @@ class _DetailProductState extends State<DetailProduct> {
                             padding: const EdgeInsets.only(left: 15),
                             child: Row(
                               children: [
-                                const Text(
-                                  "Ronaldo",
+                                 Text(
+                                  state.product.reviews![0].user_name,
                                   style: TextStyle(fontSize: 16),
                                 ),
                                 const SizedBox(
@@ -474,10 +473,10 @@ class _DetailProductState extends State<DetailProduct> {
                                 ),
                               ],
                             )),
-                        const Padding(
+                         Padding(
                           padding: EdgeInsets.only(left: 15),
                           child: Text(
-                            "It is suitable for people who are in business",
+                            state.product.reviews![0].comment,
                           ),
                         ),
                         const SizedBox(
@@ -499,8 +498,8 @@ class _DetailProductState extends State<DetailProduct> {
                             padding: const EdgeInsets.only(left: 15),
                             child: Row(
                               children: [
-                                const Text(
-                                  "Ronaldo",
+                                 Text(
+                                  state.product.reviews![0].user_name,
                                   style: TextStyle(fontSize: 16),
                                 ),
                                 const SizedBox(
@@ -517,10 +516,10 @@ class _DetailProductState extends State<DetailProduct> {
                                 ),
                               ],
                             )),
-                        const Padding(
+                         Padding(
                           padding: EdgeInsets.only(left: 15),
                           child: Text(
-                            "It is suitable for people who are in business",
+                            state.product.reviews![0].comment,
                           ),
                         ),
                         const SizedBox(

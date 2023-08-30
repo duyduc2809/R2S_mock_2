@@ -45,6 +45,7 @@ dependencies:
   flutter_secure_storage: ^8.0.0
   smooth_page_indicator: ^1.1.0
   hive_flutter: ^1.1.0
+  flutter_html: ^3.0.0-alpha.6
   hive:
   intl:
 dev_dependencies:

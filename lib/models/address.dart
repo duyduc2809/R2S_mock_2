@@ -1,16 +1,18 @@
 class Address {
   final int? id;
-  final String? location;
-  final String? phoneReceiver;
-  final String? nameReceiver;
-  final bool? defaults;
+  String? location;
+  String? phoneReceiver;
+  String? nameReceiver;
+  bool? defaults;
+  String? type;
 
   Address(
       {this.id,
       this.location,
       this.phoneReceiver,
       this.nameReceiver,
-      this.defaults});
+      this.defaults,
+      this.type});
 
   factory Address.fromJson(Map<String, dynamic> json) {
     return Address(
@@ -19,5 +21,25 @@ class Address {
         phoneReceiver: json["phoneReceiver"],
         nameReceiver: json["nameReceiver"],
         defaults: json["defaults"]);
+  }
+
+  set setStatus(String chosenType) {
+    type = chosenType;
+  }
+
+  set setLocation(String newLocation) {
+    location = newLocation;
+  }
+
+  set setPhoneReceiver(String newPhone) {
+    phoneReceiver = newPhone;
+  }
+
+  set setNameReceiver(String newName) {
+    nameReceiver = newName;
+  }
+
+  set setDefaults(bool value) {
+    defaults = value;
   }
 }

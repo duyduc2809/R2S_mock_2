@@ -8,7 +8,7 @@ import 'package:mobile_store/models/user.dart';
 import 'package:mobile_store/widgets/custom_input_decoration.dart';
 
 import '../../cubit/app_cubits.dart';
-import 'forgot_password_widgets.dart';
+import 'custom_dialog.dart';
 
 class CheckBoxState {}
 
@@ -168,10 +168,11 @@ class _LoginWidgetState extends State<LoginWidget> {
                             ),
                           ),
                           InkWell(
-                            onTap: () => ForgotPasswordWidget.displayDialog(
+                            onTap: () => CustomDialog.displayDialog(
+                              title: 'FORGOT PASSWORD',
                                 context: context,
                                 content:
-                                    ForgotPasswordWidget.enterEmail(context, mounted)),
+                                CustomDialog.enterEmail(context, mounted)),
                             child: const Text('Forgot password?'),
                           )
                         ],

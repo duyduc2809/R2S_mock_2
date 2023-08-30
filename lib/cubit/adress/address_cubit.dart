@@ -21,7 +21,7 @@ class AddressCubit extends Cubit<AddressState> {
   Future<void> createAddress(Address address) async {
     emit(LoadingAddressState());
     try {
-      var result = await _addressRepository.getAllAddresses();
+      var result = await _addressRepository.createAddress(address);
       emit(SuccessAddAddress(address));
     } catch (e) {
       emit(FailureAddressState(e.toString()));

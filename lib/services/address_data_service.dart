@@ -5,17 +5,25 @@ import 'package:http/http.dart' as http;
 import 'package:mobile_store/models/address.dart';
 import 'package:mobile_store/models/api_user.dart';
 import 'package:mobile_store/services/hive_helpers.dart';
+import 'package:mobile_store/services/user_infor_data.dart';
 
 class AddressRepository {
+  static const urlGetUserByID = 'http://45.117.170.206:60/apis/user/';
+
   static const addressUrl = "http://45.117.170.206:60/apis/address";
+  final UserRepository _userRepository = UserRepository();
 
   Future<List<Address>> getAllAddresses() async {
-    final APIUser user = await HiveHelper.loadUserData();
     final uri = Uri.parse(addressUrl);
-    final response =
-        await http.get(uri, headers: {'Authorization': 'Bearer ${user.token}'});
+    final APIUser user = await HiveHelper.loadUserData();
+    final response = await http.get(
+      uri,
+      headers: {'Authorization': 'Bearer ${user.token}'},
+    );
     if (response.statusCode == 200) {
-      return _parseJsonList(response.body);
+      List json = jsonDecode(response.body);
+      final result = json.map((e) => Address.fromJson(e)).toList();
+      return result;
     } else {
       throw Exception('Failed to load data');
     }
@@ -27,17 +35,22 @@ class AddressRepository {
   }
 
   Future<Address> createAddress(Address address) async {
+    final APIUser user = await HiveHelper.loadUserData();
+    final url = '$urlGetUserByID${user.idUser}';
+
     final uri = Uri.parse(addressUrl);
-    final body = {
+
+    final body = jsonEncode({
       "location": address.location,
+      "type": address.type,
       "phoneReceiver": address.phoneReceiver,
       "nameReceiver": address.nameReceiver,
-      "defaults": address.defaults
-    };
-    final APIUser user = await HiveHelper.loadUserData();
+    });
 
-    final response = await http.post(uri,
-        body: body, headers: {'Authorization': 'Bearer ${user.token}'});
+    final response = await http.post(uri, body: body, headers: {
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer ${user.token}",
+    });
 
     if (response.statusCode == 201) {
       return Address.fromJson(jsonDecode(response.body));
@@ -51,8 +64,8 @@ class AddressRepository {
     final APIUser user = await HiveHelper.loadUserData();
     final uri = Uri.parse(url);
 
-    final response = await http
-        .delete(uri, headers: {'Authorization': "Bearer $user.token"});
+    final response = await http.delete(uri,
+        headers: {HttpHeaders.authorizationHeader: "Bearer ${user.token}"});
     print(response.statusCode);
 
     if (response.statusCode == 200) {
@@ -68,15 +81,15 @@ class AddressRepository {
     final APIUser user = await HiveHelper.loadUserData();
     final uri = Uri.parse(url);
 
-    final body = {
+    final body = jsonEncode({
       "location": updatedAddress.location,
       "phoneReceiver": 012345678,
       "nameReceiver": updatedAddress.nameReceiver,
       "defaults": updatedAddress.defaults
-    };
+    });
 
     final response = await http.put(uri, body: body, headers: {
-      HttpHeaders.authorizationHeader: "Bearer $user.token",
+      HttpHeaders.authorizationHeader: "Bearer ${user.token}",
       HttpHeaders.contentTypeHeader: "application/json",
     });
 
@@ -94,7 +107,7 @@ class AddressRepository {
     final uri = Uri.parse(url);
 
     final response = await http.get(uri,
-        headers: {HttpHeaders.authorizationHeader: "Bearer $user.token"});
+        headers: {HttpHeaders.authorizationHeader: "Bearer ${user.token}"});
 
     if (response.statusCode == 200) {
       return Address.fromJson(jsonDecode(response.body));

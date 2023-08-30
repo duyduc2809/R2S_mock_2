@@ -3,11 +3,9 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:mobile_store/models/api_user.dart';
-import 'package:mobile_store/services/hive_helpers.dart';
-import '../models/user.dart';
-
-const String APIURL = "http://45.117.170.206:60/apis";
+import '../constants/repo.dart';
+import '../models/api_user.dart';
+import '../services/hive_helpers.dart';
 
 class UserRepository {
   static const urlGetUserByID = 'http://45.117.170.206:60/apis/user/';
@@ -37,7 +35,7 @@ class UserRepository {
       "password": password,
       "fullName": fullname,
       "gender": "0",
-      "birthDay": "20-03-2003",
+      "birthDay": "28-09-2001",
       "authProvider": "null"
     });
 
@@ -116,19 +114,6 @@ class UserRepository {
     return result;
   }
 
-  void logout() async {
-    await _storage.delete(
-      key: "username",
-    );
-    await _storage.delete(key: "token");
-    await _storage.delete(key: "idUser");
-  }
-
-  getToken() async {
-    String? val = await _storage.read(key: "token");
-    return val.toString();
-  }
-
   Future<String> getUsername() async {
     String? val = await _storage.read(key: "username");
     return val.toString();
@@ -141,9 +126,8 @@ class UserRepository {
 
   Future<Map<String, dynamic>> getUserById(String id) async {
     final APIUser user = await HiveHelper.loadUserData();
-    final url = "$APIURL/user/$id";
+    final url = '$urlGetUserByID${user.idUser}';
     final uri = Uri.parse(url);
-
     try {
       final response = await http.get(
         uri,

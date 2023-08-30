@@ -544,6 +544,7 @@ class _AddressListState extends State<AddressList> {
                                 Text(
                                   "${addressList[index].location}",
                                   style: const TextStyle(
+                                      color: Colors.grey,
                                       overflow: TextOverflow.clip),
                                 ),
                                 Row(

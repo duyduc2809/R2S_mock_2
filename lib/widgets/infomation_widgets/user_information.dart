@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_store/models/api_user.dart';
 import 'package:mobile_store/services/hive_helpers.dart';
 import 'package:http/http.dart' as http;
+import 'package:mobile_store/widgets/auth_widgets/custom_dialog.dart';
 
 class UserInformation extends StatefulWidget {
   const UserInformation({super.key});
@@ -176,7 +177,13 @@ class _UserInformationState extends State<UserInformation> {
                   "Change password",
                   style: TextStyle(color: Colors.white, fontSize: 12),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  CustomDialog.displayDialog(
+                      height: 230,
+                      context: context,
+                      title: 'CHANGE PASSWORD',
+                      content: CustomDialog.changePassword(context, mounted));
+                },
               ))
         ],
       ),

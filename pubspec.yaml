@@ -46,6 +46,7 @@ dependencies:
   smooth_page_indicator: ^1.1.0
   hive_flutter: ^1.1.0
   hive:
+  intl:
 dev_dependencies:
   flutter_test:
     sdk: flutter

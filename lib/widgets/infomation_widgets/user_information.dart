@@ -67,7 +67,7 @@ class _UserInformationState extends State<UserInformation> {
       padding: const EdgeInsets.fromLTRB(10, 12, 10, 5),
       margin: const EdgeInsets.symmetric(horizontal: 9, vertical: 9),
       width: double.maxFinite,
-      height: 175,
+      height: 190,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -78,9 +78,16 @@ class _UserInformationState extends State<UserInformation> {
                 "INFORMATION",
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
-              SizedBox(
-                height: 30,
-                child: Image.asset(
+              const SizedBox(width: 30),
+              IconButton(
+                onPressed: () {
+                  CustomDialog.displayDialog(
+                      height: 270,
+                      context: context,
+                      title: 'Edit Information',
+                      content: CustomDialog.editInformation(context, mounted));
+                },
+                icon: Image.asset(
                   'assets/img/edit (3) 2.png',
                   width: 24,
                   height: 24,

@@ -51,4 +51,3 @@ void main() async {
           create: (context) => AppCubits(dataServices: UserDataServices()),
           child: const AppCubitLogics())));
 }
-

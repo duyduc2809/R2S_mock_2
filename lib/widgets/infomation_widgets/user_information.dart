@@ -80,7 +80,13 @@ class _UserInformationState extends State<UserInformation> {
               ),
               const SizedBox(width: 30),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  CustomDialog.displayDialog(
+                      height: 270,
+                      context: context,
+                      title: 'Edit Information',
+                      content: CustomDialog.editInformation(context, mounted));
+                },
                 icon: Image.asset(
                   'assets/img/edit (3) 2.png',
                   width: 24,

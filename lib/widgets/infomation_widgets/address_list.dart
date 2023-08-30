@@ -87,9 +87,12 @@ class _AddressListState extends State<AddressList> {
                   child: Dialog(child: StatefulBuilder(
                     builder: (context, setState) {
                       return Container(
-                        decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(5))),
-                        height: 525,
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                width: 3, color: Colors.grey.shade400),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
+                        height: 530,
                         width: double.maxFinite,
                         child: Column(
                           children: [
@@ -97,10 +100,6 @@ class _AddressListState extends State<AddressList> {
                               alignment: Alignment.center,
                               padding: const EdgeInsets.all(5),
                               width: double.maxFinite,
-                              child: TitleText(
-                                text: "Delivery Address",
-                                size: 25,
-                              ),
                               decoration: BoxDecoration(
                                   color: Colors.grey[300],
                                   border: Border.all(
@@ -108,6 +107,10 @@ class _AddressListState extends State<AddressList> {
                                   borderRadius: const BorderRadius.only(
                                       topLeft: Radius.circular(10),
                                       topRight: Radius.circular(10))),
+                              child: TitleText(
+                                text: "Delivery Address",
+                                size: 25,
+                              ),
                             ),
                             const SizedBox(
                               height: 20,
@@ -355,7 +358,8 @@ class _AddressListState extends State<AddressList> {
                                           },
                                         ),
                                         CheckboxListTile(
-                                            title: Text("Set default address"),
+                                            title: const Text(
+                                                "Set default address"),
                                             value: isChecked,
                                             onChanged: (value) {
                                               setState(() {

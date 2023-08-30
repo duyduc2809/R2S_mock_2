@@ -1,7 +1,63 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
 
-class UserInformation extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:mobile_store/models/api_user.dart';
+import 'package:mobile_store/services/hive_helpers.dart';
+import 'package:http/http.dart' as http;
+
+class UserInformation extends StatefulWidget {
   const UserInformation({super.key});
+
+  @override
+  State<UserInformation> createState() => _UserInformationState();
+}
+
+class _UserInformationState extends State<UserInformation> {
+  String _phone = '';
+  String _fullName = '';
+  String _birthday = '';
+  String _gender = '';
+  String _email = '';
+
+  static const urlGetUserByID = 'http://45.117.170.206:60/apis/user/';
+
+  void initState() {
+    super.initState();
+    _fetchUserInfo();
+  }
+
+  Future<void> _fetchUserInfo() async {
+    final APIUser user = await HiveHelper.loadUserData();
+    final url = '$urlGetUserByID${user.idUser}';
+    final uri = Uri.parse(url);
+
+    try {
+      final response = await http.get(
+        uri,
+        headers: {'Authorization': 'Bearer ${user.token}'},
+      );
+      print(response.statusCode);
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        setState(() {
+          //_phone = data['phone'];
+          _fullName = data['fullName'];
+          //_birthday = data['birthday'];
+          //_gender = data['gender'];
+          _email = data['email'];
+        });
+        print('getuser successfully');
+      } else {
+        print(response.statusCode);
+        print(response.body);
+        print('get failed');
+        throw Exception();
+      }
+    } catch (e) {
+      print(e);
+      throw Exception();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +98,7 @@ class UserInformation extends StatelessWidget {
               const SizedBox(
                 width: 2,
               ),
-              const Text('0941893338')
+              Text('unknow')
             ],
           ),
           const SizedBox(
@@ -59,10 +115,10 @@ class UserInformation extends StatelessWidget {
                 const SizedBox(
                   width: 2,
                 ),
-                const Text('Tran Ky Anh')
+                Text('$_fullName')
               ]),
               const SizedBox(
-                width: 70,
+                width: 15,
               ),
               Row(children: [
                 Image.asset(
@@ -73,7 +129,7 @@ class UserInformation extends StatelessWidget {
                 const SizedBox(
                   width: 2,
                 ),
-                const Text('Male')
+                const Text('unknow')
               ])
             ],
           ),
@@ -91,10 +147,10 @@ class UserInformation extends StatelessWidget {
                 const SizedBox(
                   width: 2,
                 ),
-                const Text('01/01/2001')
+                const Text('unknow')
               ]),
               const SizedBox(
-                width: 70,
+                width: 50,
               ),
               Row(children: [
                 Image.asset(
@@ -105,7 +161,7 @@ class UserInformation extends StatelessWidget {
                 const SizedBox(
                   width: 2,
                 ),
-                const Text('kyanh@gmail.com')
+                Text('$_email')
               ])
             ],
           ),

@@ -22,12 +22,11 @@ class _InformationPage extends State<InformationPage> {
   int _currentTab = 0;
 
   final screens = [
-    const Expanded(
-        child: Column(
+    const Column(
       children: [UserInformation(), AddressList()],
-    )),
-    const Expanded(child: OrderTab()),
-    const Expanded(child: PromotionTab())
+    ),
+    const OrderTab(),
+    const PromotionTab()
   ];
 
   void onNavBarClicked(int index) {
@@ -52,13 +51,15 @@ class _InformationPage extends State<InformationPage> {
               context: context,
               user: AppCubits.userData,
             ),
-            body: Column(children: [
-              SizedBox(
-                height: 9,
-              ),
-              NavBarUserInfor(onNavBarClicked: onNavBarClicked),
-              screens[_currentTab],
-            ]));
+            body: SingleChildScrollView(
+              child: Column(children: [
+                const SizedBox(
+                  height: 9,
+                ),
+                NavBarUserInfor(onNavBarClicked: onNavBarClicked),
+                screens[_currentTab],
+              ]),
+            ));
       } else {
         return const Center(child: CircularProgressIndicator());
       }

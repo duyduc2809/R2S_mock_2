@@ -4,11 +4,14 @@ import 'package:mobile_store/services/user_data_services.dart';
 
 import '../../constants/dimension_const.dart';
 
-class ForgotPasswordWidget {
+class CustomDialog {
   static const buttonHeight = smallButtonHeight;
 
   static displayDialog(
-      {required BuildContext context, Widget? content, double? height}) async {
+      {required BuildContext context,
+      Widget? content,
+      double? height,
+      required String title}) async {
     return showDialog(
         context: context,
         builder: (context) {
@@ -37,11 +40,11 @@ class ForgotPasswordWidget {
                         ),
                       ),
                     ),
-                    child: const Center(
+                    child: Center(
                         child: Text(
-                      'FORGOT PASSWORD',
-                      style:
-                          TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
+                      title,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w700, fontSize: 16),
                     )),
                   ),
                   Container(
@@ -100,6 +103,7 @@ class ForgotPasswordWidget {
                 if (result == null && mounted) {
                   Navigator.pop(context);
                   displayDialog(
+                      title: 'FORGOT PASSWORD',
                       context: context,
                       content: enterOTP(context, mounted),
                       height: 192 + 125);
@@ -300,6 +304,133 @@ class ForgotPasswordWidget {
           ],
         );
       }),
+    );
+  }
+
+  static changePassword(BuildContext context, mounted) {
+    final _formKey = GlobalKey<FormState>();
+    final currentPasswordController = TextEditingController();
+    final newPasswordController = TextEditingController();
+    final confirmNewPasswordController = TextEditingController();
+
+    return Form(
+      key: _formKey,
+      child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            TextFormField(
+              obscureText: true,
+              controller: currentPasswordController,
+              validator: (value) {
+                if (value == null || value == '') {
+                  return "Vui lòng nhập mật khẩu hiện tại";
+                } else {
+                  return null;
+                }
+              },
+              decoration: InputDecoration(
+                  contentPadding:
+                      const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
+                  constraints:
+                      const BoxConstraints(maxHeight: 30, minHeight: 20),
+                  hintText: 'Old password',
+                  hintStyle: const TextStyle(color: ColorPallete.mainColor),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0))),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            TextFormField(
+              obscureText: true,
+              validator: (value) {
+                if (value == null || value == '') {
+                  return "Vui lòng nhập mật khẩu mới";
+                } else {
+                  return null;
+                }
+              },
+              controller: newPasswordController,
+              decoration: InputDecoration(
+                  hintStyle: const TextStyle(color: ColorPallete.mainColor),
+                  contentPadding:
+                      const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
+                  constraints:
+                      const BoxConstraints(maxHeight: 30, minHeight: 20),
+                  hintText: 'New password',
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0))),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            TextFormField(
+              obscureText: true,
+              validator: (value) {
+                if (value == null || value == '') {
+                  return "Vui lòng nhập lại mật khẩu";
+                } else if (value != newPasswordController.text) {
+                  return 'Mật khẩu không trùng khớp';
+                } else {
+                  return null;
+                }
+              },
+              controller: confirmNewPasswordController,
+              decoration: InputDecoration(
+                  hintStyle: const TextStyle(color: ColorPallete.mainColor),
+                  contentPadding:
+                      const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
+                  constraints:
+                      const BoxConstraints(maxHeight: 30, minHeight: 20),
+                  hintText: 'Repeat new password',
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0))),
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      fixedSize: const Size(buttonHeight, 20),
+                      backgroundColor: ColorPallete.redColor),
+                  child: const Text('Cancel'),
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    if (_formKey.currentState!.validate()) {
+                        final result = await UserDataServices.changePasswordByToken(currentPasswordController.text, newPasswordController.text);
+                      if (result == null && mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content:
+                                    Text('Password changed successfully!')));
+                        Navigator.of(context).pop();
+                      } else if (result != null && mounted) {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(SnackBar(content: Text(result)));
+                      }
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      fixedSize: const Size(buttonHeight, 20),
+                      backgroundColor: ColorPallete.mainColor),
+                  child: const Text('Confirm'),
+                ),
+              ],
+            )
+          ],
+        )
+
     );
   }
 }

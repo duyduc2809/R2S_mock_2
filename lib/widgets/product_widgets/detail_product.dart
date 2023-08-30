@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:mobile_store/cubit/app_cubit_states.dart';
 import 'package:mobile_store/cubit/app_cubits.dart';
 import 'package:mobile_store/services/product_data.dart';
@@ -102,7 +103,7 @@ class _DetailProductState extends State<DetailProduct> {
                     ],
                   ),
                    Text(
-                    state.product.price.toString() + " VND",
+                    "${formatNumber(state.product.price!.toInt())} VND",
                     style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
@@ -598,5 +599,10 @@ class _DetailProductState extends State<DetailProduct> {
         return const Center(child: CircularProgressIndicator());
       }
     });
+  }
+
+  String formatNumber(int number) {
+    final NumberFormat formatter = NumberFormat('#,##0', 'vi_VN');
+    return formatter.format(number);
   }
 }

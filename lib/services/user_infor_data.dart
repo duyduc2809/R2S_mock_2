@@ -1,8 +1,7 @@
 import 'dart:convert';
-import 'dart:io';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../constants/repo.dart';
 import '../models/api_user.dart';
 import '../services/hive_helpers.dart';

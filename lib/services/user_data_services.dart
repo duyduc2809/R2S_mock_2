@@ -142,7 +142,6 @@ class UserDataServices {
 
     final response = await http.get(
       uri,
-      // headers: {'Content-Type': 'application/json'},
     );
     if (response.statusCode == 200) {
       return null;
@@ -185,8 +184,9 @@ class UserDataServices {
       },
     );
 
-    jsonResponse = json.decode(response.body);
+    jsonResponse = jsonDecode(utf8.decode(response.bodyBytes));
     if (response.statusCode == 200) {
+      print(jsonResponse);
       return null;
     } else {
       print(jsonResponse);

@@ -117,7 +117,7 @@ class _DetailProductState extends State<DetailProduct> {
                     child: const Text(
                       'ADD TO CART',
                       style:
-                          TextStyle(fontSize: 15, fontWeight: FontWeight.w800),
+                      TextStyle(fontSize: 15, fontWeight: FontWeight.w800),
                     ),
                   ),
                   Container(
@@ -133,10 +133,10 @@ class _DetailProductState extends State<DetailProduct> {
                         ),
                         const Center(
                             child: Text(
-                          "SPECIFICATIONS",
-                          style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.w700),
-                        )),
+                              "SPECIFICATIONS",
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.w700),
+                            )),
                         const SizedBox(
                           height: 5,
                         ),
@@ -193,7 +193,7 @@ class _DetailProductState extends State<DetailProduct> {
                           margin: const EdgeInsets.only(left: 10, right: 10),
                           child: Padding(
                             padding:
-                                const EdgeInsets.only(left: 10, right: 135),
+                            const EdgeInsets.only(left: 10, right: 135),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -217,7 +217,7 @@ class _DetailProductState extends State<DetailProduct> {
                           margin: const EdgeInsets.only(left: 10, right: 10),
                           child: Padding(
                             padding:
-                                const EdgeInsets.only(left: 10, right: 125),
+                            const EdgeInsets.only(left: 10, right: 125),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -311,10 +311,10 @@ class _DetailProductState extends State<DetailProduct> {
                         ),
                         const Center(
                             child: Text(
-                          "PRODUCT INFORMATION",
-                          style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.w700),
-                        )),
+                              "PRODUCT INFORMATION",
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.w700),
+                            )),
                         const SizedBox(
                           height: 5,
                         ),
@@ -360,10 +360,10 @@ class _DetailProductState extends State<DetailProduct> {
                         ),
                         const Center(
                             child: Text(
-                          "REVIEW OF CUSTOMER BOUGHT THE PRODUCT",
-                          style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.w700),
-                        )),
+                              "REVIEW OF CUSTOMER BOUGHT THE PRODUCT",
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.w700),
+                            )),
                         const SizedBox(
                           height: 5,
                         ),
@@ -404,7 +404,7 @@ class _DetailProductState extends State<DetailProduct> {
                             height: 1,
                             decoration: BoxDecoration(
                                 border:
-                                    Border.all(color: Colors.grey, width: 1.5)),
+                                Border.all(color: Colors.grey, width: 1.5)),
                           ),
                         ),
                         const SizedBox(
@@ -445,7 +445,7 @@ class _DetailProductState extends State<DetailProduct> {
                             height: 1,
                             decoration: BoxDecoration(
                                 border:
-                                    Border.all(color: Colors.grey, width: 1.5)),
+                                Border.all(color: Colors.grey, width: 1.5)),
                           ),
                         ),
                         const SizedBox(
@@ -488,7 +488,7 @@ class _DetailProductState extends State<DetailProduct> {
                             height: 1,
                             decoration: BoxDecoration(
                                 border:
-                                    Border.all(color: Colors.grey, width: 1.5)),
+                                Border.all(color: Colors.grey, width: 1.5)),
                           ),
                         ),
                         const SizedBox(
@@ -531,7 +531,7 @@ class _DetailProductState extends State<DetailProduct> {
                             height: 1,
                             decoration: BoxDecoration(
                                 border:
-                                    Border.all(color: Colors.grey, width: 1.5)),
+                                Border.all(color: Colors.grey, width: 1.5)),
                           ),
                         ),
                         const SizedBox(
@@ -570,10 +570,10 @@ class _DetailProductState extends State<DetailProduct> {
                       ),
                       const Center(
                           child: Text(
-                        "ANOTHER",
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.w700),
-                      )),
+                            "ANOTHER",
+                            style: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.w700),
+                          )),
                       const SizedBox(
                         height: 5,
                       ),

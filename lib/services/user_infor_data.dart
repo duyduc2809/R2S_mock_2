@@ -20,7 +20,7 @@ class UserRepository {
     final response = await http
         .post(uri, body: body, headers: {"Content-Type": "application/json"});
     if (response.statusCode == 201) {
-      var data = jsonDecode(response.body);
+      var data = jsonDecode(utf8.decode(response.bodyBytes));
       print(data);
       await saveUserInfo(data['token'], username, data['idUser']);
     }

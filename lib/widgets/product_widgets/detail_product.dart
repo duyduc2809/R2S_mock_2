@@ -6,7 +6,7 @@ import 'package:mobile_store/services/product_data.dart';
 import 'package:mobile_store/widgets/app_text.dart';
 import 'package:mobile_store/widgets/custom_button_detail.dart';
 import 'package:mobile_store/widgets/custom_app_bar.dart';
-
+import 'package:flutter_html/flutter_html.dart';
 import '../../pages/cart_page.dart';
 import '../../pages/home_page.dart';
 import '../../pages/information_page.dart';
@@ -318,15 +318,12 @@ class _DetailProductState extends State<DetailProduct> {
                         const SizedBox(
                           height: 5,
                         ),
-                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          child: Text(
-                            state.product.productTechs![0].info.toString(),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 5,
-                            textAlign: TextAlign.justify,
-                          ),
-                        ),
+                         Expanded(
+                           child: Padding(
+                            padding:const EdgeInsets.symmetric(horizontal: 10),
+                            child: Html(data: state.product.productTechs![0].info)
+                                                 ),
+                         ),
                         const SizedBox(
                           height: 10,
                         ),
@@ -341,7 +338,8 @@ class _DetailProductState extends State<DetailProduct> {
                               color: Colors.green,
                             ),
                           ),
-                        )
+                        ),
+                        SizedBox(height: 10,)
                       ],
                     ),
                   ),

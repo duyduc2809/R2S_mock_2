@@ -7,7 +7,7 @@ class FetchCartProduct {
   final String urlRead = "http://45.117.170.206:60/apis/order/user?no=0&limit";
   final int statusCode200 = 200;
   final String bearerToken =
-      "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2b3RpZW4xMjM0NUBnbWFpbC5jb20iLCJyb2xlcyI6W3siYXV0aG9yaXR5IjoiUm9sZV9DdXN0b21lciJ9XSwiaWF0IjoxNjkyODU3NjIxLCJleHAiOjE2OTI4NzU2MjF9.PRSf9ymxJ_bBkFvBuO32jvIbjC1jIjx7xm88jn-oT7s";
+      "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2b3RpZW4xMjM0NUBnbWFpbC5jb20iLCJyb2xlcyI6W3siYXV0aG9yaXR5IjoiUm9sZV9DdXN0b21lciJ9XSwiaWF0IjoxNjkzMjA2NTQxLCJleHAiOjE2OTMyMjQ1NDF9.mL74MQK25HuanxH93vn-9Ei_CO7KI7OutRVjv5Utabg";
   List<CartProduct> parseCartProduct(String response) {
     final jsonMap = jsonDecode(response);
     final contents = jsonMap['contents'] as List<dynamic>;

@@ -36,7 +36,7 @@ class _InformationPage extends State<InformationPage>
     SizeConfig().init(context);
 
     return Scaffold(
-        backgroundColor: Color(0xFFE0EAEB),
+        backgroundColor: const Color(0xFFE0EAEB),
         // appBar: AppBar(title: const Text('Mobile Store'),),
         appBar: CustomAppBar(
           logged: true,

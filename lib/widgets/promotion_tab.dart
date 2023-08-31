@@ -10,9 +10,7 @@ class PromotionTab extends StatefulWidget {
 }
 
 class _PromotionTabState extends State<PromotionTab> {
-
   late Future<List<Promotion>> futureListPromotion;
-
 
   @override
   void initState() {
@@ -25,28 +23,28 @@ class _PromotionTabState extends State<PromotionTab> {
   Widget build(BuildContext context) {
     return Center(
       child: FutureBuilder(
-    future: futureListPromotion,
-    builder: (context, snapshot) {
-      if (snapshot.hasError) {
-        return Text("Retrieve Failed${snapshot.error}");
-      } else if (snapshot.hasData) {
-        final List<Promotion> promotions = snapshot.data!;
-        return ListView.builder(
-          itemCount: promotions.length,
-          itemBuilder: (context, index) => Card(
-            child: ListTile(
-              leading: Image.asset('assets/img/promotion_gift.png'),
-              title: Text('${promotions[index].discountDTO}% '
-                  'discount for orders ${promotions[index].maxGetDTO},'
-                  'for customers who bought ${promotions[index].totalPurchaseDTO}'),
-              subtitle: Text('Exp: ${promotions[index].expireDateDTO}'),
-            ),
-          ),
-        );
-      } else {
-        return const CircularProgressIndicator();
-      }
-    },
+        future: futureListPromotion,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Text("Retrieve Failed${snapshot.error}");
+          } else if (snapshot.hasData) {
+            final List<Promotion> promotions = snapshot.data!;
+            return ListView.builder(
+              itemCount: promotions.length,
+              itemBuilder: (context, index) => Card(
+                child: ListTile(
+                  leading: Image.asset('assets/img/promotion_gift.png'),
+                  title: Text('${promotions[index].discountDTO}% '
+                      'discount for orders ${promotions[index].maxGetDTO},'
+                      'for customers who bought ${promotions[index].totalPurchaseDTO}'),
+                  subtitle: Text('Exp: ${promotions[index].expireDateDTO}'),
+                ),
+              ),
+            );
+          } else {
+            return const CircularProgressIndicator();
+          }
+        },
       ),
     );
   }

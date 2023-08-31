@@ -29,6 +29,7 @@ class _HomePageState extends State<HomePage> {
       builder: (context, state) {
         if (state is HomePageState) {
           return Scaffold(
+            resizeToAvoidBottomInset: false,
             backgroundColor: Colors.white,
             appBar: CustomAppBar(
               logged: true,
@@ -38,12 +39,10 @@ class _HomePageState extends State<HomePage> {
               user: AppCubits.userData,
             ),
             body: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
+              padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+              child: Center(
+                  child: Column(
                 children: [
-                  const SizedBox(
-                    height: 20,
-                  ),
                   CarouselSlider.builder(
                       carouselController: controller,
                       itemCount: images.length,
@@ -52,8 +51,8 @@ class _HomePageState extends State<HomePage> {
                         return buildImage(urlImage, index);
                       },
                       options: CarouselOptions(
-                        viewportFraction: 1,
-                        initialPage: 1,
+                          viewportFraction: 1,
+                          initialPage: 1,
                           height: 150,
                           autoPlay: true,
                           enableInfiniteScroll: true,
@@ -61,24 +60,32 @@ class _HomePageState extends State<HomePage> {
                           enlargeCenterPage: true,
                           onPageChanged: (index, reason) =>
                               setState(() => activeIndex = index))),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        height: 32,
-                        child: Image.asset('assets/img/new.png'),
+                  Align(
+                    alignment: const AlignmentDirectional(-1, 0),
+                    child: Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(10, 10, 0, 10),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image.asset(
+                          'assets/img/new.png',
+                          width: 50,
+                          height: 30,
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                    ],
+                    ),
                   ),
-                  const SizedBox(
-                    height: 10,
+
+                  Container(
+                    width: 300,
+                    height: 350,
+                    child: ListProduct()
+                // )  
+                    
                   ),
-                  ListProduct(),
                 ],
-              ),
+              )),
             ),
           );
         } else {

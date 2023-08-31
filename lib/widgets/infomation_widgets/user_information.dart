@@ -7,7 +7,7 @@ class UserInformation extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      padding: const EdgeInsets.symmetric(horizontal: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
       margin: const EdgeInsets.symmetric(horizontal: 9, vertical: 9),
       width: 375,
       height: 155,

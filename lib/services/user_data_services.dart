@@ -77,8 +77,6 @@ class UserDataServices {
     );
     final jsonResponse = json.decode(utf8.decode(response.bodyBytes));
     if (response.statusCode == 200) {
-      BlocProvider.of<AppCubits>(context).getUserData(
-          returnState: InformationPageState());
       print(jsonResponse);
       return null;
     } else {

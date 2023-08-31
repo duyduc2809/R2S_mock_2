@@ -3,6 +3,7 @@ import 'package:mobile_store/constants/color_const.dart';
 import 'package:mobile_store/services/user_data_services.dart';
 
 import '../../constants/dimension_const.dart';
+import '../../models/user.dart';
 
 class CustomDialog {
   static const buttonHeight = smallButtonHeight;
@@ -428,6 +429,141 @@ class CustomDialog {
                       fixedSize: const Size(buttonHeight, 20),
                       backgroundColor: ColorPallete.mainColor),
                   child: const Text('Confirm'),
+                ),
+              ],
+            )
+          ],
+        ));
+  }
+
+  static editInformation(BuildContext context, mounted, User user) {
+    final _formKey = GlobalKey<FormState>();
+    final fullNameController = TextEditingController();
+    final phoneController = TextEditingController();
+    final birthdayController = TextEditingController();
+    final mailController = TextEditingController();
+    fullNameController.text = user.fullName ?? '';
+    phoneController.text = user.phoneNumber ?? '';
+    birthdayController.text = user.birthDay ?? '';
+    mailController.text = user.email ?? '';
+    return Form(
+        key: _formKey,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            TextFormField(
+              controller: fullNameController,
+              validator: (value) {
+                if (value == null || value == '') {
+                  return "Vui lòng nhập tên";
+                } else {
+                  return null;
+                }
+              },
+              decoration: InputDecoration(
+                  contentPadding:
+                      const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
+                  constraints:
+                      const BoxConstraints(maxHeight: 30, minHeight: 20),
+                  hintText: 'Full name',
+                  hintStyle: const TextStyle(color: ColorPallete.mainColor),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0))),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            TextFormField(
+              validator: (value) {
+                // if (value == null || value == '') {
+                //   return "Vui lòng nhập sđt";
+                // } else {
+                //   return null;
+                // }
+              },
+              controller: phoneController,
+              decoration: InputDecoration(
+                  hintStyle: const TextStyle(color: ColorPallete.mainColor),
+                  contentPadding:
+                      const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
+                  constraints:
+                      const BoxConstraints(maxHeight: 30, minHeight: 20),
+                  hintText: 'Phone number',
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0))),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            TextFormField(
+              controller: birthdayController,
+              decoration: InputDecoration(
+                  hintStyle: const TextStyle(color: ColorPallete.mainColor),
+                  contentPadding:
+                      const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
+                  constraints:
+                      const BoxConstraints(maxHeight: 30, minHeight: 20),
+                  hintText: 'dd/mm/yyyy',
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0))),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            TextFormField(
+              controller: mailController,
+              decoration: InputDecoration(
+                  hintStyle: const TextStyle(color: ColorPallete.mainColor),
+                  contentPadding:
+                      const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
+                  constraints:
+                      const BoxConstraints(maxHeight: 30, minHeight: 20),
+                  hintText: 'Email',
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0))),
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      fixedSize: const Size(buttonHeight, 20),
+                      backgroundColor: ColorPallete.redColor),
+                  child: const Text('Cancel'),
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    User updatedUser = User(
+                        fullName: fullNameController.text,
+                        email: mailController.text,
+                        birthDay: birthdayController.text,
+                        phoneNumber: phoneController.text);
+                    var result =
+                        await UserDataServices.updateUser(updatedUser, context);
+                    if (result != null && mounted) {
+
+                      ScaffoldMessenger.of(context)
+                          .showSnackBar(SnackBar(content: Text(result)));
+                    } else {
+                      Navigator.pop(context);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('User updated!')));
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      fixedSize: const Size(buttonHeight, 20),
+                      backgroundColor: ColorPallete.mainColor),
+                  child: const Text('Save'),
                 ),
               ],
             )

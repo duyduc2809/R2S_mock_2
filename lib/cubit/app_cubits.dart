@@ -16,11 +16,12 @@ class AppCubits extends Cubit<CubitStates> {
     init();
   }
 
-  void getUserData() async {
+
+  void getUserData({returnState}) async {
     try {
       emit(LoadingState());
-      userData = await dataServices.getUser();
-      emit(HomePageState());
+      userData = await UserDataServices.getUser();
+      emit(returnState ?? HomePageState());
     } catch (e) {
       print(e);
       throw Exception();

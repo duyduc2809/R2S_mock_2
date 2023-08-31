@@ -441,11 +441,13 @@ class CustomDialog {
     final fullNameController = TextEditingController();
     final phoneController = TextEditingController();
     final birthdayController = TextEditingController();
+    String? _gender = 'male';
     final mailController = TextEditingController();
     fullNameController.text = user.fullName ?? '';
     phoneController.text = user.phoneNumber ?? '';
     birthdayController.text = user.birthDay ?? '';
     mailController.text = user.email ?? '';
+
     return Form(
         key: _formKey,
         child: Column(
@@ -510,6 +512,28 @@ class CustomDialog {
             const SizedBox(
               height: 10,
             ),
+            DropdownButtonFormField(
+              items: const [
+                DropdownMenuItem(value: 'male', child: Text('Male')),
+                DropdownMenuItem(value: 'female', child: Text('Female')),
+              ],
+              value: 'male',
+              onChanged: (value) {
+                _gender = value;
+              },
+              decoration: InputDecoration(
+                  hintStyle: const TextStyle(color: ColorPallete.mainColor),
+                  contentPadding:
+                      const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
+                  constraints:
+                      const BoxConstraints(maxHeight: 30, minHeight: 20),
+                  hintText: 'Gender',
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0))),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
             TextFormField(
               controller: mailController,
               decoration: InputDecoration(
@@ -545,11 +569,11 @@ class CustomDialog {
                         fullName: fullNameController.text,
                         email: mailController.text,
                         birthDay: birthdayController.text,
+                        //gender: _gender,
                         phoneNumber: phoneController.text);
                     var result =
                         await UserDataServices.updateUser(updatedUser, context);
                     if (result != null && mounted) {
-
                       ScaffoldMessenger.of(context)
                           .showSnackBar(SnackBar(content: Text(result)));
                     } else {

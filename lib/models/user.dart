@@ -10,13 +10,13 @@ class User {
 
   User(
       {this.userName,
-        this.fullName,
-        this.phoneNumber,
-        this.birthDay,
-        this.gender,
-        this.email,
-        this.password,
-        this.address});
+      this.fullName,
+      this.phoneNumber,
+      this.birthDay,
+      this.gender,
+      this.email,
+      this.password,
+      this.address});
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(

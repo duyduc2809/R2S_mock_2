@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_store/constants/color_const.dart';
+import 'package:mobile_store/cubit/app_cubits.dart';
+import 'package:mobile_store/services/hive_helpers.dart';
 import 'package:mobile_store/services/user_data_services.dart';
 import '../../constants/dimension_const.dart';
+import '../../cubit/app_cubit_states.dart';
 import '../../models/user.dart';
 
 class CustomDialog {
@@ -270,7 +274,8 @@ class CustomDialog {
                   },
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(buttonBorderRadius)),
+                          borderRadius:
+                              BorderRadius.circular(buttonBorderRadius)),
                       fixedSize: const Size(buttonHeight, 20),
                       backgroundColor: ColorPallete.redColor),
                   child: const Text('Cancel'),
@@ -296,7 +301,8 @@ class CustomDialog {
                   },
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(buttonBorderRadius)),
+                          borderRadius:
+                              BorderRadius.circular(buttonBorderRadius)),
                       fixedSize: const Size(buttonHeight, 20),
                       backgroundColor: ColorPallete.mainColor),
                   child: const Text('Confirm'),
@@ -580,9 +586,36 @@ class CustomDialog {
                       ScaffoldMessenger.of(context)
                           .showSnackBar(SnackBar(content: Text(result)));
                     } else {
+                      print('www' + context.toString());
                       Navigator.pop(context);
                       ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: Text('User updated!')));
+                      if (mailController.text != user.email) {
+                        bool agreeLogout = false;
+                        await showDialog(
+                            barrierDismissible: false,
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                content: const Text(
+                                    'Your session has expired\nPlease log in again'),
+                                actions: [
+                                  ElevatedButton(
+                                      onPressed: () async {
+                                        Navigator.pop(context);
+                                        agreeLogout = true;
+                                      },
+                                      child: const Text("OK"))
+                                ],
+                              );
+                            });
+                        if (agreeLogout == true) {
+                          BlocProvider.of<AppCubits>(context).loginPage();
+                        }
+                      } else {
+                        BlocProvider.of<AppCubits>(context)
+                            .getUserData(returnState: InformationPageState());
+                      }
                     }
                   },
                   style: ElevatedButton.styleFrom(

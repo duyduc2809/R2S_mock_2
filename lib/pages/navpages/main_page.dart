@@ -4,7 +4,7 @@ import 'package:mobile_store/cubit/app_cubit_states.dart';
 import 'package:mobile_store/cubit/app_cubits.dart';
 import 'package:mobile_store/pages/cart_page.dart';
 import 'package:mobile_store/pages/information_page.dart';
-import 'package:mobile_store/widget/detail_product.dart';
+import 'package:mobile_store/widgets/product_widgets/detail_product.dart';
 
 import '../home_page.dart';
 

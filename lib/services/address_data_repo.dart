@@ -6,6 +6,14 @@ const String provinceApi = "https://provinces.open-api.vn/api/p";
 const String districtApi = "https://provinces.open-api.vn/api/d";
 const String wardApi = "https://provinces.open-api.vn/api/w";
 
+String handleToReadableName(Map<String, dynamic> json) {
+  List<String> rawList = json["codename"].split("_");
+  List<String> formtedList =
+      rawList.map((e) => "${e[0].toUpperCase()}${e.substring(1)}").toList();
+  String readableName = formtedList.join(" ");
+  return readableName;
+}
+
 class AddressDataRepository {
   List<String> provinceList = [];
   Map<String, List<String>> districts = {};
@@ -50,7 +58,7 @@ class AddressDataRepository {
     throw Exception("Failed to parse list");
   }
 
-  Future<void> setData() async {
+  Future<bool> setData() async {
     List<dynamic> provinceData = await getData(provinceApi, "province");
     provinceList =
         List.generate(provinceData.length, (index) => provinceData[index].name);
@@ -78,6 +86,7 @@ class AddressDataRepository {
           wardOfDistrict.length, (index) => wardOfDistrict[index].name);
       wards[districtName] = wardNames;
     }
+    return true;
   }
 }
 
@@ -89,7 +98,7 @@ class Province {
 
   factory Province.fromjson(Map<String, dynamic> json) {
     return Province(
-      name: json["name"],
+      name: handleToReadableName(json),
       code: json["code"],
     );
   }
@@ -104,7 +113,7 @@ class District {
 
   factory District.fromJson(Map<String, dynamic> json) {
     return District(
-        name: json["name"],
+        name: handleToReadableName(json),
         code: json["code"],
         provinceCode: json["province_code"]);
   }
@@ -119,7 +128,7 @@ class Ward {
 
   factory Ward.fromJson(Map<String, dynamic> json) {
     return Ward(
-        name: json["name"],
+        name: handleToReadableName(json),
         code: json["code"],
         districtCode: json["district_code"]);
   }

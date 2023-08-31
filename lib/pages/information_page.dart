@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_store/constants/size_config.dart';
-import 'package:mobile_store/widgets/information_tab.dart';
+import 'package:mobile_store/widgets/infomation_widgets/address_list.dart';
+import 'package:mobile_store/widgets/infomation_widgets/nav_tab.dart';
+import 'package:mobile_store/widgets/infomation_widgets/user_information.dart';
 import 'package:mobile_store/widgets/order_tab.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/promotion_tab.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:mobile_store/cubit/app_cubits.dart';
+import 'package:mobile_store/cubit/app_cubit_states.dart';
 
 class InformationPage extends StatefulWidget {
   const InformationPage({super.key});
@@ -13,110 +18,54 @@ class InformationPage extends StatefulWidget {
   State<InformationPage> createState() => _InformationPage();
 }
 
-class _InformationPage extends State<InformationPage>
-    with TickerProviderStateMixin {
-  List itemsImagesInformation = [
-    'information_img.png',
-    'shopping_bag_img.png',
-    'promotion_img.png'
+class _InformationPage extends State<InformationPage> {
+  int _currentTab = 0;
+
+  final screens = [
+    const Column(
+      children: [UserInformation(), AddressList()],
+    ),
+    const OrderTab(),
+    const PromotionTab()
   ];
 
-  List itemsTextInformation = ['Your Information', 'Order', 'Promotion'];
-
-  List tabPages = [
-    InformationTab(),
-    OrderTab(),
-    PromotionTab(),
-  ];
-
-  int currentTab = 0;
+  void onNavBarClicked(int index) {
+    setState(() {
+      _currentTab = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-
-    return Scaffold(
-        backgroundColor: const Color(0xFFE0EAEB),
-        // appBar: AppBar(title: const Text('Mobile Store'),),
-        appBar: CustomAppBar(
-          logged: true,
-          title: '',
-          showUserInfo: true,
-          context: context,
-          user: AppCubits.userData,
-        ),
-        body: Container(
-          margin: const EdgeInsets.all(9),
-          width: double.maxFinite,
-          height: double.infinity,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                height: 84,
-                width: double.maxFinite,
-                margin: const EdgeInsets.only(left: 2.0, right: 2.0),
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10.0),
-                    topRight: Radius.circular(10.0),
+    return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
+      if (state is InformationPageState) {
+        return Scaffold(
+            resizeToAvoidBottomInset: false,
+            backgroundColor: Colors.grey[300],
+            // appBar: AppBar(title: const Text('Mobile Store'),),
+            appBar: CustomAppBar(
+              logged: true,
+              title: '',
+              showUserInfo: true,
+              context: context,
+              user: AppCubits.userData,
+            ),
+            body: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(9.0),
+                child: Column(children: [
+                  const SizedBox(
+                    height: 9,
                   ),
-                ),
-                child: ListView.builder(
-                  itemCount: 3,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          currentTab = index;
-                        });
-                      },
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 300),
-                        margin:
-                            const EdgeInsets.only(top: 6, bottom: 6, left: 6),
-                        width: MediaQuery.of(context).size.width * 0.3,
-                        height: double.maxFinite,
-                        decoration: const BoxDecoration(color: Colors.white),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                                'assets/img/' + itemsImagesInformation[index]),
-                            Text(itemsTextInformation[index])
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                ),
+                  NavBarUserInfor(onNavBarClicked: onNavBarClicked),
+                  screens[_currentTab],
+                ]),
               ),
-              const SizedBox(
-                height: 6,
-              ),
-              Expanded(
-                child: Container(
-                  // height: 84,
-                  // width: double.maxFinite,
-                  // decoration: const BoxDecoration(
-                  //   color: Colors.white,
-                  //   borderRadius: BorderRadius.only(
-                  //     bottomLeft: Radius.circular(20.0),
-                  //     bottomRight: Radius.circular(20.0),
-                  //   ),
-                  // ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      tabPages[currentTab],
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ));
+            ));
+      } else {
+        return const Center(child: CircularProgressIndicator());
+      }
+    });
   }
 }

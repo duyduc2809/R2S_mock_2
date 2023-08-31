@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_store/constants/color_const.dart';
 import 'package:mobile_store/services/user_data_services.dart';
-
 import '../../constants/dimension_const.dart';
 import '../../models/user.dart';
 
 class CustomDialog {
   static const buttonHeight = smallButtonHeight;
+  static const blackOpacity = 0.20000000298023224;
+  static const buttonBorderRadius = 10.0;
 
   static displayDialog(
       {required BuildContext context,
@@ -23,7 +24,7 @@ class CustomDialog {
                 shape: RoundedRectangleBorder(
                   side: BorderSide(
                     width: 0.50,
-                    color: Colors.black.withOpacity(0.20000000298023224),
+                    color: Colors.black.withOpacity(blackOpacity),
                   ),
                 ),
               ),
@@ -37,7 +38,7 @@ class CustomDialog {
                       shape: RoundedRectangleBorder(
                         side: BorderSide(
                           width: 0.50,
-                          color: Colors.black.withOpacity(0.20000000298023224),
+                          color: Colors.black.withOpacity(blackOpacity),
                         ),
                       ),
                     ),
@@ -78,7 +79,7 @@ class CustomDialog {
               constraints: const BoxConstraints(maxHeight: 30, minHeight: 20),
               hintText: 'email',
               border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0))),
+                  borderRadius: BorderRadius.circular(buttonBorderRadius))),
         ),
         const SizedBox(
           height: 15,
@@ -92,7 +93,7 @@ class CustomDialog {
               },
               style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
+                      borderRadius: BorderRadius.circular(buttonBorderRadius)),
                   fixedSize: const Size(buttonHeight, 20),
                   backgroundColor: ColorPallete.redColor),
               child: const Text('Cancel'),
@@ -115,7 +116,7 @@ class CustomDialog {
               },
               style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
+                      borderRadius: BorderRadius.circular(buttonBorderRadius)),
                   fixedSize: const Size(buttonHeight, 20),
                   backgroundColor: ColorPallete.mainColor),
               child: const Text('Confirm'),
@@ -169,7 +170,7 @@ class CustomDialog {
                   hintText: 'OTP',
                   hintStyle: const TextStyle(color: ColorPallete.mainColor),
                   border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0))),
+                      borderRadius: BorderRadius.circular(buttonBorderRadius))),
             ),
             const SizedBox(
               height: 5,
@@ -192,7 +193,7 @@ class CustomDialog {
                       const BoxConstraints(maxHeight: 30, minHeight: 20),
                   hintText: 'Password',
                   border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0))),
+                      borderRadius: BorderRadius.circular(buttonBorderRadius))),
             ),
             const SizedBox(
               height: 5,
@@ -217,7 +218,7 @@ class CustomDialog {
                       const BoxConstraints(maxHeight: 30, minHeight: 20),
                   hintText: 'Repeat Password',
                   border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0))),
+                      borderRadius: BorderRadius.circular(buttonBorderRadius))),
             ),
             const SizedBox(
               height: 10,
@@ -269,7 +270,7 @@ class CustomDialog {
                   },
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
+                          borderRadius: BorderRadius.circular(buttonBorderRadius)),
                       fixedSize: const Size(buttonHeight, 20),
                       backgroundColor: ColorPallete.redColor),
                   child: const Text('Cancel'),
@@ -295,7 +296,7 @@ class CustomDialog {
                   },
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
+                          borderRadius: BorderRadius.circular(buttonBorderRadius)),
                       fixedSize: const Size(buttonHeight, 20),
                       backgroundColor: ColorPallete.mainColor),
                   child: const Text('Confirm'),

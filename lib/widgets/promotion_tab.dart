@@ -11,9 +11,7 @@ class PromotionTab extends StatefulWidget {
 }
 
 class _PromotionTabState extends State<PromotionTab> {
-
   late Future<List<Promotion>> futureListPromotion;
-
 
   @override
   void initState() {

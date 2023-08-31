@@ -23,10 +23,7 @@ class FetchPromotion {
     if (response.statusCode == statusCode200) {
       return parsePromotions(response.body);
     }
-    throw Exception("Failed to get Promotion, Status Code: ${response.statusCode}");
-
+    throw Exception(
+        "Failed to get Promotion, Status Code: ${response.statusCode}");
   }
 }
-
-
-

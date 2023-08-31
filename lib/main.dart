@@ -10,12 +10,6 @@ import 'package:mobile_store/services/user_data_services.dart';
 import 'cubit/app_cubits.dart';
 import 'models/api_user.dart';
 
-void main() {
-  // runApp(InformationPage());
-  runApp(
-  MaterialApp(debugShowCheckedModeBanner: false, home: const ReviewPage()));
-}
-
 //
 // void main() async {
 //   WidgetsFlutterBinding.ensureInitialized();
@@ -61,4 +55,17 @@ void main() {
 //           child: const AppCubitLogics())));
 // }
 
-
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Hive.registerAdapter(APIUserAdapter());
+  await Hive.initFlutter();
+  runApp(MaterialApp(
+      theme: ThemeData(
+          colorScheme: const ColorScheme.light().copyWith(
+              primary: ColorPallete.mainColor,
+              secondary: ColorPallete.yellowColor)),
+      debugShowCheckedModeBanner: false,
+      home: BlocProvider<AppCubits>(
+          create: (context) => AppCubits(dataServices: UserDataServices()),
+          child: const AppCubitLogics())));
+}

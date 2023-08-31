@@ -38,6 +38,7 @@ class _InformationPage extends State<InformationPage> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
+
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
       if (state is InformationPageState) {
         return Scaffold(

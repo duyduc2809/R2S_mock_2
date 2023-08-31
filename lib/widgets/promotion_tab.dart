@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_store/constants/fetch_promotion.dart';
 import '../models/promotion.dart';
-import '../constants/fetch_promotion.dart';
 
 class PromotionTab extends StatefulWidget {
   const PromotionTab({super.key});

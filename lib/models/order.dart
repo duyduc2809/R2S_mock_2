@@ -1,4 +1,4 @@
-import 'package:mobile_store/models/product.dart';
+import 'package:mobile_store/models/product/product.dart';
 import 'package:mobile_store/models/status.dart';
 
 class Order {

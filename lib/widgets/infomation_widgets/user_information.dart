@@ -1,10 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:mobile_store/cubit/app_cubits.dart';
 import 'package:mobile_store/models/api_user.dart';
 import 'package:mobile_store/services/hive_helpers.dart';
 import 'package:http/http.dart' as http;
+import 'package:mobile_store/services/user_data_services.dart';
 import 'package:mobile_store/widgets/auth_widgets/custom_dialog.dart';
+
+import '../../models/user.dart';
 
 class UserInformation extends StatefulWidget {
   const UserInformation({super.key});
@@ -14,58 +18,14 @@ class UserInformation extends StatefulWidget {
 }
 
 class _UserInformationState extends State<UserInformation> {
-  String _phone = '';
-  String _fullName = '';
-  String _birthday = '';
-  String _gender = '';
-  String _email = '';
-
-  static const urlGetUserByID = 'http://45.117.170.206:60/apis/user/';
-
-  void initState() {
-    super.initState();
-    _fetchUserInfo();
-  }
-
-  Future<void> _fetchUserInfo() async {
-    final APIUser user = await HiveHelper.loadUserData();
-    final url = '$urlGetUserByID${user.idUser}';
-    final uri = Uri.parse(url);
-
-    try {
-      final response = await http.get(
-        uri,
-        headers: {'Authorization': 'Bearer ${user.token}'},
-      );
-      print(response.statusCode);
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        setState(() {
-          //_phone = data['phone'];
-          _fullName = data['fullName'];
-          //_birthday = data['birthday'];
-          //_gender = data['gender'];
-          _email = data['email'];
-        });
-        print('getuser successfully');
-      } else {
-        print(response.statusCode);
-        print(response.body);
-        print('get failed');
-        throw Exception();
-      }
-    } catch (e) {
-      print(e);
-      throw Exception();
-    }
-  }
+  User user = AppCubits.userData;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      padding: const EdgeInsets.fromLTRB(10, 12, 10, 5),
-      margin: const EdgeInsets.symmetric(horizontal: 9, vertical: 9),
+      padding: const EdgeInsets.fromLTRB(10, 0, 10, 5),
+      margin: const EdgeInsets.symmetric(vertical: 9),
       width: double.maxFinite,
       height: 190,
       child: Column(
@@ -85,7 +45,7 @@ class _UserInformationState extends State<UserInformation> {
                       height: 270,
                       context: context,
                       title: 'Edit Information',
-                      content: CustomDialog.editInformation(context, mounted));
+                      content: CustomDialog.editInformation(context, mounted, user));
                 },
                 icon: Image.asset(
                   'assets/img/edit (3) 2.png',
@@ -106,7 +66,7 @@ class _UserInformationState extends State<UserInformation> {
               const SizedBox(
                 width: 2,
               ),
-              Text('unknow')
+              Text(user.phoneNumber ?? "null")
             ],
           ),
           const SizedBox(
@@ -123,7 +83,7 @@ class _UserInformationState extends State<UserInformation> {
                 const SizedBox(
                   width: 2,
                 ),
-                Text('$_fullName')
+                Text(user.fullName!)
               ]),
               const SizedBox(
                 width: 15,
@@ -137,7 +97,7 @@ class _UserInformationState extends State<UserInformation> {
                 const SizedBox(
                   width: 2,
                 ),
-                const Text('unknow')
+                 Text(user.gender == 1 ? 'male' : 'female')
               ])
             ],
           ),
@@ -155,7 +115,7 @@ class _UserInformationState extends State<UserInformation> {
                 const SizedBox(
                   width: 2,
                 ),
-                const Text('unknow')
+                 Text(user.birthDay!),
               ]),
               const SizedBox(
                 width: 50,
@@ -169,7 +129,7 @@ class _UserInformationState extends State<UserInformation> {
                 const SizedBox(
                   width: 2,
                 ),
-                Text('$_email')
+                Text(user.email!)
               ])
             ],
           ),

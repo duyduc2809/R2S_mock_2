@@ -1,7 +1,8 @@
 import 'dart:convert';
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
+import 'package:mobile_store/cubit/app_cubit_states.dart';
 import 'package:mobile_store/cubit/app_cubits.dart';
 import 'package:mobile_store/models/api_user.dart';
 import 'package:mobile_store/services/hive_helpers.dart';
@@ -22,6 +23,7 @@ class UserDataServices {
       'http://45.117.170.206:60/apis/user/active-otp?activeOTP=';
   static const urlActiveUser =
       'http://45.117.170.206:60/apis/mail/active-user?email=';
+  static const urlUpdateUser = 'http://45.117.170.206:60/apis/user/';
 
   //create new user account
   static Future<String?> createUser(User user) async {
@@ -42,6 +44,41 @@ class UserDataServices {
     if (response.statusCode == 201) {
       UserDataServices.sendActiveUser(user.email);
       print('create successfully');
+      print(jsonResponse);
+      return null;
+    } else {
+      print(jsonResponse);
+      return jsonResponse['message'] ?? jsonResponse['error'];
+    }
+  }
+
+  static Future<String?> updateUser(User user, BuildContext context) async {
+    final APIUser apiUser = await HiveHelper.loadUserData();
+    final uri = Uri.parse('$urlUpdateUser${apiUser.idUser}');
+    final body = jsonEncode({
+      "email": user.email.toString(),
+      "fullName": user.fullName.toString(),
+      "gender": user.gender ?? 1,
+      "birthDay": user.birthDay.toString(),
+      "id": apiUser.idUser,
+      "authProvider": "null",
+      "roleDTO": {"id": 2, "name": "Role_Customer"},
+      "statusDTO": true,
+      "lockStatusDTO": false
+    });
+
+    final response = await http.put(
+      uri,
+      body: body,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${apiUser.token}'
+      },
+    );
+    final jsonResponse = json.decode(utf8.decode(response.bodyBytes));
+    if (response.statusCode == 200) {
+      BlocProvider.of<AppCubits>(context).getUserData(
+          returnState: InformationPageState());
       print(jsonResponse);
       return null;
     } else {
@@ -78,7 +115,7 @@ class UserDataServices {
   }
 
   //(hàm được gọi từ hàm login của AppCubits, dùng để lấy về thông tin của user đã đăng nhập)
-  Future<User> getUser() async {
+  static Future<User> getUser() async {
     final APIUser user = await HiveHelper.loadUserData();
     final url = '$urlGetUserByID${user.idUser}';
     final uri = Uri.parse(url);
@@ -90,7 +127,7 @@ class UserDataServices {
     print(response.statusCode);
     if (response.statusCode == 200) {
       print('getuser successfully');
-      return User.fromJson(json.decode(response.body));
+      return User.fromJson(json.decode(utf8.decode(response.bodyBytes)));
     } else {
       print('get failed');
       throw Exception();

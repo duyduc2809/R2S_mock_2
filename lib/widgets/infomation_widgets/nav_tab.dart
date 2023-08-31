@@ -8,7 +8,6 @@ class NavBarUserInfor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.95,
       height: 90,
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(

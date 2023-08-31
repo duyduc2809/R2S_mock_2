@@ -52,13 +52,16 @@ class _InformationPage extends State<InformationPage> {
               user: AppCubits.userData,
             ),
             body: SingleChildScrollView(
-              child: Column(children: [
-                const SizedBox(
-                  height: 9,
-                ),
-                NavBarUserInfor(onNavBarClicked: onNavBarClicked),
-                screens[_currentTab],
-              ]),
+              child: Padding(
+                padding: const EdgeInsets.all(9.0),
+                child: Column(children: [
+                  const SizedBox(
+                    height: 9,
+                  ),
+                  NavBarUserInfor(onNavBarClicked: onNavBarClicked),
+                  screens[_currentTab],
+                ]),
+              ),
             ));
       } else {
         return const Center(child: CircularProgressIndicator());

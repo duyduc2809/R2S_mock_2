@@ -499,8 +499,7 @@ class _AddressListState extends State<AddressList> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 6),
-        margin: const EdgeInsets.symmetric(horizontal: 9, vertical: 9),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
         decoration: const BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(
@@ -508,7 +507,6 @@ class _AddressListState extends State<AddressList> {
             bottomRight: Radius.circular(10.0),
           ),
         ),
-        width: 375,
         height: 256,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -42,10 +42,11 @@ class _UserInformationState extends State<UserInformation> {
               IconButton(
                 onPressed: () {
                   CustomDialog.displayDialog(
-                      height: 270,
+                      height: 310,
                       context: context,
                       title: 'Edit Information',
-                      content: CustomDialog.editInformation(context, mounted, user));
+                      content:
+                          CustomDialog.editInformation(context, mounted, user));
                 },
                 icon: Image.asset(
                   'assets/img/edit (3) 2.png',
@@ -73,85 +74,90 @@ class _UserInformationState extends State<UserInformation> {
             height: 6,
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Row(children: [
-                Image.asset(
-                  'assets/img/image 42.png',
-                  width: 20,
-                  height: 20,
-                ),
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Row(children: [
+                  Image.asset(
+                    'assets/img/image 42.png',
+                    width: 20,
+                    height: 20,
+                  ),
+                  const SizedBox(
+                    width: 2,
+                  ),
+                  Text(user.fullName!)
+                ]),
                 const SizedBox(
-                  width: 2,
+                  height: 6,
                 ),
-                Text(user.fullName!)
+                Row(children: [
+                  Image.asset(
+                    'assets/img/calender.png',
+                    width: 20,
+                    height: 20,
+                  ),
+                  const SizedBox(
+                    width: 2,
+                  ),
+                  Text('user.birthDay!'),
+                ]),
               ]),
               const SizedBox(
-                width: 15,
+                width: 20,
               ),
-              Row(children: [
-                Image.asset(
-                  'assets/img/gender.png',
-                  width: 20,
-                  height: 20,
-                ),
-                const SizedBox(
-                  width: 2,
-                ),
-                 Text(user.gender == 1 ? 'male' : 'female')
-              ])
-            ],
-          ),
-          const SizedBox(
-            height: 6,
-          ),
-          Row(
-            children: [
-              Row(children: [
-                Image.asset(
-                  'assets/img/calender.png',
-                  width: 20,
-                  height: 20,
-                ),
-                const SizedBox(
-                  width: 2,
-                ),
-                 Text(user.birthDay!),
-              ]),
-              const SizedBox(
-                width: 50,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(children: [
+                    Image.asset(
+                      'assets/img/gender.png',
+                      width: 20,
+                      height: 20,
+                    ),
+                    const SizedBox(
+                      width: 2,
+                    ),
+                    Text(user.gender == 1 ? 'male' : 'female')
+                  ]),
+                  const SizedBox(
+                    height: 6,
+                  ),
+                  Row(children: [
+                    Image.asset(
+                      'assets/img/mail.png',
+                      width: 20,
+                      height: 20,
+                    ),
+                    const SizedBox(
+                      width: 2,
+                    ),
+                    Text(user.email!)
+                  ])
+                ],
               ),
-              Row(children: [
-                Image.asset(
-                  'assets/img/mail.png',
-                  width: 20,
-                  height: 20,
-                ),
-                const SizedBox(
-                  width: 2,
-                ),
-                Text(user.email!)
-              ])
             ],
           ),
           const SizedBox(
             height: 5,
           ),
-          ButtonTheme(
-              height: 20,
-              child: TextButton(
-                style: TextButton.styleFrom(backgroundColor: Colors.blue[400]),
-                child: const Text(
-                  "Change password",
-                  style: TextStyle(color: Colors.white, fontSize: 12),
-                ),
-                onPressed: () {
-                  CustomDialog.displayDialog(
-                      height: 230,
-                      context: context,
-                      title: 'CHANGE PASSWORD',
-                      content: CustomDialog.changePassword(context, mounted));
-                },
-              ))
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                backgroundColor: Colors.blue[400]),
+            child: const Text(
+              "Change password",
+              style: TextStyle(color: Colors.white, fontSize: 12),
+            ),
+            onPressed: () {
+              CustomDialog.displayDialog(
+                  height: 230,
+                  context: context,
+                  title: 'CHANGE PASSWORD',
+                  content: CustomDialog.changePassword(context, mounted));
+            },
+          )
         ],
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mobile_store/constants/color_const.dart';
 import 'package:mobile_store/cubit/adress/address_cubit.dart';
 import 'package:mobile_store/cubit/adress/address_state.dart';
 import 'package:mobile_store/models/address.dart';
@@ -87,11 +88,15 @@ class _AddressListState extends State<AddressList> {
                   child: Dialog(child: StatefulBuilder(
                     builder: (context, setState) {
                       return Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                                width: 3, color: Colors.grey.shade400),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
+                        decoration: ShapeDecoration(
+                            shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          side: BorderSide(
+                            width: 0.50,
+                            color:
+                                Colors.black.withOpacity(0.20000000298023224),
+                          ),
+                        )),
                         height: 530,
                         width: double.maxFinite,
                         child: Column(
@@ -634,7 +639,10 @@ class _AddressListState extends State<AddressList> {
               onPressed: () {
                 showAddressFormDialog();
               },
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+              style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  backgroundColor: ColorPallete.mainColor),
               child: const Text("Add"),
             )
           ],

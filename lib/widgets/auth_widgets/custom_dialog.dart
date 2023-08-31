@@ -441,7 +441,8 @@ class CustomDialog {
     final fullNameController = TextEditingController();
     final phoneController = TextEditingController();
     final birthdayController = TextEditingController();
-    String? _gender = 'male';
+    int? _gender;
+    ;
     final mailController = TextEditingController();
     fullNameController.text = user.fullName ?? '';
     phoneController.text = user.phoneNumber ?? '';
@@ -517,9 +518,9 @@ class CustomDialog {
                 DropdownMenuItem(value: 'male', child: Text('Male')),
                 DropdownMenuItem(value: 'female', child: Text('Female')),
               ],
-              value: 'male',
+              value: user.gender == 1 ? 'male' : 'female',
               onChanged: (value) {
-                _gender = value;
+                _gender = value == "male" ? 1 : 0;
               },
               decoration: InputDecoration(
                   hintStyle: const TextStyle(color: ColorPallete.mainColor),
@@ -566,6 +567,7 @@ class CustomDialog {
                 ElevatedButton(
                   onPressed: () async {
                     User updatedUser = User(
+                        gender: _gender,
                         fullName: fullNameController.text,
                         email: mailController.text,
                         birthDay: birthdayController.text,

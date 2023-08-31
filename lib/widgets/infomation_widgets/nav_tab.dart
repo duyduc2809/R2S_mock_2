@@ -30,7 +30,7 @@ class NavBarUserInfor extends StatelessWidget {
                   height: 40,
                   child: Image.asset('assets/img/information_img.png'),
                 ),
-                const Text("Your infomation",
+                const Text("Your information",
                     style: TextStyle(
                       fontFamily: "Inter",
                       fontSize: 14,

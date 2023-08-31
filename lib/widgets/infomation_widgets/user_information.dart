@@ -100,12 +100,13 @@ class _UserInformationState extends State<UserInformation> {
                   const SizedBox(
                     width: 2,
                   ),
-                  Text('user.birthDay!'),
+                  Text(user.birthDay ?? "null"),
                 ]),
               ]),
-              const SizedBox(
-                width: 20,
-              ),
+              // const SizedBox(
+              //   width: 20,
+              // ),
+              Expanded(child: Container()),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -118,7 +119,7 @@ class _UserInformationState extends State<UserInformation> {
                     const SizedBox(
                       width: 2,
                     ),
-                    Text(user.gender == 1 ? 'male' : 'female')
+                    Text(user.gender == 1 ? 'Male' : 'Female')
                   ]),
                   const SizedBox(
                     height: 6,
@@ -132,7 +133,10 @@ class _UserInformationState extends State<UserInformation> {
                     const SizedBox(
                       width: 2,
                     ),
-                    Text(user.email!)
+                    Text(
+                      user.email!,
+                      overflow: TextOverflow.clip,
+                    )
                   ])
                 ],
               ),

@@ -7,8 +7,6 @@ import '../models/user.dart';
 
 abstract class CubitStates extends Equatable {}
 
-
-
 class InitialState extends CubitStates {
   @override
   // TODO: implement props

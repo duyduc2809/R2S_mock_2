@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_store/constants/color_const.dart';
+import 'package:mobile_store/cubit/app_cubits.dart';
+import 'package:mobile_store/services/hive_helpers.dart';
 import 'package:mobile_store/services/user_data_services.dart';
-
 import '../../constants/dimension_const.dart';
+import '../../cubit/app_cubit_states.dart';
 import '../../models/user.dart';
 
 class CustomDialog {
   static const buttonHeight = smallButtonHeight;
+  static const blackOpacity = 0.20000000298023224;
+  static const buttonBorderRadius = 10.0;
 
   static displayDialog(
       {required BuildContext context,
@@ -23,7 +28,7 @@ class CustomDialog {
                 shape: RoundedRectangleBorder(
                   side: BorderSide(
                     width: 0.50,
-                    color: Colors.black.withOpacity(0.20000000298023224),
+                    color: Colors.black.withOpacity(blackOpacity),
                   ),
                 ),
               ),
@@ -37,7 +42,7 @@ class CustomDialog {
                       shape: RoundedRectangleBorder(
                         side: BorderSide(
                           width: 0.50,
-                          color: Colors.black.withOpacity(0.20000000298023224),
+                          color: Colors.black.withOpacity(blackOpacity),
                         ),
                       ),
                     ),
@@ -78,7 +83,7 @@ class CustomDialog {
               constraints: const BoxConstraints(maxHeight: 30, minHeight: 20),
               hintText: 'email',
               border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0))),
+                  borderRadius: BorderRadius.circular(buttonBorderRadius))),
         ),
         const SizedBox(
           height: 15,
@@ -92,7 +97,7 @@ class CustomDialog {
               },
               style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
+                      borderRadius: BorderRadius.circular(buttonBorderRadius)),
                   fixedSize: const Size(buttonHeight, 20),
                   backgroundColor: ColorPallete.redColor),
               child: const Text('Cancel'),
@@ -115,7 +120,7 @@ class CustomDialog {
               },
               style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
+                      borderRadius: BorderRadius.circular(buttonBorderRadius)),
                   fixedSize: const Size(buttonHeight, 20),
                   backgroundColor: ColorPallete.mainColor),
               child: const Text('Confirm'),
@@ -169,7 +174,7 @@ class CustomDialog {
                   hintText: 'OTP',
                   hintStyle: const TextStyle(color: ColorPallete.mainColor),
                   border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0))),
+                      borderRadius: BorderRadius.circular(buttonBorderRadius))),
             ),
             const SizedBox(
               height: 5,
@@ -192,7 +197,7 @@ class CustomDialog {
                       const BoxConstraints(maxHeight: 30, minHeight: 20),
                   hintText: 'Password',
                   border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0))),
+                      borderRadius: BorderRadius.circular(buttonBorderRadius))),
             ),
             const SizedBox(
               height: 5,
@@ -217,7 +222,7 @@ class CustomDialog {
                       const BoxConstraints(maxHeight: 30, minHeight: 20),
                   hintText: 'Repeat Password',
                   border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0))),
+                      borderRadius: BorderRadius.circular(buttonBorderRadius))),
             ),
             const SizedBox(
               height: 10,
@@ -269,7 +274,8 @@ class CustomDialog {
                   },
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
+                          borderRadius:
+                              BorderRadius.circular(buttonBorderRadius)),
                       fixedSize: const Size(buttonHeight, 20),
                       backgroundColor: ColorPallete.redColor),
                   child: const Text('Cancel'),
@@ -295,7 +301,8 @@ class CustomDialog {
                   },
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
+                          borderRadius:
+                              BorderRadius.circular(buttonBorderRadius)),
                       fixedSize: const Size(buttonHeight, 20),
                       backgroundColor: ColorPallete.mainColor),
                   child: const Text('Confirm'),
@@ -579,9 +586,36 @@ class CustomDialog {
                       ScaffoldMessenger.of(context)
                           .showSnackBar(SnackBar(content: Text(result)));
                     } else {
+                      print('www' + context.toString());
                       Navigator.pop(context);
                       ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: Text('User updated!')));
+                      if (mailController.text != user.email) {
+                        bool agreeLogout = false;
+                        await showDialog(
+                            barrierDismissible: false,
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                content: const Text(
+                                    'Your session has expired\nPlease log in again'),
+                                actions: [
+                                  ElevatedButton(
+                                      onPressed: () async {
+                                        Navigator.pop(context);
+                                        agreeLogout = true;
+                                      },
+                                      child: const Text("OK"))
+                                ],
+                              );
+                            });
+                        if (agreeLogout == true) {
+                          BlocProvider.of<AppCubits>(context).loginPage();
+                        }
+                      } else {
+                        BlocProvider.of<AppCubits>(context)
+                            .getUserData(returnState: InformationPageState());
+                      }
                     }
                   },
                   style: ElevatedButton.styleFrom(

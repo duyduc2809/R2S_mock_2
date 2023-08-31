@@ -1,8 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:mobile_store/services/hive_helpers.dart';
-import '../models/promotion.dart';
 import '../models/api_user.dart';
+import '../models/promotion.dart';
 import '../services/hive_helpers.dart';
 
 class FetchPromotion {
@@ -16,9 +15,9 @@ class FetchPromotion {
   }
 
   Future<List<Promotion>> getAllPromotions(int no, int limit) async {
-    final APIUser user = await HiveHelper.loadUserData();
+    final APIUser apiUser = await HiveHelper.loadUserData();
     final uri = Uri.parse("$urlRead?no=$no&limit=$limit");
-    final headers = {'Authorization': 'Bearer ${user.token}'};
+    final headers = {'Authorization': 'Bearer ${apiUser.token}'};
     final response = await http.get(uri, headers: headers);
 
     if (response.statusCode == statusCode200) {

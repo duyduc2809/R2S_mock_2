@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_store/cubit/app_cubit_states.dart';
 import 'package:mobile_store/cubit/app_cubits.dart';
-import 'package:mobile_store/widget/product_cart.dart';
+import 'package:mobile_store/widgets/product_widgets/product_cart.dart';
 import 'package:mobile_store/widgets/custom_app_bar.dart';
 
 class CartPage extends StatefulWidget {

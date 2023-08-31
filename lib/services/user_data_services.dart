@@ -1,7 +1,8 @@
 import 'dart:convert';
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
+import 'package:mobile_store/cubit/app_cubit_states.dart';
 import 'package:mobile_store/cubit/app_cubits.dart';
 import 'package:mobile_store/models/api_user.dart';
 import 'package:mobile_store/services/hive_helpers.dart';
@@ -12,6 +13,8 @@ class UserDataServices {
   static const urlGetUserByID = 'http://45.117.170.206:60/apis/user/';
   static const urlCreate = 'http://45.117.170.206:60/apis/user/';
   static const urlLogin = 'http://45.117.170.206:60/apis/login';
+  static const urlChangePasswordByToken =
+      'http://45.117.170.206:60/apis/user/change-password-by-token';
   static const urlForgotPassword =
       'http://45.117.170.206:60/apis/mail/forgot-password/';
   static const urlChangePasswordByOTP =
@@ -20,6 +23,7 @@ class UserDataServices {
       'http://45.117.170.206:60/apis/user/active-otp?activeOTP=';
   static const urlActiveUser =
       'http://45.117.170.206:60/apis/mail/active-user?email=';
+  static const urlUpdateUser = 'http://45.117.170.206:60/apis/user/';
 
   //create new user account
   static Future<String?> createUser(User user) async {
@@ -42,7 +46,42 @@ class UserDataServices {
       print('create successfully');
       print(jsonResponse);
       return null;
-     } else {
+    } else {
+      print(jsonResponse);
+      return jsonResponse['message'] ?? jsonResponse['error'];
+    }
+  }
+
+  static Future<String?> updateUser(User user, BuildContext context) async {
+    final APIUser apiUser = await HiveHelper.loadUserData();
+    final uri = Uri.parse('$urlUpdateUser${apiUser.idUser}');
+    final body = jsonEncode({
+      "email": user.email.toString(),
+      "fullName": user.fullName.toString(),
+      "gender": user.gender ?? 1,
+      "birthDay": user.birthDay.toString(),
+      "id": apiUser.idUser,
+      "authProvider": "null",
+      "roleDTO": {"id": 2, "name": "Role_Customer"},
+      "statusDTO": true,
+      "lockStatusDTO": false
+    });
+
+    final response = await http.put(
+      uri,
+      body: body,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${apiUser.token}'
+      },
+    );
+    final jsonResponse = json.decode(utf8.decode(response.bodyBytes));
+    if (response.statusCode == 200) {
+      BlocProvider.of<AppCubits>(context).getUserData(
+          returnState: InformationPageState());
+      print(jsonResponse);
+      return null;
+    } else {
       print(jsonResponse);
       return jsonResponse['message'] ?? jsonResponse['error'];
     }
@@ -63,7 +102,7 @@ class UserDataServices {
     jsonResponse = json.decode(response.body);
     if (response.statusCode == 201) {
       print('login successfully');
-    print(jsonResponse['messsage']);
+      print(jsonResponse['messsage']);
 
       final apiUser = APIUser.fromJson(jsonResponse);
       HiveHelper.saveData(apiUser, rememberMe);
@@ -71,32 +110,26 @@ class UserDataServices {
 
       return null;
     } else {
-
       return jsonResponse['message'];
     }
   }
 
   //(hàm được gọi từ hàm login của AppCubits, dùng để lấy về thông tin của user đã đăng nhập)
-  Future<User> getUser() async {
+  static Future<User> getUser() async {
     final APIUser user = await HiveHelper.loadUserData();
     final url = '$urlGetUserByID${user.idUser}';
     final uri = Uri.parse(url);
 
-    try {
-      final response = await http.get(
-        uri,
-        headers: {'Authorization': 'Bearer ${user.token}'},
-      );
-      print(response.statusCode);
-      if (response.statusCode == 200) {
-        print('getuser successfully');
-        return User.fromJson(json.decode(response.body));
-      } else {
-        print('get failed');
-        throw Exception();
-      }
-    } catch (e) {
-      print(e);
+    final response = await http.get(
+      uri,
+      headers: {'Authorization': 'Bearer ${user.token}'},
+    );
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      print('getuser successfully');
+      return User.fromJson(json.decode(utf8.decode(response.bodyBytes)));
+    } else {
+      print('get failed');
       throw Exception();
     }
   }
@@ -146,7 +179,6 @@ class UserDataServices {
 
     final response = await http.get(
       uri,
-      // headers: {'Content-Type': 'application/json'},
     );
     if (response.statusCode == 200) {
       return null;
@@ -161,7 +193,6 @@ class UserDataServices {
 
     final response = await http.get(
       uri,
-      // headers: {'Content-Type': 'application/json'},
     );
     final Map<String, dynamic> responseData = json.decode(response.body);
     print(responseData);
@@ -169,6 +200,34 @@ class UserDataServices {
       return null;
     } else {
       return "Wrong OTP";
+    }
+  }
+
+  static Future<String?> changePasswordByToken(
+      String oldPassword, String newPassword) async {
+    final APIUser user = await HiveHelper.loadUserData();
+    final uri = Uri.parse(urlChangePasswordByToken);
+    late final jsonResponse;
+    final body = jsonEncode({
+      'newPassword': newPassword.toString(),
+      'oldPassword': oldPassword.toString()
+    });
+    final response = await http.put(
+      uri,
+      body: body,
+      headers: {
+        'Authorization': 'Bearer ${user.token}',
+        'Content-Type': 'application/json'
+      },
+    );
+
+    jsonResponse = jsonDecode(utf8.decode(response.bodyBytes));
+    if (response.statusCode == 200) {
+      print(jsonResponse);
+      return null;
+    } else {
+      print(jsonResponse);
+      return 'Failed';
     }
   }
 }

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:mobile_store/cubit/app_cubit_states.dart';
 import 'package:mobile_store/cubit/app_cubits.dart';
 import 'package:mobile_store/services/product_data.dart';
 
-import '../models/product.dart';
+import '../../models/product/product.dart';
 
 class ListProduct extends StatefulWidget {
   const ListProduct({super.key});
@@ -15,6 +16,7 @@ class ListProduct extends StatefulWidget {
 
 class _ListProductState extends State<ListProduct> {
   late Future<List<Product>> futureListProducts;
+
   @override
   void initState() {
     super.initState();
@@ -39,7 +41,8 @@ class _ListProductState extends State<ListProduct> {
                 itemCount: products.length,
                 itemBuilder: (context, index) => GestureDetector(
                   onTap: () {
-                    BlocProvider.of<AppCubits>(context).detailPage(products[index]);
+                    BlocProvider.of<AppCubits>(context)
+                        .detailPage(products[index]);
                   },
                   child: Card(
                     shape: RoundedRectangleBorder(
@@ -53,19 +56,15 @@ class _ListProductState extends State<ListProduct> {
                           Container(
                               height: 109,
                               width: 106,
-                              child: 
-                              Image.asset("assets/img/samsung.jpg")
-                              // Image.network(
-                                // ProductData.baseUrl + (products[index].images!["name"].toString()
-                              // ))
-                              ),
+                              child: Image.network(ProductData.baseUrl +
+                                  (products[index].images![1].name))),
                           Text("${products[index].name}",
                               style: const TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w600,
                               )),
                           Text(
-                            "${products[index].price} USD",
+                            "${formatNumber(products[index].price!.toInt())} VND",
                             style: const TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w700,
@@ -84,5 +83,10 @@ class _ListProductState extends State<ListProduct> {
         ),
       );
     });
+  }
+
+  String formatNumber(int number) {
+    final NumberFormat formatter = NumberFormat('#,##0', 'vi_VN');
+    return formatter.format(number);
   }
 }

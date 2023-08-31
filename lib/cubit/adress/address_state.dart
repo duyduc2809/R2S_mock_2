@@ -21,6 +21,7 @@ class SuccessAddAddress extends AddressState {
   SuccessAddAddress(this.address);
 }
 
-class SuccessDeleteAddress extends AddressState {}
-
-class SuccessUpdateAddress extends AddressState {}
+class SuccessUpdateAddress extends AddressState {
+  final Address updatedAddress;
+  SuccessUpdateAddress(this.updatedAddress);
+}

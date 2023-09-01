@@ -26,7 +26,7 @@ class _InformationPage extends State<InformationPage> {
       children: [UserInformation(), AddressList()],
     ),
     const OrderTab(),
-    const PromotionTab()
+    const PromotionTab(),
   ];
 
   void onNavBarClicked(int index) {
@@ -38,7 +38,6 @@ class _InformationPage extends State<InformationPage> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
       if (state is InformationPageState) {
         return Scaffold(
@@ -52,16 +51,34 @@ class _InformationPage extends State<InformationPage> {
               context: context,
               user: AppCubits.userData,
             ),
-            body: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(9.0),
-                child: Column(children: [
-                  const SizedBox(
-                    height: 9,
+            body: Padding(
+              padding: const EdgeInsets.all(9.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SingleChildScrollView(
+                    child: Column(children: [
+                      const SizedBox(
+                        height: 9,
+                      ),
+                      NavBarUserInfor(onNavBarClicked: onNavBarClicked),
+                      const SizedBox(
+                        height: 9,
+                      ),
+                      Container(
+                          width: double.maxFinite,
+                          height: MediaQuery.of(context).size.height * 0.55,
+                          decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(8),
+                              bottomRight: Radius.circular(8),
+                            ),
+                          ),
+                          child: screens[_currentTab]),
+                    ]),
                   ),
-                  NavBarUserInfor(onNavBarClicked: onNavBarClicked),
-                  screens[_currentTab],
-                ]),
+                ],
               ),
             ));
       } else {

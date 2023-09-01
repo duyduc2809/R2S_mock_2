@@ -22,32 +22,36 @@ class _PromotionTabState extends State<PromotionTab> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-    future: futureListPromotion,
-    builder: (context, snapshot) {
-    if (snapshot.hasError) {
-      return Text("Retrieve Failed${snapshot.error}");
-    } else if (snapshot.hasData) {
-      final List<Promotion> promotions = snapshot.data!;
-      return Padding(
-        padding: const EdgeInsets.only(top: 8),
-        child: ListView.builder(
-          shrinkWrap: true,
-          itemCount: promotions.length,
-          itemBuilder: (context, index) => ListTile(
-            tileColor: Colors.white,
-            leading: Image.asset('assets/img/promotion_gift.png'),
-            title: Text('${promotions[index].discountDTO}% '
-                'discount for orders ${promotions[index].maxGetDTO},'
-                'for customers who bought ${promotions[index].totalPurchaseDTO}'),
-            subtitle: Text('Exp: ${promotions[index].expireDateDTO}'),
+    return Container(
+      width: double.maxFinite,
+      height: double.maxFinite,
+      child: FutureBuilder(
+      future: futureListPromotion,
+      builder: (context, snapshot) {
+      if (snapshot.hasError) {
+        return Text("Retrieve Failed${snapshot.error}");
+      } else if (snapshot.hasData) {
+        final List<Promotion> promotions = snapshot.data!;
+        return Padding(
+          padding: const EdgeInsets.only(top: 8),
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: promotions.length,
+            itemBuilder: (context, index) => ListTile(
+              tileColor: Colors.white,
+              leading: Image.asset('assets/img/promotion_gift.png'),
+              title: Text('${promotions[index].discountDTO}% '
+                  'discount for orders ${promotions[index].maxGetDTO},'
+                  'for customers who bought ${promotions[index].totalPurchaseDTO}'),
+              subtitle: Text('Exp: ${promotions[index].expireDateDTO}'),
+            ),
           ),
-        ),
-      );
-    } else {
-      return const CircularProgressIndicator();
-    }
-    },
+        );
+      } else {
+        return const CircularProgressIndicator();
+      }
+      },
+      ),
     );
   }
 }

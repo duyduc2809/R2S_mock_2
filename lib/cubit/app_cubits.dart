@@ -24,7 +24,8 @@ class AppCubits extends Cubit<CubitStates> {
       emit(returnState ?? HomePageState());
     } catch (e) {
       print(e);
-      throw Exception();
+      emit(SignInState());
+      // throw Exception();
     }
   }
 

@@ -58,23 +58,11 @@ class _InformationPage extends State<InformationPage> {
                 children: [
                   SingleChildScrollView(
                     child: Column(children: [
-                      const SizedBox(
-                        height: 9,
-                      ),
                       NavBarUserInfor(onNavBarClicked: onNavBarClicked),
                       const SizedBox(
                         height: 9,
                       ),
                       Container(
-                          width: double.maxFinite,
-                          height: MediaQuery.of(context).size.height * 0.55,
-                          decoration: const BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(8),
-                              bottomRight: Radius.circular(8),
-                            ),
-                          ),
                           child: screens[_currentTab]),
                     ]),
                   ),

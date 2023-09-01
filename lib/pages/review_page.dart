@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../constants/fetch_review.dart';
 import '../constants/size_config.dart';
+import '../cubit/app_cubit_states.dart';
+import '../cubit/app_cubits.dart';
 import '../cubit/review_cubit.dart';
 import '../cubit/state/review_state.dart';
 import '../models/review.dart';
@@ -166,11 +168,13 @@ class _ReviewPageState extends State<ReviewPage> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
-        appBar: CustomAppBar(
+      appBar: CustomAppBar(
+        logged: true,
+        title: '',
+        showUserInfo: true,
         context: context,
-        title: 'Mobile Store',
-        logged: false,
-        ),
+        user: AppCubits.userData,
+      ),
       body:
          Container(
            height: double.infinity,
@@ -264,6 +268,7 @@ class _ReviewPageState extends State<ReviewPage> {
           ),
       ),
     );
+
   }
 }
 

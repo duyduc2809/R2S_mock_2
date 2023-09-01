@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_store/cubit/app_cubit_states.dart';
 import 'package:mobile_store/cubit/app_cubits.dart';
+import 'package:mobile_store/pages/review_page.dart';
 import 'package:mobile_store/services/product_data.dart';
 import 'package:mobile_store/widgets/app_text.dart';
 import 'package:mobile_store/widgets/custom_button_detail.dart';
@@ -540,6 +541,14 @@ class _DetailProductState extends State<DetailProduct> {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 10),
+                          child: GestureDetector(
+                            onTap: () {
+                              // Navigate to the Review screen when tapped
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => ReviewPage()),
+                              );
+                            },
                           child: Container(
                             width: 350,
                             height: 33,
@@ -552,6 +561,7 @@ class _DetailProductState extends State<DetailProduct> {
                               ),
                             ),
                           ),
+                        ),
                         ),
                       ],
                     ),

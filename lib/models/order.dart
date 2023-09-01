@@ -1,18 +1,15 @@
-import 'package:mobile_store/models/product/product.dart';
-import 'package:mobile_store/models/status.dart';
-
 class Order {
   final int? id;
   final double? total;
   final DateTime? receiveDate;
-  final OrderStatus? status;
+  final OrderStatus? statusDTO;
   final ProductOrderDTO? productOrderDTO;
 
   Order({
     this.id,
     this.total,
     this.receiveDate,
-    this.status,
+    this.statusDTO,
     this.productOrderDTO,
   });
 
@@ -21,7 +18,7 @@ class Order {
       id: json['id'],
       total: json['total'],
       receiveDate: DateTime.parse(json['receiveDate']),
-      status: OrderStatus.fromJson(json['status']),
+      statusDTO: OrderStatus.fromJson(json['statusDTO']),
       productOrderDTO: ProductOrderDTO.fromJson(json['productOrderDTO']),
     );
   }

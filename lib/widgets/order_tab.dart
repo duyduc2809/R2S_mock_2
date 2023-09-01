@@ -35,64 +35,85 @@ class _OrderTabState extends State<OrderTab> {
             } else if (snapshot.hasData) {
               final List<Order> orders = snapshot.data!;
               return Padding(
-                padding: const EdgeInsets.only(top: 8),
+                padding: const EdgeInsets.only(
+                  top: 8,
+                ),
                 child: ListView.separated(
                   shrinkWrap: true,
                   itemCount: orders.length,
                   itemBuilder: (context, index) => ListTile(
                     tileColor: Colors.white,
-                    leading: Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5.0),
-                      ),
-                      child: Container(
-                        margin: const EdgeInsets.all(0),
-                        width: 95,
-                        height: 95,
-                        child: Image.network(
-                          FetchOrder.baseUrl +
-                              ('${orders[index].productOrderDTO?.image}'),
+                    leading: Expanded(
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5.0),
                         ),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                width: 95,
+                                height: 48,
+                                child: Image.network(
+                                  FetchOrder.baseUrl +
+                                      ('${orders[index].productOrderDTO?.image}'),
+                                ),
+                              ),
+                            ]),
                       ),
                     ),
-                    title: Text(
-                      '${orders[index].productOrderDTO?.name}',
-                      style: const TextStyle(
-                          fontSize: 12, fontWeight: FontWeight.w600),
-                    ),
-                    subtitle: Column(children: [
-                      Text(
-                        'Delivery date: ${orders[index].receiveDate}',
-                        style: const TextStyle(
-                            fontSize: 10, fontWeight: FontWeight.w300),
-                      ),
-                      Row(
+                    title: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            '${orders[index].total}',
+                            '${orders[index].productOrderDTO?.name}',
                             style: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.green),
+                                fontSize: 12, fontWeight: FontWeight.w600),
                           ),
                           const SizedBox(
-                            width: 20,
+                            height: 10,
                           ),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5)),
-                                backgroundColor: ColorPallete.mainColor,
-                                fixedSize: const Size(90, 20)),
-                            child: const Text(
-                              'Detail',
-                              style: TextStyle(fontSize: 16),
-                            ),
-                            onPressed: () {},
-                          )
-                        ],
-                      ),
-                    ]),
+                          Text(
+                            'Delivery date: ${orders[index].receiveDate}',
+                            style: const TextStyle(
+                                fontSize: 10, fontWeight: FontWeight.w300),
+                          ),
+                          const SizedBox(
+                            height: 2,
+                          ),
+                          Text(
+                            'Order number: ${orders[index].productOrderDTO?.seri}',
+                            style: const TextStyle(
+                                fontSize: 10, fontWeight: FontWeight.w300),
+                          ),
+                        ]),
+                    subtitle: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '${orders[index].total}',
+                          style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.green),
+                        ),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5)),
+                              backgroundColor: ColorPallete.mainColor,
+                              fixedSize: const Size(80, 20)),
+                          child: const Text(
+                            'Detail',
+                            style: TextStyle(fontSize: 16),
+                          ),
+                          onPressed: () {},
+                        )
+                      ],
+                    ),
                   ),
                   separatorBuilder: (BuildContext context, int index) =>
                       const Divider(),

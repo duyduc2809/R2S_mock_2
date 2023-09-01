@@ -56,7 +56,7 @@ class _InformationPage extends State<InformationPage> {
                 padding: const EdgeInsets.all(9.0),
                 child: Column(children: [
                   const SizedBox(
-                    height: 9,
+                    height: 5,
                   ),
                   NavBarUserInfor(onNavBarClicked: onNavBarClicked),
                   screens[_currentTab],

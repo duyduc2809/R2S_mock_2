@@ -21,7 +21,7 @@ class _MainPageState extends State<MainPage> {
 
   Widget _buildBody(BuildContext context) {
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
-      if (state is DetailProductState) {
+      if (state is DetailProductState || state is ProductReviewState) {
         return const DetailProduct();
       } else if (state is CartPageState) {
         return const CartPage();

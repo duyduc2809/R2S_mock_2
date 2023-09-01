@@ -17,7 +17,7 @@ class AppCubits extends Cubit<CubitStates> {
     init();
   }
 
-  void getUserData({returnState}) async {
+  Future<void> getUserData({returnState}) async {
     try {
       emit(LoadingState());
       userData = await UserDataServices.getUser();
@@ -32,7 +32,7 @@ class AppCubits extends Cubit<CubitStates> {
   Future<void> init() async {
     final rememberMe = await HiveHelper.loadRememberMe();
     if (rememberMe == true) {
-      getUserData();
+      await getUserData();
       return homePage();
     } else {
       return loginPage();
@@ -74,7 +74,6 @@ class AppCubits extends Cubit<CubitStates> {
   }
 
   detailPage(product) {
-
     emit(DetailProductState(product: product));
   }
 
@@ -84,5 +83,9 @@ class AppCubits extends Cubit<CubitStates> {
 
   cartPage() {
     emit(CartPageState());
+  }
+
+  reviewPage(product) {
+    emit(ProductReviewState(product: product));
   }
 }

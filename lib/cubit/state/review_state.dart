@@ -19,8 +19,8 @@ class SuccessLoadingReview extends ReviewState {
 }
 
 class SuccessAddReview extends ReviewState {
-  final Review review;
-  SuccessAddReview(this.review);
+
+  SuccessAddReview();
 }
 
 class SuccessDeleteReview extends ReviewState {}

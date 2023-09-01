@@ -29,7 +29,8 @@ class _AppCubitLogicsState extends State<AppCubitLogics> {
           } else if (state is HomePageState ||
               state is DetailProductState ||
               state is CartPageState ||
-              state is InformationPageState) {
+              state is InformationPageState ||
+              state is ProductReviewState) {
             return const MainPage();
           } else if (state is LoadingState) {
             return const Center(

@@ -53,12 +53,14 @@ class _ListProductState extends State<ListProduct> {
                       width: 147,
                       child: Column(
                         children: [
-                          Container(
+                          SizedBox(
                               height: 99,
-                              width: 96,
+                              width: 66,
                               child: Image.network(ProductData.baseUrl +
                                   (products[index].images![1].name))),
                           Text("${products[index].name}",
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w600,

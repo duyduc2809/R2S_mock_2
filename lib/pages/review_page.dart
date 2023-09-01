@@ -58,15 +58,17 @@ class _ReviewPageState extends State<ReviewPage> {
 
       showDialog(
         context: context,
-        builder: (context) => SuccessDialog(),
+        builder: (context) => const SuccessDialog(),
+
       );
+      Future.delayed(const Duration(seconds: 2), () {
+        Navigator.pop(context);
+      });
     } else {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(result)));
     }
-    // Future.delayed(Duration(seconds: 5), () {
-    //   Navigator.pop(context);
-    // });
+
   }
 
   Future<void> _showDialog(

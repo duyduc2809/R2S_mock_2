@@ -14,9 +14,9 @@ class FetchPromotion {
     return contents.map<Promotion>((json) => Promotion.fromJson(json)).toList();
   }
 
-  Future<List<Promotion>> getAllPromotions(int no, int limit) async {
+  Future<List<Promotion>> getAllPromotions() async {
     final APIUser apiUser = await HiveHelper.loadUserData();
-    final uri = Uri.parse("$urlRead?no=$no&limit=$limit");
+    final uri = Uri.parse(urlRead);
     final headers = {'Authorization': 'Bearer ${apiUser.token}'};
     final response = await http.get(uri, headers: headers);
 

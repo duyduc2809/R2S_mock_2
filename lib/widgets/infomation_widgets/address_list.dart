@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mobile_store/constants/color_const.dart';
 import 'package:mobile_store/cubit/adress/address_cubit.dart';
 import 'package:mobile_store/cubit/adress/address_state.dart';
+import 'package:mobile_store/cubit/app_cubits.dart';
 import 'package:mobile_store/models/address.dart';
 import 'package:mobile_store/services/address_data_service.dart';
 import 'package:mobile_store/services/address_data_repo.dart';
@@ -87,11 +89,15 @@ class _AddressListState extends State<AddressList> {
                   child: Dialog(child: StatefulBuilder(
                     builder: (context, setState) {
                       return Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                                width: 3, color: Colors.grey.shade400),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
+                        decoration: ShapeDecoration(
+                            shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          side: BorderSide(
+                            width: 0.50,
+                            color:
+                                Colors.black.withOpacity(0.20000000298023224),
+                          ),
+                        )),
                         height: 530,
                         width: double.maxFinite,
                         child: Column(
@@ -411,8 +417,9 @@ class _AddressListState extends State<AddressList> {
                                                             phoneReceiver:
                                                                 "012345678");
 
-                                                    addressCubit.createAddress(
+                                                    await addressCubit.createAddress(
                                                         newAddress);
+                                                    // BlocProvider.of<AppCubits>(context).informationPage();
                                                   } else {
                                                     address.setLocation =
                                                         location;
@@ -499,8 +506,7 @@ class _AddressListState extends State<AddressList> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 6),
-        margin: const EdgeInsets.symmetric(horizontal: 9, vertical: 9),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
         decoration: const BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(
@@ -508,7 +514,6 @@ class _AddressListState extends State<AddressList> {
             bottomRight: Radius.circular(10.0),
           ),
         ),
-        width: 375,
         height: 256,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -530,99 +535,103 @@ class _AddressListState extends State<AddressList> {
                 } else if (state is SuccessLoadingAddress) {
                   final addressList = state.addresses;
 
-                  return ListView.separated(
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return Row(
-                        children: [
-                          Expanded(
-                            flex: 2,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                    "${addressList[index].nameReceiver} | ${addressList[index].phoneReceiver}"),
-                                const SizedBox(
-                                  height: 4,
-                                ),
-                                Text(
-                                  "${addressList[index].location}",
-                                  style: const TextStyle(
-                                      color: Colors.grey,
-                                      overflow: TextOverflow.clip),
-                                ),
-                                Row(
+                  return StatefulBuilder(
+                    builder: (context, StateSetter setState) {
+                      return ListView.separated(
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          return Row(
+                            children: [
+                              Expanded(
+                                flex: 2,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Container(
-                                      alignment: Alignment.center,
-                                      height: 22,
-                                      width: 69,
-                                      decoration: BoxDecoration(
-                                          border:
-                                              Border.all(color: Colors.green),
-                                          color: Colors.grey[200]),
-                                      child: const Text(
-                                        "Default",
-                                        style: TextStyle(
-                                          color: Colors.green,
-                                        ),
-                                      ),
-                                    ),
+                                    Text(
+                                        "${addressList[index].nameReceiver} | ${addressList[index].phoneReceiver}"),
                                     const SizedBox(
-                                      width: 18,
+                                      height: 4,
                                     ),
-                                    Container(
-                                      alignment: Alignment.center,
-                                      height: 22,
-                                      width: 69,
-                                      decoration: BoxDecoration(
-                                          border:
-                                              Border.all(color: Colors.orange),
-                                          color: Colors.grey[200]),
-                                      child: const Text(
-                                        "Home",
-                                        style: TextStyle(
-                                          color: Colors.orange,
+                                    Text(
+                                      "${addressList[index].location}",
+                                      style: const TextStyle(
+                                          color: Colors.grey,
+                                          overflow: TextOverflow.clip),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Container(
+                                          alignment: Alignment.center,
+                                          height: 22,
+                                          width: 69,
+                                          decoration: BoxDecoration(
+                                              border:
+                                                  Border.all(color: Colors.green),
+                                              color: Colors.grey[200]),
+                                          child: const Text(
+                                            "Default",
+                                            style: TextStyle(
+                                              color: Colors.green,
+                                            ),
+                                          ),
                                         ),
-                                      ),
+                                        const SizedBox(
+                                          width: 18,
+                                        ),
+                                        Container(
+                                          alignment: Alignment.center,
+                                          height: 22,
+                                          width: 69,
+                                          decoration: BoxDecoration(
+                                              border:
+                                                  Border.all(color: Colors.orange),
+                                              color: Colors.grey[200]),
+                                          child: const Text(
+                                            "Home",
+                                            style: TextStyle(
+                                              color: Colors.orange,
+                                            ),
+                                          ),
+                                        )
+                                      ],
                                     )
                                   ],
-                                )
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                              child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              IconButton(
-                                  onPressed: () {
-                                    showAddressFormDialog(
-                                        address: addressList[index]);
-                                  },
-                                  icon: Image.asset(
-                                    'assets/img/edit (3) 2.png',
-                                    width: 24,
-                                    height: 24,
-                                  )),
-                              IconButton(
-                                  onPressed: () {
-                                    addressCubit.deleteAddress(
-                                        "${addressList[index].id}");
-                                  },
-                                  icon: Image.asset(
-                                    'assets/img/delete.png',
-                                    width: 24,
-                                    height: 24,
-                                  )),
+                                ),
+                              ),
+                              Expanded(
+                                  child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  IconButton(
+                                      onPressed: () {
+                                        showAddressFormDialog(
+                                            address: addressList[index]);
+                                      },
+                                      icon: Image.asset(
+                                        'assets/img/edit (3) 2.png',
+                                        width: 24,
+                                        height: 24,
+                                      )),
+                                  IconButton(
+                                      onPressed: () {
+                                        addressCubit.deleteAddress(
+                                            "${addressList[index].id}");
+                                      },
+                                      icon: Image.asset(
+                                        'assets/img/delete.png',
+                                        width: 24,
+                                        height: 24,
+                                      )),
+                                ],
+                              ))
                             ],
-                          ))
-                        ],
+                          );
+                        },
+                        separatorBuilder: (context, index) => const Divider(),
+                        itemCount: addressList.length,
+                        padding: const EdgeInsets.symmetric(vertical: 10),
                       );
-                    },
-                    separatorBuilder: (context, index) => const Divider(),
-                    itemCount: addressList.length,
-                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    }
                   );
                 } else if (state is FailureAddressState) {
                   return Center(
@@ -636,7 +645,10 @@ class _AddressListState extends State<AddressList> {
               onPressed: () {
                 showAddressFormDialog();
               },
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+              style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  backgroundColor: ColorPallete.mainColor),
               child: const Text("Add"),
             )
           ],

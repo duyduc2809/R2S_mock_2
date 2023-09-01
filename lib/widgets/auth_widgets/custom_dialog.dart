@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_store/constants/color_const.dart';
+import 'package:mobile_store/cubit/app_cubits.dart';
+import 'package:mobile_store/services/hive_helpers.dart';
 import 'package:mobile_store/services/user_data_services.dart';
-
 import '../../constants/dimension_const.dart';
+import '../../cubit/app_cubit_states.dart';
+import '../../models/user.dart';
 
 class CustomDialog {
   static const buttonHeight = smallButtonHeight;
+  static const blackOpacity = 0.20000000298023224;
+  static const buttonBorderRadius = 10.0;
 
   static displayDialog(
       {required BuildContext context,
@@ -22,7 +28,7 @@ class CustomDialog {
                 shape: RoundedRectangleBorder(
                   side: BorderSide(
                     width: 0.50,
-                    color: Colors.black.withOpacity(0.20000000298023224),
+                    color: Colors.black.withOpacity(blackOpacity),
                   ),
                 ),
               ),
@@ -36,7 +42,7 @@ class CustomDialog {
                       shape: RoundedRectangleBorder(
                         side: BorderSide(
                           width: 0.50,
-                          color: Colors.black.withOpacity(0.20000000298023224),
+                          color: Colors.black.withOpacity(blackOpacity),
                         ),
                       ),
                     ),
@@ -77,7 +83,7 @@ class CustomDialog {
               constraints: const BoxConstraints(maxHeight: 30, minHeight: 20),
               hintText: 'email',
               border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0))),
+                  borderRadius: BorderRadius.circular(buttonBorderRadius))),
         ),
         const SizedBox(
           height: 15,
@@ -91,7 +97,7 @@ class CustomDialog {
               },
               style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
+                      borderRadius: BorderRadius.circular(buttonBorderRadius)),
                   fixedSize: const Size(buttonHeight, 20),
                   backgroundColor: ColorPallete.redColor),
               child: const Text('Cancel'),
@@ -114,7 +120,7 @@ class CustomDialog {
               },
               style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
+                      borderRadius: BorderRadius.circular(buttonBorderRadius)),
                   fixedSize: const Size(buttonHeight, 20),
                   backgroundColor: ColorPallete.mainColor),
               child: const Text('Confirm'),
@@ -168,7 +174,7 @@ class CustomDialog {
                   hintText: 'OTP',
                   hintStyle: const TextStyle(color: ColorPallete.mainColor),
                   border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0))),
+                      borderRadius: BorderRadius.circular(buttonBorderRadius))),
             ),
             const SizedBox(
               height: 5,
@@ -191,7 +197,7 @@ class CustomDialog {
                       const BoxConstraints(maxHeight: 30, minHeight: 20),
                   hintText: 'Password',
                   border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0))),
+                      borderRadius: BorderRadius.circular(buttonBorderRadius))),
             ),
             const SizedBox(
               height: 5,
@@ -216,7 +222,7 @@ class CustomDialog {
                       const BoxConstraints(maxHeight: 30, minHeight: 20),
                   hintText: 'Repeat Password',
                   border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0))),
+                      borderRadius: BorderRadius.circular(buttonBorderRadius))),
             ),
             const SizedBox(
               height: 10,
@@ -268,7 +274,8 @@ class CustomDialog {
                   },
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
+                          borderRadius:
+                              BorderRadius.circular(buttonBorderRadius)),
                       fixedSize: const Size(buttonHeight, 20),
                       backgroundColor: ColorPallete.redColor),
                   child: const Text('Cancel'),
@@ -294,7 +301,8 @@ class CustomDialog {
                   },
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
+                          borderRadius:
+                              BorderRadius.circular(buttonBorderRadius)),
                       fixedSize: const Size(buttonHeight, 20),
                       backgroundColor: ColorPallete.mainColor),
                   child: const Text('Confirm'),
@@ -435,12 +443,18 @@ class CustomDialog {
         ));
   }
 
-  static editInformation(BuildContext context, mounted) {
+  static editInformation(BuildContext context, mounted, User user) {
     final _formKey = GlobalKey<FormState>();
     final fullNameController = TextEditingController();
     final phoneController = TextEditingController();
     final birthdayController = TextEditingController();
+    int? _gender;
+    ;
     final mailController = TextEditingController();
+    fullNameController.text = user.fullName ?? '';
+    phoneController.text = user.phoneNumber ?? '';
+    birthdayController.text = user.birthDay ?? '';
+    mailController.text = user.email ?? '';
 
     return Form(
         key: _formKey,
@@ -448,7 +462,6 @@ class CustomDialog {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             TextFormField(
-              obscureText: true,
               controller: fullNameController,
               validator: (value) {
                 if (value == null || value == '') {
@@ -471,13 +484,12 @@ class CustomDialog {
               height: 10,
             ),
             TextFormField(
-              obscureText: true,
               validator: (value) {
-                if (value == null || value == '') {
-                  return "Vui lòng nhập sđt";
-                } else {
-                  return null;
-                }
+                // if (value == null || value == '') {
+                //   return "Vui lòng nhập sđt";
+                // } else {
+                //   return null;
+                // }
               },
               controller: phoneController,
               decoration: InputDecoration(
@@ -494,7 +506,6 @@ class CustomDialog {
               height: 10,
             ),
             TextFormField(
-              obscureText: true,
               controller: birthdayController,
               decoration: InputDecoration(
                   hintStyle: const TextStyle(color: ColorPallete.mainColor),
@@ -509,8 +520,29 @@ class CustomDialog {
             const SizedBox(
               height: 10,
             ),
+            DropdownButtonFormField(
+              items: const [
+                DropdownMenuItem(value: 'male', child: Text('Male')),
+                DropdownMenuItem(value: 'female', child: Text('Female')),
+              ],
+              value: user.gender == 1 ? 'male' : 'female',
+              onChanged: (value) {
+                _gender = value == "male" ? 1 : 0;
+              },
+              decoration: InputDecoration(
+                  hintStyle: const TextStyle(color: ColorPallete.mainColor),
+                  contentPadding:
+                      const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
+                  constraints:
+                      const BoxConstraints(maxHeight: 30, minHeight: 20),
+                  hintText: 'Gender',
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0))),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
             TextFormField(
-              obscureText: true,
               controller: mailController,
               decoration: InputDecoration(
                   hintStyle: const TextStyle(color: ColorPallete.mainColor),
@@ -518,7 +550,7 @@ class CustomDialog {
                       const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
                   constraints:
                       const BoxConstraints(maxHeight: 30, minHeight: 20),
-                  hintText: 'Gmail',
+                  hintText: 'Email',
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0))),
             ),
@@ -540,24 +572,52 @@ class CustomDialog {
                   child: const Text('Cancel'),
                 ),
                 ElevatedButton(
-                  onPressed: () {}, //async {
-                  //   if (_formKey.currentState!.validate()) {
-                  //     final result =
-                  //         await UserDataServices.changePasswordByToken(
-                  //             currentPasswordController.text,
-                  //             newPasswordController.text);
-                  //     if (result == null && mounted) {
-                  //       ScaffoldMessenger.of(context).showSnackBar(
-                  //           const SnackBar(
-                  //               content:
-                  //                   Text('Password changed successfully!')));
-                  //       Navigator.of(context).pop();
-                  //     } else if (result != null && mounted) {
-                  //       ScaffoldMessenger.of(context)
-                  //           .showSnackBar(SnackBar(content: Text(result)));
-                  //     }
-                  //   }
-                  // },
+                  onPressed: () async {
+                    User updatedUser = User(
+                        gender: _gender,
+                        fullName: fullNameController.text,
+                        email: mailController.text,
+                        birthDay: birthdayController.text,
+                        //gender: _gender,
+                        phoneNumber: phoneController.text);
+                    var result =
+                        await UserDataServices.updateUser(updatedUser, context);
+                    if (result != null && mounted) {
+                      ScaffoldMessenger.of(context)
+                          .showSnackBar(SnackBar(content: Text(result)));
+                    } else {
+                      print('www' + context.toString());
+                      Navigator.pop(context);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('User updated!')));
+                      if (mailController.text != user.email) {
+                        bool agreeLogout = false;
+                        await showDialog(
+                            barrierDismissible: false,
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                content: const Text(
+                                    'Your session has expired\nPlease log in again'),
+                                actions: [
+                                  ElevatedButton(
+                                      onPressed: () async {
+                                        Navigator.pop(context);
+                                        agreeLogout = true;
+                                      },
+                                      child: const Text("OK"))
+                                ],
+                              );
+                            });
+                        if (agreeLogout == true) {
+                          BlocProvider.of<AppCubits>(context).loginPage();
+                        }
+                      } else {
+                        BlocProvider.of<AppCubits>(context)
+                            .getUserData(returnState: InformationPageState());
+                      }
+                    }
+                  },
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)),

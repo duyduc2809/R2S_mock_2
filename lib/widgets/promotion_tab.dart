@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_store/constants/fetch_promotion.dart';
+import 'package:mobile_store/constants/size_config.dart';
 import '../models/promotion.dart';
 
 class PromotionTab extends StatefulWidget {
@@ -10,9 +11,7 @@ class PromotionTab extends StatefulWidget {
 }
 
 class _PromotionTabState extends State<PromotionTab> {
-
   late Future<List<Promotion>> futureListPromotion;
-
 
   @override
   void initState() {
@@ -23,30 +22,58 @@ class _PromotionTabState extends State<PromotionTab> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return Container(
+      width: double.maxFinite,
+      height: MediaQuery.of(context).size.height * 0.56,
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(8),
+          bottomRight: Radius.circular(8),
+        ),
+      ),
       child: FutureBuilder(
-    future: futureListPromotion,
-    builder: (context, snapshot) {
+      future: futureListPromotion,
+      builder: (context, snapshot) {
       if (snapshot.hasError) {
         return Text("Retrieve Failed${snapshot.error}");
       } else if (snapshot.hasData) {
         final List<Promotion> promotions = snapshot.data!;
-        return ListView.builder(
-          itemCount: promotions.length,
-          itemBuilder: (context, index) => Card(
-            child: ListTile(
-              leading: Image.asset('assets/img/promotion_gift.png'),
-              title: Text('${promotions[index].discountDTO}% '
-                  'discount for orders ${promotions[index].maxGetDTO},'
-                  'for customers who bought ${promotions[index].totalPurchaseDTO}'),
-              subtitle: Text('Exp: ${promotions[index].expireDateDTO}'),
-            ),
+
+        return Padding(
+          padding: const EdgeInsets.only(top: 8),
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: promotions.length,
+            itemBuilder: (context, index) {
+              final Promotion promotion = promotions[index];
+              final DateTime expireDate = DateTime.parse(promotion.expireDateDTO!);
+              final bool isExpired = expireDate.isBefore(DateTime.now());
+              final TextStyle titleTextStyle = TextStyle(
+                color: isExpired ? Colors.black.withOpacity(0.5) : Colors.black,
+              );
+              return ListTile(
+                tileColor: Colors.white,
+                leading: Image.asset('assets/img/promotion_gift.png'),
+                title: Text(
+                  '${promotion.discountDTO}% discount for orders ${promotion.maxGetDTO},'
+                      ' for customers who bought ${promotion.totalPurchaseDTO}',
+                  style: titleTextStyle,
+                ),
+                subtitle: Text(
+                  'Exp: ${promotion.expireDateDTO}',
+                  style: TextStyle(
+                    color: isExpired ? Colors.black.withOpacity(0.5) : Colors.black,
+                  ),
+                ),
+              );
+            },
           ),
         );
       } else {
         return const CircularProgressIndicator();
       }
-    },
+      },
       ),
     );
   }

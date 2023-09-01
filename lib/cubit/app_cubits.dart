@@ -11,26 +11,28 @@ import '../models/user.dart';
 class AppCubits extends Cubit<CubitStates> {
   static late User userData;
   UserDataServices dataServices;
+
   AppCubits({required this.dataServices}) : super(InitialState()) {
     emit(LoadingState());
     init();
   }
 
-  void getUserData() async {
+  Future<void> getUserData({returnState}) async {
     try {
       emit(LoadingState());
-      userData = await dataServices.getUser();
-      emit(HomePageState());
+      userData = await UserDataServices.getUser();
+      emit(returnState ?? HomePageState());
     } catch (e) {
       print(e);
-      throw Exception();
+      emit(SignInState());
+      // throw Exception();
     }
   }
 
   Future<void> init() async {
     final rememberMe = await HiveHelper.loadRememberMe();
     if (rememberMe == true) {
-      getUserData();
+      await getUserData();
       return homePage();
     } else {
       return loginPage();
@@ -72,7 +74,6 @@ class AppCubits extends Cubit<CubitStates> {
   }
 
   detailPage(product) {
-
     emit(DetailProductState(product: product));
   }
 
@@ -82,5 +83,9 @@ class AppCubits extends Cubit<CubitStates> {
 
   cartPage() {
     emit(CartPageState());
+  }
+
+  reviewPage(product) {
+    emit(ProductReviewState(product: product));
   }
 }

@@ -76,13 +76,10 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-                  Container(
-                    width: 300,
-                    height: 350,
-                    child: ListProduct()
-                // )  
-                    
-                  ),
+                  Container(width: 300, height: 350, child: ListProduct()
+                      // )
+
+                      ),
                 ],
               )),
             ),

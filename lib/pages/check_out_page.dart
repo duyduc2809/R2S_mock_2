@@ -116,7 +116,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                 decoration: const BoxDecoration(
                   color: Colors.grey,
                 ),
-                child: const CartTab(),
+                child:const CartTab(),
                 ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -218,7 +218,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                   ),
                   child: TextButton(
                     onPressed: () {
-                      print('abc');
+                      print('Pay success');
                     },
                     child: const Text(
                         'Pay',

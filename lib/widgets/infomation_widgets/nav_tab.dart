@@ -8,7 +8,6 @@ class NavBarUserInfor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.95,
       height: 90,
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(
@@ -31,7 +30,7 @@ class NavBarUserInfor extends StatelessWidget {
                   height: 40,
                   child: Image.asset('assets/img/information_img.png'),
                 ),
-                const Text("Your infomation",
+                const Text("Your information",
                     style: TextStyle(
                       fontFamily: "Inter",
                       fontSize: 14,

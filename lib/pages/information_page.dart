@@ -41,28 +41,27 @@ class _InformationPage extends State<InformationPage> {
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
       if (state is InformationPageState) {
         return Scaffold(
-            resizeToAvoidBottomInset: false,
-            backgroundColor: Colors.grey[300],
-            // appBar: AppBar(title: const Text('Mobile Store'),),
-            appBar: CustomAppBar(
-              logged: true,
-              title: '',
-              showUserInfo: true,
-              context: context,
-              user: AppCubits.userData,
-            ),
-            body: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(9.0),
-                child: Column(children: [
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  NavBarUserInfor(onNavBarClicked: onNavBarClicked),
-                  screens[_currentTab],
-                ]),
+          resizeToAvoidBottomInset: false,
+          backgroundColor: Colors.grey[300],
+          // appBar: AppBar(title: const Text('Mobile Store'),),
+          appBar: CustomAppBar(
+            logged: true,
+            title: '',
+            showUserInfo: true,
+            context: context,
+            user: AppCubits.userData,
+          ),
+          body: Padding(
+            padding: const EdgeInsets.all(9.0),
+            child: Column(children: [
+              const SizedBox(
+                height: 5,
               ),
-            ));
+              NavBarUserInfor(onNavBarClicked: onNavBarClicked),
+              screens[_currentTab],
+            ]),
+          ),
+        );
       } else {
         return const Center(child: CircularProgressIndicator());
       }

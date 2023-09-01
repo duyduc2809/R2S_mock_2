@@ -21,7 +21,7 @@ class AddressRepository {
       headers: {'Authorization': 'Bearer ${user.token}'},
     );
     if (response.statusCode == 200) {
-      List json = jsonDecode(response.body);
+      List json = jsonDecode(utf8.decode(response.bodyBytes));
       final result = json.map((e) => Address.fromJson(e)).toList();
       return result;
     } else {
@@ -53,7 +53,7 @@ class AddressRepository {
     });
 
     if (response.statusCode == 201) {
-      return Address.fromJson(jsonDecode(response.body));
+      return Address.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
     } else {
       throw Exception(response.body);
     }
@@ -110,7 +110,7 @@ class AddressRepository {
         headers: {HttpHeaders.authorizationHeader: "Bearer ${user.token}"});
 
     if (response.statusCode == 200) {
-      return Address.fromJson(jsonDecode(response.body));
+      return Address.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
     } else {
       throw Exception("Failed to get an address");
     }

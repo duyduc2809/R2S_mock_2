@@ -135,7 +135,7 @@ class UserRepository {
       print(response.statusCode);
       if (response.statusCode == 200) {
         print('getuser successfully');
-        return json.decode(response.body);
+        return json.decode(utf8.decode(response.bodyBytes));
       } else {
         print('get failed');
         throw Exception();

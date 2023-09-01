@@ -23,6 +23,7 @@ class AddressCubit extends Cubit<AddressState> {
     try {
       var result = await _addressRepository.createAddress(address);
       emit(SuccessAddAddress(address));
+      getAllAddresses();
     } catch (e) {
       emit(FailureAddressState(e.toString()));
     }

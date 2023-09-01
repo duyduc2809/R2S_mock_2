@@ -11,11 +11,11 @@ import '../models/user.dart';
 class AppCubits extends Cubit<CubitStates> {
   static late User userData;
   UserDataServices dataServices;
+
   AppCubits({required this.dataServices}) : super(InitialState()) {
     emit(LoadingState());
     init();
   }
-
 
   void getUserData({returnState}) async {
     try {
@@ -24,7 +24,8 @@ class AppCubits extends Cubit<CubitStates> {
       emit(returnState ?? HomePageState());
     } catch (e) {
       print(e);
-      throw Exception();
+      emit(SignInState());
+      // throw Exception();
     }
   }
 

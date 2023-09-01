@@ -8,6 +8,13 @@ import 'package:mobile_store/services/hive_helpers.dart';
 class FetchOrder {
   static const orderUrl = 'http://45.117.170.206:60/apis/order/user?no=0&limit';
   static const baseUrl = "http://45.117.170.206:60/apis/file/display/";
+
+  List<Order> parsePromotions(String response) {
+    final jsonMap = jsonDecode(response);
+    final contents = jsonMap['contents'] as List<dynamic>;
+    return contents.map<Order>((json) => Order.fromJson(json)).toList();
+  }
+
   Future<List<Order>> fetchOrders() async {
     final APIUser user = await HiveHelper.loadUserData();
     final uri = Uri.parse(orderUrl);
@@ -17,13 +24,7 @@ class FetchOrder {
     );
 
     if (response.statusCode == 200) {
-      final json = jsonDecode(response.body);
-
-      final List<Order> orders = json['contents'].map((e) {
-        return Order.fromJson(e);
-      }).toList();
-
-      return orders;
+      return parsePromotions(response.body);
     } else {
       throw Exception('An error occurred while fetching orders.');
     }

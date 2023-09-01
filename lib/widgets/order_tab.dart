@@ -33,20 +33,25 @@ class _OrderTabState extends State<OrderTab> {
               return Text('Retrive Failed${snapshot.error}');
             } else if (snapshot.hasData) {
               final List<Order> orders = snapshot.data!;
-              return ListView.separated(
-                shrinkWrap: true,
-                itemCount: orders.length,
-                itemBuilder: (context, index) => Card(
-                  child: ListTile(
-                    leading: Image.asset('assets/img/order.png'),
-                    title: Text('${orders[index].productOrderDTO?.name}'),
-                    subtitle:
-                        Text('Delivery date: ${orders[index].receiveDate}'),
-                    trailing: Text('${orders[index].total}'),
+              return Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: ListView.separated(
+                  shrinkWrap: true,
+                  itemCount: orders.length,
+                  itemBuilder: (context, index) => Card(
+                    child: ListTile(
+                      tileColor: Colors.white,
+                      leading: Image.network(FetchOrder.baseUrl +
+                          ('${orders[index].productOrderDTO?.image}')),
+                      title: Text('${orders[index].productOrderDTO?.name}'),
+                      subtitle:
+                          Text('Delivery date: ${orders[index].receiveDate}'),
+                      trailing: Text('${orders[index].total}'),
+                    ),
                   ),
+                  separatorBuilder: (BuildContext context, int index) =>
+                      const Divider(),
                 ),
-                separatorBuilder: (BuildContext context, int index) =>
-                    const Divider(),
               );
             } else {
               return const CircularProgressIndicator();

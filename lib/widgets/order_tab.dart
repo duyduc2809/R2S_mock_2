@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mobile_store/services/order_data.dart';
 
 import '../constants/color_const.dart';
@@ -91,14 +92,14 @@ class _OrderTabState extends State<OrderTab> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          '${orders[index].total}',
+                          '${formatNumber(orders[index].total!.toInt())} VND',
                           style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
                               color: Colors.green),
                         ),
                         const SizedBox(
-                          width: 20,
+                          width: 15,
                         ),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
@@ -124,5 +125,10 @@ class _OrderTabState extends State<OrderTab> {
             }
           }),
     );
+  }
+
+  String formatNumber(int number) {
+    final NumberFormat formatter = NumberFormat('#,##0', 'vi_VN');
+    return formatter.format(number);
   }
 }

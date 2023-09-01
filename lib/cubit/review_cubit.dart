@@ -9,21 +9,22 @@ class ReviewCubit extends Cubit<ReviewState> {
   final FetchReview _reviewRepository;
   ReviewCubit(this._reviewRepository) : super(InitialReviewState());
 
-  Future<void> getAllReview() async {
+  Future<void> getAllReview(int productID) async {
     emit(LoadingReviewState());
     try {
-      var result = await _reviewRepository.getAllReview(1);
+      var result = await _reviewRepository.getAllReview(productID);
       emit(SuccessLoadingReview(result));
     } catch (e) {
       emit(FailureReviewState(e.toString()));
     }
   }
 
-  Future<void> createReview(ReviewInput review) async {
+  Future<String?> createReview(ReviewInput review) async {
     emit(LoadingReviewState());
     try {
       var result = await _reviewRepository.createReview(review);
-      emit(SuccessAddReview(result));
+      emit(SuccessAddReview());
+      return result;
     } catch (e) {
       emit(FailureReviewState(e.toString()));
     }

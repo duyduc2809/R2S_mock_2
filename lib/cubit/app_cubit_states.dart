@@ -53,7 +53,14 @@ class CartPageState extends CubitStates {
 
 class CartState extends CubitStates {
   List<Object> get props => [];
-
 }
 
+
+class ProductReviewState extends CubitStates {
+  Product product;
+  ProductReviewState({
+    required this.product,
+  });
+  List<Object> get props => [];
+}
 

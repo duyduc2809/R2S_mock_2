@@ -6,12 +6,12 @@ import '../cubit/app_cubit_states.dart';
 import '../cubit/app_cubits.dart';
 import '../cubit/review_cubit.dart';
 import '../cubit/state/review_state.dart';
+import '../models/product/product.dart';
 import '../models/review.dart';
 import '../models/review_input.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/rating_star.dart';
 import '../widgets/success_dialog.dart';
-
 
 class ReviewPage extends StatefulWidget {
   const ReviewPage({super.key});
@@ -29,13 +29,13 @@ class _ReviewPageState extends State<ReviewPage> {
   final reviewCubit = ReviewCubit(FetchReview());
   late Future<List<Review>> futureListReview;
   late int productID = 2;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    reviewCubit.getAllReview();
-  }
+  late Product product;
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   reviewCubit.getAllReview(pro);
+  // }
 
   void _onStarSelected(int stars) {
     setState(() {
@@ -43,45 +43,46 @@ class _ReviewPageState extends State<ReviewPage> {
     });
   }
 
-  void _submitComment()  {
+  void _submitComment() async {
     final reviewInput = ReviewInput(
-      product_id: 1,
+      product_id: product.id!,
       comment: commentController.text,
       rating: selectedStars,
       status: true,
     );
 
-    reviewCubit.createReview(reviewInput);
-    Navigator.pop(context);
-    reviewCubit.getAllReview();
-
-    showDialog(
-      context: context,
-      builder: (context) => SuccessDialog(),
-    );
-
-    Future.delayed(Duration(seconds: 5), () {
+    var result = await reviewCubit.createReview(reviewInput);
+    if (result == null) {
       Navigator.pop(context);
-    });
+      reviewCubit.getAllReview(product.id!);
 
+      showDialog(
+        context: context,
+        builder: (context) => SuccessDialog(),
+      );
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(result)));
+    }
+    // Future.delayed(Duration(seconds: 5), () {
+    //   Navigator.pop(context);
+    // });
   }
 
-
-  Future<void>_showDialog(
+  Future<void> _showDialog(
       BuildContext context, ReviewInput? reviewInput) async {
     return showDialog(
         context: context,
-        builder: (context){
-          return StatefulBuilder(builder: (context, setState){
+        builder: (context) {
+          return StatefulBuilder(builder: (context, setState) {
             return AlertDialog(
               title: Center(
                 child: Text(
                   titleReview,
-                  style:const TextStyle(
+                  style: const TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.w800,
-                      fontSize: 16
-                  ),
+                      fontSize: 16),
                 ),
               ),
               content: Column(
@@ -91,21 +92,25 @@ class _ReviewPageState extends State<ReviewPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: List.generate(
                       5,
-                          (index) => GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                _onStarSelected(index + 1);
-                              });
-                            },
+                      (index) => GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _onStarSelected(index + 1);
+                          });
+                        },
                         child: Icon(
                           Icons.star,
                           size: 30,
-                          color: index < selectedStars ? Colors.orange : Colors.grey,
+                          color: index < selectedStars
+                              ? Colors.orange
+                              : Colors.grey,
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 18,),
+                  const SizedBox(
+                    height: 18,
+                  ),
                   Container(
                     width: double.maxFinite,
                     height: 118,
@@ -117,8 +122,9 @@ class _ReviewPageState extends State<ReviewPage> {
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.only(left: 9),
                         labelText: 'Comments',
-                        labelStyle: TextStyle(color: Colors.green.withOpacity(0.5)),
-                        border:InputBorder.none,
+                        labelStyle:
+                            TextStyle(color: Colors.green.withOpacity(0.5)),
+                        border: InputBorder.none,
                       ),
                     ),
                   ),
@@ -132,13 +138,14 @@ class _ReviewPageState extends State<ReviewPage> {
                       width: 117, // Set the desired width
                       height: 39, // Set the desired height
                       child: ElevatedButton(
-                        onPressed: (){
+                        onPressed: () {
                           _submitComment();
                         },
                         style: ElevatedButton.styleFrom(
                           primary: Colors.green,
                         ),
-                        child: const Text('Send', style: TextStyle(color: Colors.white)),
+                        child: const Text('Send',
+                            style: TextStyle(color: Colors.white)),
                       ),
                     ),
                     SizedBox(
@@ -151,124 +158,150 @@ class _ReviewPageState extends State<ReviewPage> {
                         style: ElevatedButton.styleFrom(
                           primary: Colors.red,
                         ),
-                        child:const Text('Close', style: TextStyle(color: Colors.white),),
+                        child: const Text(
+                          'Close',
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 9,),
+                const SizedBox(
+                  height: 9,
+                ),
               ],
             );
           });
-        }
-    );
+        });
   }
 
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return Scaffold(
-      appBar: CustomAppBar(
-        logged: true,
-        title: '',
-        showUserInfo: true,
-        context: context,
-        user: AppCubits.userData,
-      ),
-      body:
-         Container(
-           height: double.infinity,
-           width: MediaQuery.of(context).size.width,
-           child: Column(
-             mainAxisAlignment: MainAxisAlignment.start,
-             children: [
-               const SizedBox(height: 9,),
+    return BlocBuilder<AppCubits, CubitStates>(
+      builder: (context,state) {
+        if (state is ProductReviewState) {
+          product = state.product;
+          reviewCubit.getAllReview(product.id!);
+
+          return Scaffold(
+          appBar: CustomAppBar(
+            logged: true,
+            title: '',
+            showUserInfo: true,
+            context: context,
+            user: AppCubits.userData,
+          ),
+          body: SizedBox(
+            height: double.infinity,
+            width: MediaQuery.of(context).size.width,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: 9,
+                ),
                 Center(
-                 child: Text(
-                   reviewTitle.toUpperCase(),
-                   style:const TextStyle(
-                     fontWeight: FontWeight.w700,
-                     fontSize: 15,
-                     color: Colors.black
-                   ),
-                 ),
-               ),
+                  child: Text(
+                    reviewTitle.toUpperCase(),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 15,
+                        color: Colors.black),
+                  ),
+                ),
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(9.0),
                     child: SizedBox(
                       width: double.maxFinite,
-                     child: BlocProvider.value(
-                       value: reviewCubit,
-                       child: BlocBuilder<ReviewCubit, ReviewState>(
-                         builder: (context, state) {
-                           if (state is InitialReviewState || state is LoadingReviewState) {
-                             return const Center(child: CircularProgressIndicator(),);
-                           } else if (state is SuccessLoadingReview) {
-                             final reviews = state.listReview;
-                             return ListView.builder(
-                               itemCount: reviews.length,
-                               itemBuilder: (context, index) =>
-                                   Card(
-                                     child: ListTile(
-                                       title: Column(
-                                         mainAxisAlignment: MainAxisAlignment.start,
-                                         children: [
-                                           Row(
-                                             mainAxisAlignment: MainAxisAlignment.start,
-                                             children: [
-                                               Text('${reviews[index].user_name} '),
-                                               const SizedBox(width: 9,),
-                                               Column(
-                                                 children: [
-                                                   StarRating(rating: reviews[index].rating),
-                                                   const SizedBox(height: 5,),
-                                                 ],
-                                               ),
-                                               //${reviews[index].rating}
-                                             ],
-                                           ),
-                                           const SizedBox(height: 9,),
-                                         ],
-                                       ),
-                                       subtitle: Text(
-                                         reviews[index].comment,
-                                         style: const TextStyle(
-                                             fontWeight: FontWeight.w400,
-                                             fontSize: 15,
-                                             color: Colors.black
-                                         ),
-                                       ),
-                                     ),
-                                   ),
-                             );
-                           }else if(state is FailureReviewState){
-                             return Center(child: Text(state.errorMessage),);
-                           }
-                           return Text(state.toString());
-                         },
-                       ),
-                     ),
+                      child: BlocProvider.value(
+                        value: reviewCubit,
+                        child: BlocBuilder<ReviewCubit, ReviewState>(
+                          builder: (context, state) {
+                            if (state is InitialReviewState ||
+                                state is LoadingReviewState) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            } else if (state is SuccessLoadingReview) {
+                              final reviews = state.listReview;
+                              return ListView.builder(
+                                itemCount: reviews.length,
+                                itemBuilder: (context, index) => Card(
+                                  child: ListTile(
+                                    title: Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                          children: [
+                                            Text('${reviews[index].user_name} '),
+                                            const SizedBox(
+                                              width: 9,
+                                            ),
+                                            Column(
+                                              children: [
+                                                StarRating(
+                                                    rating: reviews[index].rating),
+                                                const SizedBox(
+                                                  height: 5,
+                                                ),
+                                              ],
+                                            ),
+                                            //${reviews[index].rating}
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          height: 9,
+                                        ),
+                                      ],
+                                    ),
+                                    subtitle: Text(
+                                      reviews[index].comment,
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 15,
+                                          color: Colors.black),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            } else if (state is FailureReviewState) {
+                              return Center(
+                                child: Text(state.errorMessage),
+                              );
+                            }
+                            return Text(state.toString());
+                          },
+                        ),
+                      ),
                     ),
                   ),
                 ),
-               const SizedBox(height: 9,),
-             ],
-           ),
-         ),
-      floatingActionButton: FloatingActionButton.extended(
-          onPressed: () async{
-            await _showDialog(context,null);
-            reviewCubit.getAllReview();
-          },
-        backgroundColor: Colors.white,
-          label:const Icon(
-            Icons.edit,
-            color: Colors.black,
+                const SizedBox(
+                  height: 9,
+                ),
+              ],
+            ),
           ),
-      ),
+          floatingActionButton: FloatingActionButton.extended(
+            onPressed: () async {
+              await _showDialog(context, null);
+              reviewCubit.getAllReview(product.id!);
+            },
+            backgroundColor: Colors.white,
+            label: const Icon(
+              Icons.edit,
+              color: Colors.black,
+            ),
+          ),
+        );
+        } else {
+          return const CircularProgressIndicator();
+        }
+      }
     );
-
   }
 }
-

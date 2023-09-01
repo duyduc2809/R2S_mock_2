@@ -61,9 +61,10 @@ class _DetailProductState extends State<DetailProduct> {
                   SizedBox(
                     height: 177,
                     width: 393,
-                    child: Image.network(ProductData.baseUrl + state.product.images![1].name),
+                    child: Image.network(
+                        ProductData.baseUrl + state.product.images![1].name),
                   ),
-                   Text(
+                  Text(
                     state.product.name!,
                     style: const TextStyle(
                         fontSize: 16,
@@ -72,17 +73,23 @@ class _DetailProductState extends State<DetailProduct> {
                   ),
                   Row(
                     children: [
-                       Text(state.product.star!.toString()),
+                      Text(state.product.star!.toString()),
                       const SizedBox(
                         width: 5,
                       ),
                       Wrap(
                         children: List.generate(5, (index) {
-                          return index < gottenStars ?
-                                  const Icon(Icons.star, color:Color.fromRGBO(254, 140, 35, 1),
-                                    size: 15,) :
-                                  const Icon(Icons.star_border, color:Color.fromRGBO(254, 140, 35, 1),
-                                    size: 15,);
+                          return index < gottenStars
+                              ? const Icon(
+                                  Icons.star,
+                                  color: Color.fromRGBO(254, 140, 35, 1),
+                                  size: 15,
+                                )
+                              : const Icon(
+                                  Icons.star_border,
+                                  color: Color.fromRGBO(254, 140, 35, 1),
+                                  size: 15,
+                                );
                         }),
                       ),
                     ],
@@ -103,7 +110,7 @@ class _DetailProductState extends State<DetailProduct> {
                       // CustomButtonDetail(text: state.product.colors![2].name),
                     ],
                   ),
-                   Text(
+                  Text(
                     "${formatNumber(state.product.price!.toInt())} VND",
                     style: const TextStyle(
                         fontSize: 18,
@@ -119,7 +126,7 @@ class _DetailProductState extends State<DetailProduct> {
                     child: const Text(
                       'ADD TO CART',
                       style:
-                      TextStyle(fontSize: 15, fontWeight: FontWeight.w800),
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.w800),
                     ),
                   ),
                   Container(
@@ -135,10 +142,10 @@ class _DetailProductState extends State<DetailProduct> {
                         ),
                         const Center(
                             child: Text(
-                              "SPECIFICATIONS",
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.w700),
-                            )),
+                          "SPECIFICATIONS",
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.w700),
+                        )),
                         const SizedBox(
                           height: 5,
                         ),
@@ -195,7 +202,7 @@ class _DetailProductState extends State<DetailProduct> {
                           margin: const EdgeInsets.only(left: 10, right: 10),
                           child: Padding(
                             padding:
-                            const EdgeInsets.only(left: 10, right: 135),
+                                const EdgeInsets.only(left: 10, right: 135),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -219,7 +226,7 @@ class _DetailProductState extends State<DetailProduct> {
                           margin: const EdgeInsets.only(left: 10, right: 10),
                           child: Padding(
                             padding:
-                            const EdgeInsets.only(left: 10, right: 125),
+                                const EdgeInsets.only(left: 10, right: 125),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -313,19 +320,20 @@ class _DetailProductState extends State<DetailProduct> {
                         ),
                         const Center(
                             child: Text(
-                              "PRODUCT INFORMATION",
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.w700),
-                            )),
+                          "PRODUCT INFORMATION",
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.w700),
+                        )),
                         const SizedBox(
                           height: 5,
                         ),
-                         Expanded(
-                           child: Padding(
-                            padding:const EdgeInsets.symmetric(horizontal: 10),
-                            child: Html(data: state.product.productTechs![0].info)
-                                                 ),
-                         ),
+                        Expanded(
+                          child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              child: Html(
+                                  data: state.product.productTechs![0].info)),
+                        ),
                         const SizedBox(
                           height: 10,
                         ),
@@ -341,7 +349,9 @@ class _DetailProductState extends State<DetailProduct> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 10,)
+                        SizedBox(
+                          height: 10,
+                        )
                       ],
                     ),
                   ),
@@ -362,10 +372,10 @@ class _DetailProductState extends State<DetailProduct> {
                         ),
                         const Center(
                             child: Text(
-                              "REVIEW OF CUSTOMER BOUGHT THE PRODUCT",
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.w700),
-                            )),
+                          "REVIEW OF CUSTOMER BOUGHT THE PRODUCT",
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.w700),
+                        )),
                         const SizedBox(
                           height: 5,
                         ),
@@ -373,7 +383,7 @@ class _DetailProductState extends State<DetailProduct> {
                             padding: const EdgeInsets.only(left: 15),
                             child: Row(
                               children: [
-                                 Text(
+                                Text(
                                   state.product.reviews![0].user_name,
                                   style: TextStyle(fontSize: 16),
                                 ),
@@ -391,7 +401,7 @@ class _DetailProductState extends State<DetailProduct> {
                                 ),
                               ],
                             )),
-                         Padding(
+                        Padding(
                           padding: EdgeInsets.only(left: 15),
                           child: Text(
                             state.product.reviews![0].comment,
@@ -406,7 +416,7 @@ class _DetailProductState extends State<DetailProduct> {
                             height: 1,
                             decoration: BoxDecoration(
                                 border:
-                                Border.all(color: Colors.grey, width: 1.5)),
+                                    Border.all(color: Colors.grey, width: 1.5)),
                           ),
                         ),
                         const SizedBox(
@@ -416,7 +426,7 @@ class _DetailProductState extends State<DetailProduct> {
                             padding: const EdgeInsets.only(left: 15),
                             child: Row(
                               children: [
-                                 Text(
+                                Text(
                                   state.product.reviews![0].user_name,
                                   style: TextStyle(fontSize: 16),
                                 ),
@@ -434,7 +444,7 @@ class _DetailProductState extends State<DetailProduct> {
                                 ),
                               ],
                             )),
-                         Padding(
+                        Padding(
                           padding: EdgeInsets.only(left: 15),
                           child: Text(state.product.reviews![0].comment),
                         ),
@@ -447,7 +457,7 @@ class _DetailProductState extends State<DetailProduct> {
                             height: 1,
                             decoration: BoxDecoration(
                                 border:
-                                Border.all(color: Colors.grey, width: 1.5)),
+                                    Border.all(color: Colors.grey, width: 1.5)),
                           ),
                         ),
                         const SizedBox(
@@ -457,7 +467,7 @@ class _DetailProductState extends State<DetailProduct> {
                             padding: const EdgeInsets.only(left: 15),
                             child: Row(
                               children: [
-                                 Text(
+                                Text(
                                   state.product.reviews![0].user_name,
                                   style: TextStyle(fontSize: 16),
                                 ),
@@ -475,7 +485,7 @@ class _DetailProductState extends State<DetailProduct> {
                                 ),
                               ],
                             )),
-                         Padding(
+                        Padding(
                           padding: EdgeInsets.only(left: 15),
                           child: Text(
                             state.product.reviews![0].comment,
@@ -490,7 +500,7 @@ class _DetailProductState extends State<DetailProduct> {
                             height: 1,
                             decoration: BoxDecoration(
                                 border:
-                                Border.all(color: Colors.grey, width: 1.5)),
+                                    Border.all(color: Colors.grey, width: 1.5)),
                           ),
                         ),
                         const SizedBox(
@@ -500,7 +510,7 @@ class _DetailProductState extends State<DetailProduct> {
                             padding: const EdgeInsets.only(left: 15),
                             child: Row(
                               children: [
-                                 Text(
+                                Text(
                                   state.product.reviews![0].user_name,
                                   style: TextStyle(fontSize: 16),
                                 ),
@@ -518,7 +528,7 @@ class _DetailProductState extends State<DetailProduct> {
                                 ),
                               ],
                             )),
-                         Padding(
+                        Padding(
                           padding: EdgeInsets.only(left: 15),
                           child: Text(
                             state.product.reviews![0].comment,
@@ -533,7 +543,7 @@ class _DetailProductState extends State<DetailProduct> {
                             height: 1,
                             decoration: BoxDecoration(
                                 border:
-                                Border.all(color: Colors.grey, width: 1.5)),
+                                    Border.all(color: Colors.grey, width: 1.5)),
                           ),
                         ),
                         const SizedBox(
@@ -544,24 +554,22 @@ class _DetailProductState extends State<DetailProduct> {
                           child: GestureDetector(
                             onTap: () {
                               // Navigate to the Review screen when tapped
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => ReviewPage()),
-                              );
+                              BlocProvider.of<AppCubits>(context)
+                                  .reviewPage(state.product);
                             },
-                          child: Container(
-                            width: 350,
-                            height: 33,
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.green)),
-                            child: Center(
-                              child: AppText(
-                                text: "See more ",
-                                color: Colors.green,
+                            child: Container(
+                              width: 350,
+                              height: 33,
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.green)),
+                              child: Center(
+                                child: AppText(
+                                  text: "See more ",
+                                  color: Colors.green,
+                                ),
                               ),
                             ),
                           ),
-                        ),
                         ),
                       ],
                     ),
@@ -581,10 +589,10 @@ class _DetailProductState extends State<DetailProduct> {
                       ),
                       const Center(
                           child: Text(
-                            "ANOTHER",
-                            style: TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.w700),
-                          )),
+                        "ANOTHER",
+                        style: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.w700),
+                      )),
                       const SizedBox(
                         height: 5,
                       ),
@@ -605,7 +613,10 @@ class _DetailProductState extends State<DetailProduct> {
             ),
           ),
         );
-      } else {
+      } if (state is ProductReviewState) {
+        return ReviewPage();
+      }
+      else {
         return const Center(child: CircularProgressIndicator());
       }
     });

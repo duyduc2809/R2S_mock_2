@@ -54,8 +54,8 @@ class _ListProductState extends State<ListProduct> {
                       child: Column(
                         children: [
                           Container(
-                              height: 109,
-                              width: 106,
+                              height: 99,
+                              width: 96,
                               child: Image.network(ProductData.baseUrl +
                                   (products[index].images![1].name))),
                           Text("${products[index].name}",

@@ -53,7 +53,7 @@ class _InformationPage extends State<InformationPage> {
           ),
           body: Padding(
             padding: const EdgeInsets.all(9.0),
-            child: Column(children: [
+            child: ListView(children: [
               const SizedBox(
                 height: 5,
               ),

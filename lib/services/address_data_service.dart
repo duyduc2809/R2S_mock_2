@@ -75,7 +75,7 @@ class AddressRepository {
     }
   }
 
-  Future<Address> updateAddress(Address updatedAddress) async {
+  Future<int> updateAddress(Address updatedAddress) async {
     final url = "$addressUrl/update-address/${updatedAddress.id}";
 
     final APIUser user = await HiveHelper.loadUserData();
@@ -85,7 +85,8 @@ class AddressRepository {
       "location": updatedAddress.location,
       "phoneReceiver": 012345678,
       "nameReceiver": updatedAddress.nameReceiver,
-      "defaults": updatedAddress.defaults
+      "defaults": updatedAddress.defaults,
+      "type": updatedAddress.type
     });
 
     final response = await http.put(uri, body: body, headers: {
@@ -94,11 +95,7 @@ class AddressRepository {
     });
 
     print(response.statusCode);
-    if (response.statusCode == 200) {
-      return Address.fromJson(jsonDecode(response.body));
-    } else {
-      throw Exception("Failed to update address");
-    }
+    return response.statusCode;
   }
 
   Future<Address> getAddressById(Address address) async {

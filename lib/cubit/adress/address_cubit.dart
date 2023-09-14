@@ -39,13 +39,8 @@ class AddressCubit extends Cubit<AddressState> {
     }
   }
 
-  Future<void> updateAddress(Address address) async {
-    emit(LoadingAddressState());
-    try {
-      await _addressRepository.updateAddress(address);
-      getAllAddresses();
-    } catch (e) {
-      emit(FailureAddressState(e.toString()));
-    }
+  Future<int> updateAddress(Address address) async {
+    int statusCode = await _addressRepository.updateAddress(address);
+    return statusCode;
   }
 }
